@@ -1,0 +1,71 @@
+\documentclass[a4paper,14pt]{extarticle}
+
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{geometry}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage{url}
+
+\geometry{left=2cm}
+\geometry{right=2cm}
+\geometry{top=2cm}
+\geometry{bottom=2cm}
+
+\linespread{1.5}
+
+\begin{document}
+
+\begin{titlepage}
+
+\begin{center}
+  Санкт-Петербургский государственный политехнический университет\\
+  Кафедра компьютерных систем и программных технологий
+\end{center}
+
+\vspace{13em}
+
+\begin{center}
+\textbf{\Large РЕФЕРАТ}
+
+Дисциплина: \textbf{Современные проблемы информатики и вычислительной техники}\\
+Тема: \textbf{Анализ подходов и средств для верификации программ.
+Использование фреймворков как средств автоматизации}
+\end{center}
+
+\vspace{13em}
+
+\begin{flushright}
+  Выполнил студент гр. 63501/13 \hspace{8em} А.М. Половцев\\
+  Преподаватель \hspace{8em} В.Ф. Мелехин\\
+  ``\underline{\hspace{2em}}''\underline{\hspace{8em}} 2013 г.
+\end{flushright}
+
+\vspace{\fill}
+
+\begin{center}
+  Санкт-Петербург\\
+  2013
+\end{center}
+
+\end{titlepage}
+
+\tableofcontents
+
+\thispagestyle{empty}
+
+\include{introduction}
+\include{analysis}
+\include{models}
+\include{frameworks}
+\include{mytask}
+\include{conclusion}
+
+\bibliography{biblio}{}
+\bibliographystyle{ugost2008}
+
+\nocite{*}
+
+\end{document}
+

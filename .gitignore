@@ -1,0 +1,11 @@
+# Latex stuff #
+
+*.aux
+*.toc
+*.nav
+*.fdb_latexmk
+*.snm
+*.gz
+
+*.out
+*.log
