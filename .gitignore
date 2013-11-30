@@ -6,6 +6,7 @@
 *.fdb_latexmk
 *.snm
 *.gz
+*.vrb
 
 *.out
 *.log
