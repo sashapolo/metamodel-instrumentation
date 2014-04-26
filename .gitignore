@@ -15,3 +15,5 @@
 # IntelliJ #
 .idea
 *.iml
+/metamodel/target/
+/parsers/javaParser/target/
