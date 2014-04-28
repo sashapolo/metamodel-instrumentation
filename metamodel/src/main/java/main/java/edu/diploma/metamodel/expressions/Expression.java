@@ -6,14 +6,14 @@
 
 package main.java.edu.diploma.metamodel.expressions;
 
-import main.java.edu.diploma.metamodel.Entity;
+import main.java.edu.diploma.metamodel.statements.Statement;
 import main.java.edu.diploma.metamodel.types.Type;
 
 /**
  *
  * @author alexander
  */
-public class Expression extends Entity {
+public class Expression extends Statement {
     private final Type type;
     
     public Expression() {

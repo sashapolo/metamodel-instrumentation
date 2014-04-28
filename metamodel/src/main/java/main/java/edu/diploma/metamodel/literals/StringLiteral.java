@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package edu.diploma.parser.util;
+package main.java.edu.diploma.metamodel.literals;
 
 import main.java.edu.diploma.metamodel.types.Type;
 
@@ -12,12 +12,11 @@ import main.java.edu.diploma.metamodel.types.Type;
  *
  * @author alexander
  */
-public class TypeFactory {
-    public static Type createJavaClassType(final Type type) {
-        //TODO
-        throw new UnsupportedOperationException();
-    }
-
-    private TypeFactory() {
+public class StringLiteral extends Literal {
+    private final String value;
+    
+    public StringLiteral(final Type type, final String value) {
+        super(type);
+        this.value = value;
     }
 }

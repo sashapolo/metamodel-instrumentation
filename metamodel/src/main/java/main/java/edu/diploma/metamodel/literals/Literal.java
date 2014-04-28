@@ -4,20 +4,17 @@
  * and open the template in the editor.
  */
 
-package edu.diploma.parser.util;
+package main.java.edu.diploma.metamodel.literals;
 
+import main.java.edu.diploma.metamodel.expressions.Expression;
 import main.java.edu.diploma.metamodel.types.Type;
 
 /**
  *
  * @author alexander
  */
-public class TypeFactory {
-    public static Type createJavaClassType(final Type type) {
-        //TODO
-        throw new UnsupportedOperationException();
-    }
-
-    private TypeFactory() {
+public class Literal extends Expression {
+    public Literal(final Type type) {
+        super(type);
     }
 }

@@ -35,4 +35,8 @@ public class Declaration {
     public void addModifier(final String modifier) {
         this.modifiers.add(modifier);
     }
+
+    public String getName() {
+        return name;
+    }
 }

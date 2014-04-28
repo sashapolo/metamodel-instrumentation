@@ -1,4 +1,4 @@
-/*
+    /*
  [The "BSD licence"]
  Copyright (c) 2013 Terence Parr, Sam Harwell
  All rights reserved.
@@ -37,7 +37,7 @@ grammar JavaGrammar;
     import main.java.edu.diploma.metamodel.*;
     import main.java.edu.diploma.metamodel.types.*;
     import main.java.edu.diploma.metamodel.expressions.*;
-    import main.java.edu.diploma.metamodel.typedelem.*;
+    import main.java.edu.diploma.metamodel.statements.*;
     import edu.diploma.parser.util.TypeFactory;
 }
 
@@ -285,7 +285,8 @@ returns [DeclBody result]
 
 classBodyDeclaration
 returns [Declaration result]
-locals [List<String> mods = new LinkedList<>(), List<Annotation> annos = new LinkedList<>()]
+locals [List<String> mods = new LinkedList<>(), 
+        List<Annotation> annos = new LinkedList<>()]
     :   ';' { $result = null; }
     |   'static'? block 
         {
@@ -311,15 +312,15 @@ locals [List<String> mods = new LinkedList<>(), List<Annotation> annos = new Lin
 
 memberDeclaration
 returns [Declaration result]
-    :   methodDeclaration
-    |   genericMethodDeclaration
-    |   fieldDeclaration
-    |   constructorDeclaration
-    |   genericConstructorDeclaration
-    |   interfaceDeclaration { $result = $interfaceDeclaration.result; }
-    |   annotationTypeDeclaration { $result = $annotationTypeDeclaration.result; }
-    |   classDeclaration { $result = $classDeclaration.result; }
-    |   enumDeclaration { $result = $enumDeclaration.result; }
+    :   methodDeclaration             { $result = $methodDeclaration.result; }
+    |   genericMethodDeclaration      { $result = $genericMethodDeclaration.result; }
+    |   fieldDeclaration              { $result = $fieldDeclaration.result; }
+    |   constructorDeclaration        { $result = $constructorDeclaration.result; }
+    |   genericConstructorDeclaration { $result = $genericConstructorDeclaration.result; }
+    |   interfaceDeclaration          { $result = $interfaceDeclaration.result; }
+    |   annotationTypeDeclaration     { $result = $annotationTypeDeclaration.result; }
+    |   classDeclaration              { $result = $classDeclaration.result; }
+    |   enumDeclaration               { $result = $enumDeclaration.result; }
     ;
 
 /* We use rule this even for void methods which cannot have [] after parameters.
@@ -328,36 +329,78 @@ returns [Declaration result]
    for invalid return type after parsing.
  */
 methodDeclaration
-//returns [FunctionDecl result]
-locals [Type retType]  
+returns [FunctionDecl result]
+locals [Type retType, 
+        List<String> exceptions = Collections.emptyList(),
+        StatementBlock body = StatementBlock.EMPTY_BLOCK]  
     :   (type {$retType = $type.result;} | 'void' {$retType = PrimitiveType.VOID;}) 
         Identifier formalParameters ('[' ']' { $retType = new ArrayType($retType); })*
-        ('throws' qualifiedNameList)?
-        (   methodBody
+        ('throws' qualifiedNameList { $exceptions = $qualifiedNameList.result })?
+        (   methodBody { $body = $methodBody.result; }
         |   ';'
         )
+        {
+            $result = new FunctionDecl.Builder($retType, $Identifier.text, $formalParameters.result, $body)
+                      .exceptions($exceptions)
+                      .build();
+        }   
     ;
 
 genericMethodDeclaration
+returns [FunctionDecl result]
     :   typeParameters methodDeclaration
+        {
+            FunctionDecl t = $methodDeclaration.result;
+            $result = new FunctionDecl.Builder(t.getRetType(), t.getName(), t.getParams(), t.getBody())
+                      .exceptions(t.getExceptions())
+                      .templates($typeParameters.result)
+                      .build(); 
+        } 
     ;
 
 constructorDeclaration
+returns [FunctionDecl result]
     :   Identifier formalParameters ('throws' qualifiedNameList)?
         constructorBody
+        {
+            FunctionDecl.Builder builder = 
+                new FunctionDecl.Builder(null, $Identifier.text, $formalParameters.result, $constructorBody.result);
+            if ($qualifiedNameList.ctx != null) {
+                builder.exceptions($qualifiedNameList.result);
+            }                                     
+            $result = builder.build();
+        } 
     ;
 
 genericConstructorDeclaration
+returns [FunctionDecl result]
     :   typeParameters constructorDeclaration
+        {
+            FunctionDecl t = $constructorDeclaration.result;
+            $result = new FunctionDecl.Builder(t.getRetType(), t.getName(), t.getParams(), t.getBody())
+                      .exceptions(t.getExceptions())
+                      .templates($typeParameters.result)
+                      .build();
+        } 
     ;
 
 fieldDeclaration
+returns [List<VariableDecl> result]
+@init {
+    $result = new LinkedList<>();
+}       
     :   type variableDeclarators ';'
+        {
+            for (final UntypedVariable decl : $variableDeclarators.result) {
+                $result.add(decl.createVariableDecl($type.result));                                                                
+            }                                                                 
+        } 
     ;
 
 interfaceBodyDeclaration
 returns [Declaration result]
-locals [List<String> mods = new LinkedList<>(), List<Annotation> annos = new LinkedList<>()]
+locals [List<String> mods = new LinkedList<>(), 
+        List<Annotation> annos = new LinkedList<>()]
     :   ( modifier
           {
               if ($modifier.mod != null) {
@@ -377,32 +420,64 @@ locals [List<String> mods = new LinkedList<>(), List<Annotation> annos = new Lin
     ;
 
 interfaceMemberDeclaration
-    :   constDeclaration
-    |   interfaceMethodDeclaration
-    |   genericInterfaceMethodDeclaration
-    |   interfaceDeclaration
-    |   annotationTypeDeclaration
-    |   classDeclaration
-    |   enumDeclaration
+returns [List<Declaration> result]
+@init {
+    $result = new LinkedList<>();       
+}       
+    :   constDeclaration                  { $result.addAll($constDeclaration.result); }
+    |   interfaceMethodDeclaration        { $result.add($interfaceMethodDeclaration.result); }
+    |   genericInterfaceMethodDeclaration { $result.add($genericInterfaceMethodDeclaration.result); }
+    |   interfaceDeclaration              { $result.add($interfaceDeclaration.result); }
+    |   annotationTypeDeclaration         { $result.add($annotationTypeDeclaration.result); }
+    |   classDeclaration                  { $result.add($classDeclaration.result); }
+    |   enumDeclaration                   { $result.add($enumDeclaration.result); }
     ;
 
 constDeclaration
-    :   type constantDeclarator (',' constantDeclarator)* ';'
+returns [List<VariableDecl> result] 
+@init {
+    $result = new LinkedList<>();
+}
+    :   type constantDeclarator { $result.add($constantDeclarator.result.createVariableDecl($type.result)); } 
+        (',' constantDeclarator { $result.add($constantDeclarator.result.createVariableDecl($type.result)); })* ';'
     ;
 
 constantDeclarator
-    :   Identifier ('[' ']')* '=' variableInitializer
+returns [UntypedVariable result]
+    :   Identifier { $result = new UntypedVariable($Identifier.text); }
+        ('[' ']' { $result = new UntypedVariable($result); })* 
+        '=' variableInitializer
+        {
+            $resultsetValue($variableInitializer.result); 
+        } 
     ;
 
 // see matching of [] comment in methodDeclaratorRest
 interfaceMethodDeclaration
-    :   (type|'void') Identifier formalParameters ('[' ']')*
-        ('throws' qualifiedNameList)?
+returns [FunctionDecl result]
+locals [Type retType, 
+        List<String> exceptions = Collections.emptyList()]
+    :   (type {$retType = $type.result;} | 'void' {$retType = PrimitiveType.VOID;}) 
+        Identifier formalParameters ('[' ']' { $retType = new ArrayType($retType); })*
+        ('throws' qualifiedNameList { $exceptions = $qualifiedNameList.result })?
         ';'
+        {
+            $result = new FunctionDecl.Builder($retType, $Identifier.text, $formalParameters.result, StatementBlock.EMPTY_BLOCK)
+                      .exceptions($exceptions)
+                      .build();
+        }
     ;
 
 genericInterfaceMethodDeclaration
+returns [FunctionDecl result]
     :   typeParameters interfaceMethodDeclaration
+        {
+            FunctionDecl t = $interfaceMethodDeclaration.result;
+            $result = new FunctionDecl.Builder(t.getRetType(), t.getName(), t.getParams(), t.getBody())
+                      .exceptions(t.getExceptions())
+                      .templates($typeParameters.result)
+                      .build(); 
+        }
     ;
 
 variableDeclarators
@@ -557,11 +632,13 @@ lastFormalParameter
     ;
 
 methodBody
-    :   block
+returns [StatementBlock result]
+    :   block { $result = $block.result; }
     ;
 
 constructorBody
-    :   block
+returns [StatementBlock result]
+    :   block { $result = $block.result; }
     ;
 
 qualifiedName
@@ -574,12 +651,13 @@ locals [StringBuilder res]
     ;
 
 literal
-    :   IntegerLiteral
-    |   FloatingPointLiteral
-    |   CharacterLiteral
-    |   StringLiteral
-    |   BooleanLiteral
-    |   'null'
+returns [Literal result]
+    :   IntegerLiteral       {$result = new IntegerLiteral($IntegerLiteral.text);}
+    |   FloatingPointLiteral {$result = new FloatLiteral($FloatingPointLiteral.text);}
+    |   CharacterLiteral     {$result = new CharLiteral($CharacterLiteral.text);}
+    |   StringLiteral        {$result = new StringLiteral($StringLiteral.text);}
+    |   BooleanLiteral       {$result = new BooleanLiteral($BooleanLiteral.text);}
+    |   'null'               {$result = new SpecialLiteral("null");}
     ;
 
 // ANNOTATIONS
@@ -670,7 +748,8 @@ returns [DeclBody result]
 
 annotationTypeElementDeclaration
 returns [Declaration result]
-locals [List<String> mods = new LinkedList<>(), List<Annotation> annos = new LinkedList<>()]
+locals [List<String> mods = new LinkedList<>(), 
+        List<Annotation> annos = new LinkedList<>()]
     :   ( modifier
           {
               if ($modifier.mod != null) {
@@ -691,17 +770,18 @@ locals [List<String> mods = new LinkedList<>(), List<Annotation> annos = new Lin
 
 annotationTypeElementRest
 returns [Declaration result]
-    :   annotationMethod ';' { $result = $annotationMethod.result; }
-    |   classDeclaration ';'? { $result = $classDeclaration.result; }
-    |   interfaceDeclaration ';'? { $result = $interfaceDeclaration.result; }
-    |   enumDeclaration ';'? { $result = $enumDeclaration.result; }
+    :   annotationMethod ';'           { $result = $annotationMethod.result; }
+    |   classDeclaration ';'?          { $result = $classDeclaration.result; }
+    |   interfaceDeclaration ';'?      { $result = $interfaceDeclaration.result; }
+    |   enumDeclaration ';'?           { $result = $enumDeclaration.result; }
     |   annotationTypeDeclaration ';'? { $result = $annotationTypeDeclaration.result; }
     ;
 
 
 annotationConstantsDeclaration
 returns [List<Declaration> result]
-locals [List<String> mods = new LinkedList<>(), List<Annotation> annos = new LinkedList<>()]
+locals [List<String> mods = new LinkedList<>(), 
+        List<Annotation> annos = new LinkedList<>()]
     :   ( modifier
           {
               if ($modifier.mod != null) {
@@ -761,41 +841,98 @@ returns [Entity result]
 // STATEMENTS / BLOCKS
 
 block
-    :   '{' blockStatement* '}'
+returns [StatementBlock result]
+@init {
+    $result = new StatementBlock();       
+}
+    :   '{' 
+        ( blockStatement { $result.addAll($blockStatement.result); })* 
+        '}'
     ;
 
 blockStatement
-    :   localVariableDeclarationStatement
-    |   statement
-    |   typeDeclaration
+returns [List<Statement> result]
+@init {
+    $result = new LinkedList<>();
+}
+    :   localVariableDeclarationStatement { $result = $localVariableDeclarationStatement.result; }
+    |   statement                         { $result = $statement.result; }
+    |   typeDeclaration                   { $result = $typeDeclaration.result; }
     ;
 
 localVariableDeclarationStatement
-    :    localVariableDeclaration ';'
+returns [List<VariableDeclStatement> result]
+    :    localVariableDeclaration ';' { $result = $localVariableDeclaration.result; }
     ;
 
 localVariableDeclaration
+returns [List<VariableDeclStatement> result]
+@init {
+    $result = new LinkedList<>();       
+}       
     :   variableModifier* type variableDeclarators
+        {
+            VariableDecl varDecl;
+            for (final UntypedVariable var : $variableDeclarators.result) {
+                varDecl = var.createVariableDecl($type.result);
+                if ($variableModifier.ctx != null) {
+                    if ($variableModifier.mod != null) {
+                        varDecl.addModifier($variableModifier.mod)                                    
+                    }
+                    if ($variableModifier.anno != null) {
+                        varDecl.addAnnotation($variableModifier.anno)                                    
+                    }   
+                }
+            }
+            $result.add(new VariableDeclStatement(varDecl));
+        } 
     ;
 
 statement
-    :   block
-    |   ASSERT expression (':' expression)? ';'
-    |   'if' parExpression statement ('else' statement)?
-    |   'for' '(' forControl ')' statement
-    |   'while' parExpression statement
-    |   'do' statement 'while' parExpression ';'
+returns [Statement result]
+locals [List<SwitchStatement.Label> labels = new LinkedList<>()]
+    :   block { $result = $block.result; }
+    |   ASSERT car=expression (':' cdr=expression)? ';'
+        {
+            List<Entity> exprs = new LinkedList<>();
+            exprs.add($car.result);
+            if ($cdr.ctx != null) {
+                exprs.add($cdr.result);
+            }
+            $result = new ArbitraryStatement($ASSERT.text, exprs);
+        }
+    |   'if' parExpression car=statement ('else' cdr=statement)?
+        {
+            $result = 
+                new IfStatement($parExpression.result, $car.result, $cdr.ctx == null ? null : $cdr.result);
+        } 
+    |   for     { $result = $for.result; }
+    |   forEach { $result = $forEach.result; }
+    |   'while' parExpression statement 
+        { $result = new WhileStatement($parExpression.result, $statement.result); }
+    |   'do' statement 'while' parExpression ';' 
+        { $result = new DoWhileStatement($parExpression.result, $statement.result); }
     |   'try' block (catchClause+ finallyBlock? | finallyBlock)
     |   'try' resourceSpecification block catchClause* finallyBlock?
-    |   'switch' parExpression '{' switchBlockStatementGroup* switchLabel* '}'
-    |   'synchronized' parExpression block
-    |   'return' expression? ';'
-    |   'throw' expression ';'
+    |   'switch' parExpression '{' 
+        ( switchBlockStatementGroup {$labels.addAll($switchBlockStatementGroup.result); })* 
+        ( switchLabel {$labels.add($switchLabel.result); })* '}'
+        {
+            $result = new SwitchStatement($parExpression.result, $labels);
+        }
+    |   'synchronized' parExpression block { $result = new EmptyStatement(); }
+    |   'return' expression? ';'   
+        { $ressult = new ReturnStatement($expression.ctx == null ? null : $expression.result); }
+    |   'throw' expression ';'     
+        { $result = new ThrowStatement($expression.result); }
     |   'break' Identifier? ';'
+        { $result = new BreakStatement($Identifier.ctx == null ? "" : $Identifier.text); }
     |   'continue' Identifier? ';'
-    |   ';'
-    |   statementExpression ';'
-    |   Identifier ':' statement
+        { $result = new ContinueStatement($Identifier.ctx == null ? "" : $Identifier.text); }
+    |   ';'                        { $result = new EmptyStatement(); }
+    |   statementExpression ';'    { $result = $statementExpression.result; }
+    |   Identifier ':' statement   
+        { $result = new LabelStatement($Identifier.text, $statement.result); }
     ;
 
 catchClause
@@ -826,49 +963,112 @@ resource
  *  To handle empty cases at the end, we add switchLabel* to statement.
  */
 switchBlockStatementGroup
-    :   switchLabel+ blockStatement+
+returns [List<SwitchStatement.Label> result]
+locals [SwitchStatement.Label label = null]
+@init {
+    $result = new LinkedList<>();
+}
+    :   ( 
+            switchLabel 
+            {
+                if ($label != null) {
+                    $result.add($label);
+                }
+                $label = $switchLabel.result;
+            }
+        )+ 
+        ( blockStatement { $label.addAll($blockStatement.result); })+
+        {
+            $result.add($label);
+        }
     ;
 
 switchLabel
-    :   'case' constantExpression ':'
-    |   'case' enumConstantName ':'
-    |   'default' ':'
+returns [SwitchStatement.Label result]
+    :   'case' constantExpression ':' { $result = new SwitchStatement.Label($constantExpression.result); }
+    |   'case' enumConstantName ':' 
+        { $result = new SwitchStatement.Label(new VariableReference($enumConstantName.result); }
+    |   'default' ':' { $result = SwitchStatement.Label.DEFAULT; }
     ;
 
-forControl
-    :   enhancedForControl
-    |   forInit? ';' expression? ';' forUpdate?
-    ;
+for
+returns [ForStatement result]
+    :   'for' '(' forInit? ';' expression? ';' forUpdate? ')' statement
+        {
+            Statement init = $forInit.ctx == null ? null : $forInit.result;
+            Expression cond = $expression.ctx == null ? null : $expression.result;
+            Statement action = $forUpdate.ctx == null ? null : $forUpdate.result;
+            $result = new ForStatement(init, cond, action, $statement.result);
+        } 
+    ;    
+        
+forEach
+returns [ForEachStatement result]
+    :   'for' '(' enhancedForControl ')' statement 
+        {
+            $result = 
+                new ForEachStatement($enhancedForControl.init, $enhancedForControl.range, $statement.result);
+        } 
+    ;    
 
 forInit
-    :   localVariableDeclaration
-    |   expressionList
+returns [Statement result]
+    :   localVariableDeclaration { $result = $localVariableDeclaration.result; }
+    |   expressionList           { $result = $expressionList.result; }
     ;
 
 enhancedForControl
-    :   variableModifier* type Identifier ':' expression
+returns [VariableDeclStatement init, Expression range]
+locals [List<Annotation> annos = new LinkedList<>(),
+        List<String> mods = new LinkedList<>()]
+    :   ( variableModifier
+          {
+              if ($variableModifier.mod != null) {
+                  $mods.add($variableModifier.mod);
+              }
+              if ($variableModifier.anno != null) {
+                  $annos.add($variableModifier.anno);
+              }
+          }
+        )* type Identifier ':' expression
+        {
+            VariableDecl decl = new VariableDecl.Builder($type.result, $Identifier.text).build();
+            decl.addModifiers($mods);
+            decl.addAnnotations($annos);
+            $init = new VariableDeclStatement(decl);  
+            $range = $expression.result;
+        }
     ;
 
 forUpdate
-    :   expressionList
+returns [ExpressionList result]
+    :   expressionList { $result = $expressionList.result; }
     ;
 
 // EXPRESSIONS
 
 parExpression
-    :   '(' expression ')'
+returns [Expression result]
+    :   '(' expression ')' { $result = $expression.result; }
     ;
 
 expressionList
-    :   expression (',' expression)*
+returns [ExpressionList result]
+@init {
+    $result = new ExpressionList();
+}
+    :   expression { $result.add($expression.result); } 
+        (',' expression { $result.add($expression.result); })*
     ;
 
 statementExpression
-    :   expression
+returns [Expression result]
+    :   expression { $result = $expression.result; }
     ;
 
 constantExpression
-    :   expression
+returns [Expression result]
+    :   expression { $result = $expression.result; }
     ;
 
 expression
@@ -917,12 +1117,11 @@ expression
 
 primary
 returns [Expression result]
-    :   '(' expression ')'
-        { $result = $expression.result; }
+    :   '(' expression ')' { $result = $expression.result; }
     |   ( 'this' { $result = new VariableReference("this"); }
         | 'super' { $result = new VariableReference("super"); })
-    |   literal { $result = TypeFactory.parseLiteral($literal.text); }
-    |   Identifier { $result = new VariableReference($Identifier.text); }    
+    |   literal            { $result = $literal.result; }
+    |   Identifier         { $result = new VariableReference($Identifier.text); }    
     |   type '.' 'class'
         {
             Type type = TypeFactory.createJavaClassType($type.result);
