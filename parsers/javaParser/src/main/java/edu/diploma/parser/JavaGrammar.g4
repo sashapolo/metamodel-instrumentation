@@ -262,7 +262,7 @@ returns [DeclBody result]
 }
     :   '{' ( classBodyDeclaration 
               { 
-                  if ($classBodyDeclaration != null) {
+                  if ($classBodyDeclaration.result != null) {
                       $result.add($classBodyDeclaration.result);
                   }
               }
@@ -276,7 +276,7 @@ returns [DeclBody result]
 }
     :   '{' ( interfaceBodyDeclaration 
               { 
-                  if ($interfaceBodyDeclaration != null) {
+                  if ($interfaceBodyDeclaration.result != null) {
                       $result.add($interfaceBodyDeclaration.result);
                   }
               }
@@ -448,7 +448,7 @@ returns [UntypedVariable result]
         ('[' ']' { $result = new UntypedVariable($result); })* 
         '=' variableInitializer
         {
-            $resultsetValue($variableInitializer.result); 
+            $result.setValue($variableInitializer.result); 
         } 
     ;
 
@@ -582,7 +582,7 @@ returns [List<String> result]
     ;
 
 formalParameters
-returns [List<VariableDecl> result]
+returns [List<ParameterDecl> result]
 @init {
     $result = Collections.emptyList();
 }
@@ -590,7 +590,7 @@ returns [List<VariableDecl> result]
     ;
 
 formalParameterList
-returns [List<VariableDecl> result]
+returns [List<ParameterDecl> result]
 @init {
     $result = new LinkedList<>();
 }
@@ -601,34 +601,47 @@ returns [List<VariableDecl> result]
     ;
 
 formalParameter
-returns [VariableDecl result]
-    :   variableModifier* type variableDeclaratorId
+returns [ParameterDecl result]
+locals [List<Annotation> annos = new LinkedList<>(),
+        List<String> mods = new LinkedList<>()]
+    :   ( variableModifier
+          {
+              if ($variableModifier.mod != null) {
+                  $mods.add($variableModifier.mod);
+              }
+              if ($variableModifier.anno != null) {
+                  $annos.add($variableModifier.anno);
+              }
+          }
+        )* type variableDeclaratorId
         {
-            $result = $variableDeclaratorId.createVariableDecl($type.result);
-            if ($variableModifier.ctx != null) {
-                if ($variableModifier.mod != null) {
-                    $result.addModifier($variableModifier.mod)                                    
-                }
-                if ($variableModifier.anno != null) {
-                    $result.addAnnotation($variableModifier.anno)                                    
-                }   
-            }                                     
-        } 
+            VariableDecl var = $variableDeclaratorId.result.createVariableDecl($type.result);
+            $result = new ParameterDecl(var, false);
+            $result.addModifiers($mods)                                    
+            $result.addAnnotations($annos);                                    
+        }
     ;
 
 lastFormalParameter
-    :   variableModifier* type '...' variableDeclaratorId
+returns [ParameterDecl result]
+locals [List<Annotation> annos = new LinkedList<>(),
+        List<String> mods = new LinkedList<>()]
+    :   ( variableModifier
+          {
+              if ($variableModifier.mod != null) {
+                  $mods.add($variableModifier.mod);
+              }
+              if ($variableModifier.anno != null) {
+                  $annos.add($variableModifier.anno);
+              }
+          }
+        )* type '...' variableDeclaratorId
         {
-            $result = $variableDeclaratorId.createVariableDecl($type.result, true);
-            if ($variableModifier.ctx != null) {
-                if ($variableModifier.mod != null) {
-                    $result.addModifier($variableModifier.mod)                                    
-                }
-                if ($variableModifier.anno != null) {
-                    $result.addAnnotation($variableModifier.anno)                                    
-                }   
-            }                                     
-        } 
+            VariableDecl var = $variableDeclaratorId.result.createVariableDecl($type.result);
+            $result = new ParameterDecl(var, true);
+            $result.addModifiers($mods)                                    
+            $result.addAnnotations($annos);                                    
+        }
     ;
 
 methodBody
@@ -761,7 +774,7 @@ locals [List<String> mods = new LinkedList<>(),
           }
         )* annotationTypeElementRest
         {
-            $result = $memberDeclaration.result;
+            $result = $annotationTypeElementRest.result;
             $result.addModifiers($mods);
             $result.addAnnotations($annos);
         }
@@ -867,22 +880,27 @@ returns [List<VariableDeclStatement> result]
 
 localVariableDeclaration
 returns [List<VariableDeclStatement> result]
+locals [List<Annotation> annos = new LinkedList<>(),
+        List<String> mods = new LinkedList<>()]
 @init {
     $result = new LinkedList<>();       
 }       
-    :   variableModifier* type variableDeclarators
+    :   ( variableModifier
+          {
+              if ($variableModifier.mod != null) {
+                  $mods.add($variableModifier.mod);
+              }
+              if ($variableModifier.anno != null) {
+                  $annos.add($variableModifier.anno);
+              }
+          }
+        )* type variableDeclarators
         {
             VariableDecl varDecl;
             for (final UntypedVariable var : $variableDeclarators.result) {
                 varDecl = var.createVariableDecl($type.result);
-                if ($variableModifier.ctx != null) {
-                    if ($variableModifier.mod != null) {
-                        varDecl.addModifier($variableModifier.mod)                                    
-                    }
-                    if ($variableModifier.anno != null) {
-                        varDecl.addAnnotation($variableModifier.anno)                                    
-                    }   
-                }
+                varDecl.addModifiers($mods)                                    
+                varDecl.addAnnotations($annos);
             }
             $result.add(new VariableDeclStatement(varDecl));
         } 
@@ -890,7 +908,9 @@ returns [List<VariableDeclStatement> result]
 
 statement
 returns [Statement result]
-locals [List<SwitchStatement.Label> labels = new LinkedList<>()]
+locals [List<SwitchStatement.Label> labels = new LinkedList<>(),
+        List<CatchStatement> catches = new LinkedList<>(),
+        StatementBlock final]
     :   block { $result = $block.result; }
     |   ASSERT car=expression (':' cdr=expression)? ';'
         {
@@ -912,8 +932,17 @@ locals [List<SwitchStatement.Label> labels = new LinkedList<>()]
         { $result = new WhileStatement($parExpression.result, $statement.result); }
     |   'do' statement 'while' parExpression ';' 
         { $result = new DoWhileStatement($parExpression.result, $statement.result); }
-    |   'try' block (catchClause+ finallyBlock? | finallyBlock)
-    |   'try' resourceSpecification block catchClause* finallyBlock?
+    |   'try' block 
+        ((catchClause {$catches.addAll($catchClause.result)})+ (finallyBlock {$final = $finallyBlock.result})? 
+        | finallyBlock {$final = $finallyBlock.result})
+        {
+            $result = new TryStatement($block.result, $catches, $final);
+        }
+    |   'try' resourceSpecification block (catchClause {$catches.addAll($catchClause.result)})* 
+        (finallyBlock {$final = $finallyBlock.result})?
+        {
+            $result = new TryWithResourcesStatement($resourceSpecification.result, $block.result, $catches, $final);
+        }
     |   'switch' parExpression '{' 
         ( switchBlockStatementGroup {$labels.addAll($switchBlockStatementGroup.result); })* 
         ( switchLabel {$labels.add($switchLabel.result); })* '}'
@@ -922,7 +951,7 @@ locals [List<SwitchStatement.Label> labels = new LinkedList<>()]
         }
     |   'synchronized' parExpression block { $result = new EmptyStatement(); }
     |   'return' expression? ';'   
-        { $ressult = new ReturnStatement($expression.ctx == null ? null : $expression.result); }
+        { $result = new ReturnStatement($expression.ctx == null ? null : $expression.result); }
     |   'throw' expression ';'     
         { $result = new ThrowStatement($expression.result); }
     |   'break' Identifier? ';'
@@ -936,27 +965,81 @@ locals [List<SwitchStatement.Label> labels = new LinkedList<>()]
     ;
 
 catchClause
-    :   'catch' '(' variableModifier* catchType Identifier ')' block
+returns [List<CatchStatement> result]
+locals [List<Annotation> annos = new LinkedList<>(),
+        List<String> mods = new LinkedList<>()]
+@init {
+    $result = new LinkedList<>();
+}
+    :   'catch' '(' 
+        ( variableModifier
+          {
+              if ($variableModifier.mod != null) {
+                  $mods.add($variableModifier.mod);
+              }
+              if ($variableModifier.anno != null) {
+                  $annos.add($variableModifier.anno);
+              }
+          }
+        )* catchType Identifier ')' block
+        {
+            for (final String typeName : $catchType.result) {
+                final Type type = new ClassType(typeName);
+                VariableDecl var = new VariableDecl(type, $Identifier.text);
+                var.addModifiers($mods);
+                var.addAnnotations($annos);
+                VariableDeclStatement varState = new VariableDeclStatement(var);
+                $result.add(new CatchStatement(varState, $block.result));
+            }
+        } 
     ;
 
 catchType
-    :   qualifiedName ('|' qualifiedName)*
+returns [List<String> result]
+@init {
+    $result = new LinkedList<>();       
+}
+    :   qualifiedName { $result.add($qualifiedName.result); } 
+        ('|' qualifiedName { $result.add($qualifiedName.result); })*
     ;
 
 finallyBlock
-    :   'finally' block
+returns [StatementBlock result]
+    :   'finally' block { $result = $block.result; }
     ;
 
 resourceSpecification
-    :   '(' resources ';'? ')'
+returns [List<VariableDecl> result]
+    :   '(' resources { $result = $resources.result; } ';'? ')'
     ;
 
 resources
-    :   resource (';' resource)*
+returns [List<VariableDecl> result]
+@init {
+    $result = new LinkedList<>();       
+}  
+    :   resource { $result.add($resource.result); } (';' resource { $result.add($resource.result); })*
     ;
 
 resource
-    :   variableModifier* classOrInterfaceType variableDeclaratorId '=' expression
+returns [VariableDecl result]
+locals [List<Annotation> annos = new LinkedList<>(),
+        List<String> mods = new LinkedList<>()]
+    :   ( variableModifier
+          {
+              if ($variableModifier.mod != null) {
+                  $mods.add($variableModifier.mod);
+              }
+              if ($variableModifier.anno != null) {
+                  $annos.add($variableModifier.anno);
+              }
+          }
+        )* classOrInterfaceType variableDeclaratorId '=' expression
+        {
+            $result = $variableDeclaratorId.result.createVariableDecl($classOrInterfaceType.result, $expression.result);
+            $result.addModifiers($mods)                                    
+            $result.addAnnotations($annos);                                    
+        }
     ;
 
 /** Matches cases then statements, both of which are mandatory.
@@ -1191,7 +1274,11 @@ explicitGenericInvocationSuffix
     ;
 
 arguments
+returns [List<Expression> result]      
     :   '(' expressionList? ')'
+        {
+            $result = $expressionList.ctx == null ? Collections.emptyList() : $expressionList.result.asList();
+        } 
     ;
 
 // LEXER

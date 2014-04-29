@@ -13,18 +13,17 @@ import main.java.edu.diploma.metamodel.types.Type;
  *
  * @author alexander
  */
-public class VariableDecl extends Declaration {
-    private final Type type;
-    private final Expression value;
-    
-    public VariableDecl(final Type type, final String name, final Expression value) {
-        super(name);
-        this.type = type;
-        this.value = value;
+public class ParameterDecl extends Declaration {
+    private final VariableDecl value;
+    private final boolean variadic;
+
+    public boolean isVariadic() {
+        return variadic;
     }
-    public VariableDecl(final Type type, final String name) {
-        super(name);
-        this.type = type;
-        this.value = null;
+    
+    public ParameterDecl(final VariableDecl value, boolean variadic) {
+        super(value.getName());
+        this.value = value;
+        this.variadic = variadic;
     }
 }

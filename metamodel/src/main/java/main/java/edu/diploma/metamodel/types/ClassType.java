@@ -1,5 +1,6 @@
 package main.java.edu.diploma.metamodel.types;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -14,6 +15,11 @@ public class ClassType extends Type {
     private final ClassType outer;
     private final List<TemplateParameter> templates;
     
+    public ClassType(final String name) {
+        this.name = name;
+        this.templates = Collections.emptyList();
+        this.outer = null;
+    }
     public ClassType(final String name, final List<TemplateParameter> templates) {
         this.name = name;
         this.templates = templates;

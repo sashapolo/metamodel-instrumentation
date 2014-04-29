@@ -6,11 +6,10 @@
 
 package main.java.edu.diploma.metamodel.declarations;
 
-import main.java.edu.diploma.metamodel.statements.StatementBlock;
-import main.java.edu.diploma.metamodel.types.Type;
-
 import java.util.Collections;
 import java.util.List;
+import main.java.edu.diploma.metamodel.statements.StatementBlock;
+import main.java.edu.diploma.metamodel.types.Type;
 
 /**
  *
@@ -19,20 +18,20 @@ import java.util.List;
 public class FunctionDecl extends Declaration {
     private final Type retType;
     private final List<String> exceptions;
-    private final List<VariableDecl> params;
+    private final List<ParameterDecl> params;
     private final List<TemplateDecl> templates;
     private final StatementBlock body;
 
     public static class Builder {
         private final String name;
         private final Type retType;
-        private final List<VariableDecl> params;
+        private final List<ParameterDecl> params;
         private final StatementBlock block;
         private List<String> exceptions = Collections.emptyList();
         private List<TemplateDecl> templates = Collections.emptyList();
 
         public Builder(final Type retType, final String name,
-                       final List<VariableDecl> params,
+                       final List<ParameterDecl> params,
                        final StatementBlock block) {
             this.retType = retType;
             this.name = name;
@@ -55,7 +54,7 @@ public class FunctionDecl extends Declaration {
     }
 
     private FunctionDecl(final Type retType, final String name,
-                         final List<VariableDecl> params,
+                         final List<ParameterDecl> params,
                          final List<String> exceptions,
                          final List<TemplateDecl> templates,
                          final StatementBlock body) {
@@ -74,7 +73,7 @@ public class FunctionDecl extends Declaration {
     public List<String> getExceptions() {
         return Collections.unmodifiableList(exceptions);
     }
-    public List<VariableDecl> getParams() {
+    public List<ParameterDecl> getParams() {
         return Collections.unmodifiableList(params);
     }
     public List<TemplateDecl> getTemplates() {

@@ -40,16 +40,10 @@ public class UntypedVariable {
         this.value = value;
     }
     
-    public VariableDecl createVariableDecl(final Type type, boolean isVariadic) {
+    public VariableDecl createVariableDecl(final Type type) {
         if (next != null) {
             return createVariableDecl(new ArrayType(type));
         }
-        if (isVariadic) {
-            return new VariableDecl.Builder(type, name).value(value).variadic().build();
-        } 
-        return new VariableDecl.Builder(type, name).value(value).build();
-    }
-    public VariableDecl createVariableDecl(final Type type) {
-        return createVariableDecl(type, false);
+        return new VariableDecl(type, name);
     }
 }

@@ -1,5 +1,6 @@
 package main.java.edu.diploma.metamodel.expressions;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,5 +12,9 @@ public class ExpressionList extends Expression {
 
     public void add(final Expression expr) {
         expressions.add(expr);
+    }
+    
+    public List<Expression> asList() {
+        return Collections.unmodifiableList(expressions);
     }
 }
