@@ -1,0 +1,12 @@
+\begin{thenomenclature} 
+
+ \nomgroup{A}
+
+  \item [{JSON}]\begingroup JavaScript Object Notation\nomeqref {3.0}
+		\nompageref{19}
+  \item [{XML}]\begingroup eXtensible Markup Language\nomeqref {3.0}
+		\nompageref{19}
+  \item [{YAML}]\begingroup Yet Another Markup Language\nomeqref {3.0}
+		\nompageref{19}
+
+\end{thenomenclature}
