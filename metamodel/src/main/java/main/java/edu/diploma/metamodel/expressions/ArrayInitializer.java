@@ -6,16 +6,18 @@
 
 package main.java.edu.diploma.metamodel.expressions;
 
+import java.util.LinkedList;
 import java.util.List;
+import main.java.edu.diploma.metamodel.Entity;
 
 /**
  *
  * @author alexander
  */
 public class ArrayInitializer extends Expression {
-    private final List<Expression> values;
+    private final List<Entity> values = new LinkedList<>();
     
-    public ArrayInitializer(final List<Expression> values) {
-        this.values = values;
+    public ArrayInitializer(final List<? extends Entity> values) {
+        this.values.addAll(values);
     }
 }

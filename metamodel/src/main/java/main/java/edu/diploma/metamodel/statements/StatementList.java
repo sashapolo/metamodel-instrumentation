@@ -6,16 +6,17 @@
 
 package main.java.edu.diploma.metamodel.statements;
 
-import main.java.edu.diploma.metamodel.expressions.Expression;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
  * @author alexander
  */
-public class ReturnStatement extends Statement {
-    private final Expression expr;
+public class StatementList extends Statement {
+    private final List<Statement> statements = new LinkedList<>();
     
-    public ReturnStatement(final Expression expr) {
-        this.expr = expr;
+    public StatementList(final List<? extends Statement> statements) {
+        this.statements.addAll(statements);
     }
 }

@@ -22,8 +22,8 @@ public class UntypedVariable {
     
     public UntypedVariable(final String name) {
         this.name = name;
-        this.value = null;
         this.next = null;
+        this.value = null;
     }
     public UntypedVariable(final String name, final Expression value) {
         this.name = name;
@@ -44,6 +44,6 @@ public class UntypedVariable {
         if (next != null) {
             return createVariableDecl(new ArrayType(type));
         }
-        return new VariableDecl(type, name);
+        return new VariableDecl(type, name, value);
     }
 }

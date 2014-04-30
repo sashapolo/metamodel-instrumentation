@@ -12,7 +12,7 @@ import main.java.edu.diploma.metamodel.expressions.Expression;
  *
  * @author alexander
  */
-public class DoWhileStatement {
+public class DoWhileStatement extends Statement {
     private final Expression condition;
     private final Statement body;
     

@@ -10,12 +10,12 @@ package main.java.edu.diploma.metamodel.expressions;
  *
  * @author alexander
  */
-public class AttributeAccess extends Expression {
-    private final Expression expr;
-    private final String name;
+public class ArrayAccessExpression extends Expression {
+    private final Expression caller;
+    private final Expression param;
     
-    public AttributeAccess(final Expression expr, final String name) {
-        this.expr = expr;
-        this.name = name;
+    public ArrayAccessExpression(final Expression caller, final Expression param) {
+        this.caller = caller;
+        this.param = param;
     }
 }

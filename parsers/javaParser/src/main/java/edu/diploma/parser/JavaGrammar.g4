@@ -38,17 +38,20 @@ grammar JavaGrammar;
     import main.java.edu.diploma.metamodel.types.*;
     import main.java.edu.diploma.metamodel.expressions.*;
     import main.java.edu.diploma.metamodel.statements.*;
+    import main.java.edu.diploma.metamodel.declarations.*;
+    import main.java.edu.diploma.metamodel.literals.*;
     import edu.diploma.parser.util.TypeFactory;
+    import edu.diploma.parser.UntypedVariable;
+    import edu.diploma.parser.ArrayParam;
 }
 
 // starting point for parsing a java file
 compilationUnit
 returns [TranslationUnit result]
-locals [PackageDecl packageDecl = null,
-        List<Import> imports = new LinkedList<>(),
-        List<Type> types = new LinkedList<>()]
-    :   ( packageDeclaration { $packageDecl = $packageDeclaration.result; })? 
-        ( importDeclaration { $imports.add($importDeclaration.result); })* 
+locals [List<Import> imports = new LinkedList<>(),
+        List<Declaration> types = new LinkedList<>()]
+    :   packageDeclaration? 
+        ( importDeclaration  { $imports.add($importDeclaration.result); })* 
         ( typeDeclaration 
           { 
               if ($typeDeclaration.result != null) {
@@ -57,24 +60,25 @@ locals [PackageDecl packageDecl = null,
           }
         )* 
         EOF
+        {
+            $result = new TranslationUnit($imports, $types);
+        }
     ;
 
 packageDeclaration
-returns [PackageDecl result]
-locals [List <Annotation> annotations = new LinkedList<>()]
-    :   ( annotation { $annotations.add($annotation.result); } )* 
-        'package' qualifiedName ';'
-        { 
-            $result = new PackageDecl($qualifiedName.result);
-            $result.addAnnotations($annotations);
-        }
+    :   annotation*  'package' qualifiedName ';'
     ;
 
 importDeclaration
 returns [Import result]
 locals [boolean isStatic = false, boolean isWildcard = false]
-    :   'import' ('static' {$isStatic = true;})? qualifiedName ('.' '*' {$isWildcard = true;})? ';'
-        { $result = new Import($qualifiedName.result, $isStatic, $isWildcard); }
+    :   'import' 
+        ('static' {$isStatic = true;})? 
+        qualifiedName 
+        ('.' '*' {$isWildcard = true;})? ';'
+        { 
+            $result = new Import($qualifiedName.result, $isStatic, $isWildcard); 
+        }
     ;
 
 typeDeclaration
@@ -84,10 +88,10 @@ locals [List<Annotation> annos = new LinkedList<>(),
     :   ( classOrInterfaceModifier 
           { 
               if ($classOrInterfaceModifier.mod != null) {
-                  mods.add($classOrInterfaceModifier.mod);
+                  $mods.add($classOrInterfaceModifier.mod);
               }
               if ($classOrInterfaceModifier.anno != null) {
-                  annos.add($classOrInterfaceModifier.anno);
+                  $annos.add($classOrInterfaceModifier.anno);
               }
           } 
         )* 
@@ -175,7 +179,7 @@ returns [TemplateDecl result]
     :   Identifier ('extends' typeBound)?
         {
             $result = new TemplateDecl($Identifier.text, 
-                $typeBound.ctx == null ? Collections.emptyList() : $typeBound.result); 
+                $typeBound.ctx == null ? Collections.<Type>emptyList() : $typeBound.result); 
         }
     ;
 
@@ -228,12 +232,7 @@ returns [DeclBody result]
 @init {
     $result = new DeclBody();       
 }
-    :   ';' ( classBodyDeclaration 
-        {
-            if ($classBodyDeclaration.result != null) {
-                $result.addDeclaration($classBodyDeclaration.result)
-            }
-        })*
+    :   ';' ( classBodyDeclaration { $result.add($classBodyDeclaration.result);})*
     ;
 
 interfaceDeclaration
@@ -260,13 +259,7 @@ returns [DeclBody result]
 @init {
     $result = new DeclBody();       
 }
-    :   '{' ( classBodyDeclaration 
-              { 
-                  if ($classBodyDeclaration.result != null) {
-                      $result.add($classBodyDeclaration.result);
-                  }
-              }
-            )* '}'
+    :   '{' ( classBodyDeclaration { $result.add($classBodyDeclaration.result); })* '}'
     ;
 
 interfaceBody
@@ -287,12 +280,8 @@ classBodyDeclaration
 returns [Declaration result]
 locals [List<String> mods = new LinkedList<>(), 
         List<Annotation> annos = new LinkedList<>()]
-    :   ';' { $result = null; }
-    |   'static'? block 
-        {
-            $result = $block.result;
-            $result.addModifier("static");
-        }
+    :   ';'             { $result = DeclBody.EMPTY; }
+    |   'static'? block { $result = DeclBody.EMPTY; }
     |   ( modifier
           {
               if ($modifier.mod != null) {
@@ -304,23 +293,26 @@ locals [List<String> mods = new LinkedList<>(),
           }
         )* memberDeclaration
         {
-            $result = $memberDeclaration.result;
+            $result = new DeclBody($memberDeclaration.result);
             $result.addModifiers($mods);
             $result.addAnnotations($annos);
         }
     ;
 
 memberDeclaration
-returns [Declaration result]
-    :   methodDeclaration             { $result = $methodDeclaration.result; }
-    |   genericMethodDeclaration      { $result = $genericMethodDeclaration.result; }
-    |   fieldDeclaration              { $result = $fieldDeclaration.result; }
-    |   constructorDeclaration        { $result = $constructorDeclaration.result; }
-    |   genericConstructorDeclaration { $result = $genericConstructorDeclaration.result; }
-    |   interfaceDeclaration          { $result = $interfaceDeclaration.result; }
-    |   annotationTypeDeclaration     { $result = $annotationTypeDeclaration.result; }
-    |   classDeclaration              { $result = $classDeclaration.result; }
-    |   enumDeclaration               { $result = $enumDeclaration.result; }
+returns [List<Declaration> result]
+@init {
+    $result = new LinkedList<>();       
+}
+    :   methodDeclaration             { $result.add($methodDeclaration.result); }
+    |   genericMethodDeclaration      { $result.add($genericMethodDeclaration.result); }
+    |   fieldDeclaration              { $result.addAll($fieldDeclaration.result); }
+    |   constructorDeclaration        { $result.add($constructorDeclaration.result); }
+    |   genericConstructorDeclaration { $result.add($genericConstructorDeclaration.result); }
+    |   interfaceDeclaration          { $result.add($interfaceDeclaration.result); }
+    |   annotationTypeDeclaration     { $result.add($annotationTypeDeclaration.result); }
+    |   classDeclaration              { $result.add($classDeclaration.result); }
+    |   enumDeclaration               { $result.add($enumDeclaration.result); }
     ;
 
 /* We use rule this even for void methods which cannot have [] after parameters.
@@ -335,12 +327,14 @@ locals [Type retType,
         StatementBlock body = StatementBlock.EMPTY_BLOCK]  
     :   (type {$retType = $type.result;} | 'void' {$retType = PrimitiveType.VOID;}) 
         Identifier formalParameters ('[' ']' { $retType = new ArrayType($retType); })*
-        ('throws' qualifiedNameList { $exceptions = $qualifiedNameList.result })?
+        ('throws' qualifiedNameList { $exceptions = $qualifiedNameList.result; })?
         (   methodBody { $body = $methodBody.result; }
         |   ';'
         )
         {
-            $result = new FunctionDecl.Builder($retType, $Identifier.text, $formalParameters.result, $body)
+            $result = new FunctionDecl.Builder($retType, $Identifier.text)
+                      .params($formalParameters.result)
+                      .body($body)
                       .exceptions($exceptions)
                       .build();
         }   
@@ -351,7 +345,9 @@ returns [FunctionDecl result]
     :   typeParameters methodDeclaration
         {
             FunctionDecl t = $methodDeclaration.result;
-            $result = new FunctionDecl.Builder(t.getRetType(), t.getName(), t.getParams(), t.getBody())
+            $result = new FunctionDecl.Builder(t.getRetType(), t.getName())
+                      .params(t.getParams())
+                      .body(t.getBody())
                       .exceptions(t.getExceptions())
                       .templates($typeParameters.result)
                       .build(); 
@@ -364,7 +360,9 @@ returns [FunctionDecl result]
         constructorBody
         {
             FunctionDecl.Builder builder = 
-                new FunctionDecl.Builder(null, $Identifier.text, $formalParameters.result, $constructorBody.result);
+                new FunctionDecl.Builder(null, $Identifier.text)
+                                .params($formalParameters.result)
+                                .body($constructorBody.result);
             if ($qualifiedNameList.ctx != null) {
                 builder.exceptions($qualifiedNameList.result);
             }                                     
@@ -377,10 +375,12 @@ returns [FunctionDecl result]
     :   typeParameters constructorDeclaration
         {
             FunctionDecl t = $constructorDeclaration.result;
-            $result = new FunctionDecl.Builder(t.getRetType(), t.getName(), t.getParams(), t.getBody())
+            $result = new FunctionDecl.Builder(t.getRetType(), t.getName())
+                      .params(t.getParams())
+                      .body(t.getBody())
                       .exceptions(t.getExceptions())
                       .templates($typeParameters.result)
-                      .build();
+                      .build(); 
         } 
     ;
 
@@ -412,7 +412,7 @@ locals [List<String> mods = new LinkedList<>(),
           }
         )* interfaceMemberDeclaration
         {
-            $result = $interfaceMemberDeclaration.result;
+            $result = new DeclBody($interfaceMemberDeclaration.result);
             $result.addModifiers($mods);
             $result.addAnnotations($annos);
         }
@@ -459,10 +459,11 @@ locals [Type retType,
         List<String> exceptions = Collections.emptyList()]
     :   (type {$retType = $type.result;} | 'void' {$retType = PrimitiveType.VOID;}) 
         Identifier formalParameters ('[' ']' { $retType = new ArrayType($retType); })*
-        ('throws' qualifiedNameList { $exceptions = $qualifiedNameList.result })?
+        ('throws' qualifiedNameList { $exceptions = $qualifiedNameList.result; })?
         ';'
         {
-            $result = new FunctionDecl.Builder($retType, $Identifier.text, $formalParameters.result, StatementBlock.EMPTY_BLOCK)
+            $result = new FunctionDecl.Builder($retType, $Identifier.text)
+                      .params($formalParameters.result)
                       .exceptions($exceptions)
                       .build();
         }
@@ -473,7 +474,9 @@ returns [FunctionDecl result]
     :   typeParameters interfaceMethodDeclaration
         {
             FunctionDecl t = $interfaceMethodDeclaration.result;
-            $result = new FunctionDecl.Builder(t.getRetType(), t.getName(), t.getParams(), t.getBody())
+            $result = new FunctionDecl.Builder(t.getRetType(), t.getName())
+                      .params(t.getParams())
+                      .body(t.getBody())
                       .exceptions(t.getExceptions())
                       .templates($typeParameters.result)
                       .build(); 
@@ -594,10 +597,10 @@ returns [List<ParameterDecl> result]
 @init {
     $result = new LinkedList<>();
 }
-    :   formalParameter { $result.add($formalParameter.result) } 
-        (',' formalParameter { $result.add($formalParameter.result) })* 
-        (',' lastFormalParameter { $result.add($lastFormalParameter.result) })?
-    |   lastFormalParameter { $result.add($lastFormalParameter.result) }
+    :   formalParameter { $result.add($formalParameter.result); } 
+        (',' formalParameter { $result.add($formalParameter.result); })* 
+        (',' lastFormalParameter { $result.add($lastFormalParameter.result); })?
+    |   lastFormalParameter { $result.add($lastFormalParameter.result); }
     ;
 
 formalParameter
@@ -617,7 +620,7 @@ locals [List<Annotation> annos = new LinkedList<>(),
         {
             VariableDecl var = $variableDeclaratorId.result.createVariableDecl($type.result);
             $result = new ParameterDecl(var, false);
-            $result.addModifiers($mods)                                    
+            $result.addModifiers($mods);                                    
             $result.addAnnotations($annos);                                    
         }
     ;
@@ -639,7 +642,7 @@ locals [List<Annotation> annos = new LinkedList<>(),
         {
             VariableDecl var = $variableDeclaratorId.result.createVariableDecl($type.result);
             $result = new ParameterDecl(var, true);
-            $result.addModifiers($mods)                                    
+            $result.addModifiers($mods);                                    
             $result.addAnnotations($annos);                                    
         }
     ;
@@ -665,10 +668,10 @@ locals [StringBuilder res]
 
 literal
 returns [Literal result]
-    :   IntegerLiteral       {$result = new IntegerLiteral($IntegerLiteral.text);}
-    |   FloatingPointLiteral {$result = new FloatLiteral($FloatingPointLiteral.text);}
+    :   IntegerLiteral       {$result = new IntegerLiteral(PrimitiveType.INT, $IntegerLiteral.text);}
+    |   FloatingPointLiteral {$result = new FloatLiteral(PrimitiveType.DOUBLE, $FloatingPointLiteral.text);}
     |   CharacterLiteral     {$result = new CharLiteral($CharacterLiteral.text);}
-    |   StringLiteral        {$result = new StringLiteral($StringLiteral.text);}
+    |   StringLiteral        {$result = new StringLiteral(new ClassType("java.lang.String"), $StringLiteral.text);}
     |   BooleanLiteral       {$result = new BooleanLiteral($BooleanLiteral.text);}
     |   'null'               {$result = new SpecialLiteral("null");}
     ;
@@ -713,8 +716,8 @@ returns [String name, Entity value]
 
 elementValue
 returns [Entity result]
-    :   expression { $result = $expression.result; }
-    |   annotation { $result = $annotation.result; }
+    :   expression                   { $result = $expression.result; }
+    |   annotation                   { $result = $annotation.result; }
     |   elementValueArrayInitializer { $result = $elementValueArrayInitializer.result; }
     ;
 
@@ -725,7 +728,7 @@ locals [List<Entity> values = new LinkedList<>()]
     $result = new ArrayInitializer($values);
 }
     :   '{' (elementValue {$values.add($elementValue.result);} 
-            (',' elementValue {$values.add($elementValue.result);})*)? (',')? '}'
+         (',' elementValue {$values.add($elementValue.result);})*)? (',')? '}'
     ;
 
 annotationTypeDeclaration
@@ -746,13 +749,13 @@ returns [DeclBody result]
             ( annotationTypeElementDeclaration 
               {
                   if ($annotationTypeElementDeclaration.result != null) {
-                      $result.addDeclaration($annotationTypeElementDeclaration.result);
+                      $result.add($annotationTypeElementDeclaration.result);
                   }
               }
             )*
         |   ( annotationConstantsDeclaration
               {
-                  $result.addDeclarations($annotationConstantsDeclaration.result);
+                  $result.addAll($annotationConstantsDeclaration.result);
               }
             )+
         )
@@ -828,10 +831,10 @@ returns [List<Declaration> result]
     ;
 
 annotationMethod
-returns [MethodDeclaration result]
+returns [FunctionDecl result]
     :   type annotationMethodRest
         {
-            $result = new MethodDeclaration($type.result, $annotationMethodRest.result);
+            $result = new FunctionDecl.Builder($type.result, $annotationMethodRest.result).build();
         } 
     ;
 
@@ -868,9 +871,9 @@ returns [List<Statement> result]
 @init {
     $result = new LinkedList<>();
 }
-    :   localVariableDeclarationStatement { $result = $localVariableDeclarationStatement.result; }
-    |   statement                         { $result = $statement.result; }
-    |   typeDeclaration                   { $result = $typeDeclaration.result; }
+    :   localVariableDeclarationStatement { $result.addAll($localVariableDeclarationStatement.result); }
+    |   statement                         { $result.add($statement.result); }
+    //|   typeDeclaration                   { $result = $typeDeclaration.result; }
     ;
 
 localVariableDeclarationStatement
@@ -896,13 +899,12 @@ locals [List<Annotation> annos = new LinkedList<>(),
           }
         )* type variableDeclarators
         {
-            VariableDecl varDecl;
             for (final UntypedVariable var : $variableDeclarators.result) {
-                varDecl = var.createVariableDecl($type.result);
-                varDecl.addModifiers($mods)                                    
+                VariableDecl varDecl = var.createVariableDecl($type.result);
+                varDecl.addModifiers($mods);                                    
                 varDecl.addAnnotations($annos);
+                $result.add(new VariableDeclStatement(varDecl));
             }
-            $result.add(new VariableDeclStatement(varDecl));
         } 
     ;
 
@@ -910,14 +912,14 @@ statement
 returns [Statement result]
 locals [List<SwitchStatement.Label> labels = new LinkedList<>(),
         List<CatchStatement> catches = new LinkedList<>(),
-        StatementBlock final]
+        StatementBlock tfinal]
     :   block { $result = $block.result; }
-    |   ASSERT car=expression (':' cdr=expression)? ';'
+    |   ASSERT carExpr=expression (':' cdrExpr=expression)? ';'
         {
             List<Entity> exprs = new LinkedList<>();
-            exprs.add($car.result);
-            if ($cdr.ctx != null) {
-                exprs.add($cdr.result);
+            exprs.add($carExpr.result);
+            if ($cdrExpr.ctx != null) {
+                exprs.add($cdrExpr.result);
             }
             $result = new ArbitraryStatement($ASSERT.text, exprs);
         }
@@ -926,22 +928,25 @@ locals [List<SwitchStatement.Label> labels = new LinkedList<>(),
             $result = 
                 new IfStatement($parExpression.result, $car.result, $cdr.ctx == null ? null : $cdr.result);
         } 
-    |   for     { $result = $for.result; }
-    |   forEach { $result = $forEach.result; }
+    |   forStatement     { $result = $forStatement.result; }
+    |   forEach          { $result = $forEach.result; }
     |   'while' parExpression statement 
         { $result = new WhileStatement($parExpression.result, $statement.result); }
     |   'do' statement 'while' parExpression ';' 
         { $result = new DoWhileStatement($parExpression.result, $statement.result); }
     |   'try' block 
-        ((catchClause {$catches.addAll($catchClause.result)})+ (finallyBlock {$final = $finallyBlock.result})? 
-        | finallyBlock {$final = $finallyBlock.result})
+        (
+            (catchClause {$catches.addAll($catchClause.result);})+ 
+            (finallyBlock {$tfinal = $finallyBlock.result;})? 
+        |   finallyBlock {$tfinal = $finallyBlock.result;}
+        )
         {
-            $result = new TryStatement($block.result, $catches, $final);
+            $result = new TryStatement($block.result, $catches, $tfinal);
         }
-    |   'try' resourceSpecification block (catchClause {$catches.addAll($catchClause.result)})* 
-        (finallyBlock {$final = $finallyBlock.result})?
+    |   'try' resourceSpecification block (catchClause {$catches.addAll($catchClause.result);})* 
+        (finallyBlock {$tfinal = $finallyBlock.result;})?
         {
-            $result = new TryWithResourcesStatement($resourceSpecification.result, $block.result, $catches, $final);
+            $result = new TryWithResourcesStatement($resourceSpecification.result, $block.result, $catches, $tfinal);
         }
     |   'switch' parExpression '{' 
         ( switchBlockStatementGroup {$labels.addAll($switchBlockStatementGroup.result); })* 
@@ -955,9 +960,9 @@ locals [List<SwitchStatement.Label> labels = new LinkedList<>(),
     |   'throw' expression ';'     
         { $result = new ThrowStatement($expression.result); }
     |   'break' Identifier? ';'
-        { $result = new BreakStatement($Identifier.ctx == null ? "" : $Identifier.text); }
+        { $result = new BreakStatement($Identifier == null ? "" : $Identifier.text); }
     |   'continue' Identifier? ';'
-        { $result = new ContinueStatement($Identifier.ctx == null ? "" : $Identifier.text); }
+        { $result = new ContinueStatement($Identifier == null ? "" : $Identifier.text); }
     |   ';'                        { $result = new EmptyStatement(); }
     |   statementExpression ';'    { $result = $statementExpression.result; }
     |   Identifier ':' statement   
@@ -1036,8 +1041,10 @@ locals [List<Annotation> annos = new LinkedList<>(),
           }
         )* classOrInterfaceType variableDeclaratorId '=' expression
         {
-            $result = $variableDeclaratorId.result.createVariableDecl($classOrInterfaceType.result, $expression.result);
-            $result.addModifiers($mods)                                    
+            final UntypedVariable var = $variableDeclaratorId.result;
+            var.setValue($expression.result);
+            $result = var.createVariableDecl($classOrInterfaceType.result);
+            $result.addModifiers($mods);                                    
             $result.addAnnotations($annos);                                    
         }
     ;
@@ -1070,11 +1077,11 @@ switchLabel
 returns [SwitchStatement.Label result]
     :   'case' constantExpression ':' { $result = new SwitchStatement.Label($constantExpression.result); }
     |   'case' enumConstantName ':' 
-        { $result = new SwitchStatement.Label(new VariableReference($enumConstantName.result); }
+        { $result = new SwitchStatement.Label(new VariableReference($enumConstantName.result)); }
     |   'default' ':' { $result = SwitchStatement.Label.DEFAULT; }
     ;
 
-for
+forStatement
 returns [ForStatement result]
     :   'for' '(' forInit? ';' expression? ';' forUpdate? ')' statement
         {
@@ -1096,7 +1103,7 @@ returns [ForEachStatement result]
 
 forInit
 returns [Statement result]
-    :   localVariableDeclaration { $result = $localVariableDeclaration.result; }
+    :   localVariableDeclaration { $result = new StatementList($localVariableDeclaration.result); }
     |   expressionList           { $result = $expressionList.result; }
     ;
 
@@ -1115,7 +1122,7 @@ locals [List<Annotation> annos = new LinkedList<>(),
           }
         )* type Identifier ':' expression
         {
-            VariableDecl decl = new VariableDecl.Builder($type.result, $Identifier.text).build();
+            VariableDecl decl = new VariableDecl($type.result, $Identifier.text);
             decl.addModifiers($mods);
             decl.addAnnotations($annos);
             $init = new VariableDeclStatement(decl);  
@@ -1155,47 +1162,80 @@ returns [Expression result]
     ;
 
 expression
-//returns [Expression result]
-    :   primary
-    |   expression '.' Identifier
+returns [Expression result]
+locals [String operation]
+    :   primary { $result = $primary.result; }
+    |   expression '.' Identifier 
+        { $result = new AttributeAccess($expression.result, $Identifier.text); }
     |   expression '.' 'this'
-    |   expression '.' 'new' nonWildcardTypeArguments? innerCreator
-    |   expression '.' 'super' superSuffix
+        { $result = new AttributeAccess($expression.result, "this"); }
+    //|   expression '.' 'new' nonWildcardTypeArguments? innerCreator
+    //|   expression '.' 'super' superSuffix
     |   expression '.' explicitGenericInvocation
-    |   expression '[' expression ']'
-    |   expression '(' expressionList? ')'
-    |   'new' creator
-    |   '(' type ')' expression
-    |   expression ('++' | '--')
-    |   ('+'|'-'|'++'|'--') expression
-    |   ('~'|'!') expression
-    |   expression ('*'|'/'|'%') expression
-    |   expression ('+'|'-') expression
-    |   expression ('<' '<' | '>' '>' '>' | '>' '>') expression
-    |   expression ('<=' | '>=' | '>' | '<') expression
-    |   expression 'instanceof' type
-    |   expression ('==' | '!=') expression
-    |   expression '&' expression
-    |   expression '^' expression
-    |   expression '|' expression
-    |   expression '&&' expression
-    |   expression '||' expression
-    |   expression '?' expression ':' expression
-    |   <assoc=right> expression
-        (   '='
-        |   '+='
-        |   '-='
-        |   '*='
-        |   '/='
-        |   '&='
-        |   '|='
-        |   '^='
-        |   '>>='
-        |   '>>>='
-        |   '<<='
-        |   '%='
-        )
+        { 
+            $result = new FunctionCall($explicitGenericInvocation.name, 
+                                       $expression.result, 
+                                       $explicitGenericInvocation.params, 
+                                       $explicitGenericInvocation.templates); 
+        }
+    |   caller=expression '[' param=expression ']'
+        { $result = new ArrayAccessExpression($caller.result, $param.result); }
+    |   expression '.' Identifier '(' expressionList? ')'
+        { 
+            List<Expression> params = $expressionList.ctx == null ? Collections.<Expression>emptyList() : $expressionList.result.asList();
+            $result = new FunctionCall($Identifier.text, $expression.result, params);
+        }
+    |   'new' creator { $result = $creator.result; }
+    |   '(' type ')' expression 
+        { $result = new CastExpression($type.result, $expression.result); }
+    |   expression ('++' { $operation = "++"; } | '--' { $operation = "--"; })
+        { $result = new UnaryExpression($expression.result, $operation, true); }
+    |   ('+' { $operation = "+"; } | '-' { $operation = "-"; } | '++' { $operation = "++"; } | '--' { $operation = "--"; }) 
         expression
+        { $result = new UnaryExpression($expression.result, $operation); } 
+    |   ('~' { $operation = "~"; } | '!' { $operation = "!"; }) expression
+        { $result = new UnaryExpression($expression.result, $operation); } 
+    |   lhs=expression ('*' { $operation = "*"; } | '/' { $operation = "/"; } | '%' { $operation = "%"; }) rhs=expression
+        { $result = new BinaryExpression($lhs.result, $rhs.result, $operation); } 
+    |   lhs=expression ('+' { $operation = "+"; } | '-' { $operation = "-"; }) rhs=expression
+        { $result = new BinaryExpression($lhs.result, $rhs.result, $operation); }
+    |   lhs=expression ('<' '<' { $operation = "<<"; } | '>' '>' '>' { $operation = ">>>"; } | '>' '>' { $operation = ">>"; }) rhs=expression
+        { $result = new BinaryExpression($lhs.result, $rhs.result, $operation); }
+    |   lhs=expression ('<=' { $operation = "<="; } | '>=' { $operation = ">="; } | '>' { $operation = ">"; } | '<' { $operation = "<"; }) rhs=expression
+        { $result = new BinaryExpression($lhs.result, $rhs.result, $operation); }
+    |   expression 'instanceof' type
+        { $result = new BinaryExpression($expression.result, new TypeExpression($type.result), "instanceof"); }
+    |   lhs=expression ('==' { $operation = "=="; } | '!=' { $operation = "!="; }) rhs=expression
+        { $result = new BinaryExpression($lhs.result, $rhs.result, $operation); }
+    |   lhs=expression '&' rhs=expression
+        { $result = new BinaryExpression($lhs.result, $rhs.result, "&"); }
+    |   lhs=expression '^' rhs=expression
+        { $result = new BinaryExpression($lhs.result, $rhs.result, "^"); }
+    |   lhs=expression '|' rhs=expression
+        { $result = new BinaryExpression($lhs.result, $rhs.result, "|"); }
+    |   lhs=expression '&&' rhs=expression
+        { $result = new BinaryExpression($lhs.result, $rhs.result, "&&"); }
+    |   lhs=expression '||' rhs=expression
+        { $result = new BinaryExpression($lhs.result, $rhs.result, "||"); }
+    |   cond=expression '?' ifBranch=expression ':' elseBranch=expression
+        { $result = new TernaryExpression($cond.result, $ifBranch.result, $elseBranch.result); }
+    |   <assoc=right> lhs=expression '=' rhs=expression
+        { $result = new AssignmentExpression($lhs.result, $rhs.result); }
+    |   <assoc=right> lhs=expression
+        (   '+='   { $operation = "+"; }
+        |   '-='   { $operation = "-"; }
+        |   '*='   { $operation = "*"; }
+        |   '/='   { $operation = "/"; }
+        |   '&='   { $operation = "&"; }
+        |   '|='   { $operation = "|"; }
+        |   '^='   { $operation = "^"; }
+        |   '>>='  { $operation = ">>"; }
+        |   '>>>=' { $operation = ">>>"; }
+        |   '<<='  { $operation = "<<"; }
+        |   '%='   { $operation = "%"; }
+        )
+        rhs=expression
+        { $result = new AssignmentExpression($lhs.result, new BinaryExpression($lhs.result, $rhs.result, $operation)); }
     ;
 
 primary
@@ -1208,26 +1248,58 @@ returns [Expression result]
     |   type '.' 'class'
         {
             Type type = TypeFactory.createJavaClassType($type.result);
-            Variable var = new Variable($type.result, "class"); 
+            VariableReference var = new VariableReference("class"); 
             $result = new StaticAttributeAccess($type.result, var);
         }
     |   'void' '.' 'class'
         {
             Type type = TypeFactory.createJavaClassType(PrimitiveType.VOID);
-            Variable var = new Variable(type, "class"); 
+            VariableReference var = new VariableReference("class"); 
             $result = new StaticAttributeAccess(PrimitiveType.VOID, var);
         }
-    |   nonWildcardTypeArguments (explicitGenericInvocationSuffix | 'this' arguments)
+    //|   nonWildcardTypeArguments (explicitGenericInvocationSuffix | 'this' arguments)
     ;
 
 creator
+returns [Expression result]
     :   nonWildcardTypeArguments createdName classCreatorRest
-    |   createdName (arrayCreatorRest | classCreatorRest)
+        {
+            $result = new ConstructorCall($createdName.result, 
+                                          $classCreatorRest.params, 
+                                          $nonWildcardTypeArguments.result, 
+                                          $classCreatorRest.body); 
+        }
+    |   createdName arrayCreatorRest
+        {
+            $result = new ConstructorCall($createdName.result, Collections.<Expression>emptyList());
+            for (final ArrayParam param : $arrayCreatorRest.params) {
+                $result = new ArrayConstructorCall($result, param.getSize());
+            }                                                          
+        }
     ;
 
 createdName
-    :   Identifier typeArgumentsOrDiamond? ('.' Identifier typeArgumentsOrDiamond?)*
-    |   primitiveType
+returns [Type result]
+locals [ClassType t]
+    :   Identifier typeArgumentsOrDiamond?
+        {
+            if ($typeArgumentsOrDiamond.ctx == null) {
+                $t = new ClassType($Identifier.text);                                          
+            } else {
+                $t = new ClassType($Identifier.text, $typeArgumentsOrDiamond.result);    
+            }         
+        } 
+        ( '.' Identifier typeArgumentsOrDiamond?
+          {
+              if ($typeArgumentsOrDiamond.ctx == null) {
+                  $t = new ClassType($Identifier.text, Collections.<TemplateParameter>emptyList(), $t);                                          
+              } else {
+                  $t = new ClassType($Identifier.text, $typeArgumentsOrDiamond.result, $t);    
+              }         
+          }
+        )*
+        { $result = $t; }
+    |   primitiveType { $result = $primitiveType.result; }
     ;
 
 innerCreator
@@ -1235,27 +1307,41 @@ innerCreator
     ;
 
 arrayCreatorRest
-    :   '['
-        (   ']' ('[' ']')* arrayInitializer
-        |   expression ']' ('[' expression ']')* ('[' ']')*
-        )
+returns [List<ArrayParam> params]
+@init {
+    $params = new LinkedList<>();       
+}       
+    :   '[' ']' { $params.add(new ArrayParam(null)); } ('[' ']' { $params.add(new ArrayParam(null)); })* 
+        arrayInitializer
+    |   '[' expression { $params.add(new ArrayParam($expression.result)); } ']' 
+        ('[' expression ']' { $params.add(new ArrayParam($expression.result)); })* 
+        ('[' ']' { $params.add(new ArrayParam(null)); })*
     ;
 
 classCreatorRest
-    :   arguments classBody?
+returns [List<Expression> params, DeclBody body]
+    :   arguments { $params = $arguments.result; } (classBody {$body = $classBody.result;} )?
     ;
 
 explicitGenericInvocation
+returns [List<Type> templates, String name, List<Expression> params]
     :   nonWildcardTypeArguments explicitGenericInvocationSuffix
+        {
+            $templates =  $nonWildcardTypeArguments.result;
+            $name = $explicitGenericInvocationSuffix.name;
+            $params = $explicitGenericInvocationSuffix.args;
+        }
     ;
 
 nonWildcardTypeArguments
-    :   '<' typeList '>'
+returns [List<Type> result]
+    :   '<' typeList {$result = $typeList.result;} '>'
     ;
 
 typeArgumentsOrDiamond
-    :   '<' '>'
-    |   typeArguments
+returns [List<TemplateParameter> result]
+    :   '<' '>'       { $result = Collections.emptyList(); }
+    |   typeArguments { $result = $typeArguments.result; }
     ;
 
 nonWildcardTypeArgumentsOrDiamond
@@ -1269,15 +1355,21 @@ superSuffix
     ;
 
 explicitGenericInvocationSuffix
-    :   'super' superSuffix
-    |   Identifier arguments
+returns [String name, List<Expression> args]
+    :   //'super' superSuffix
+    //|   Identifier arguments
+    Identifier arguments
+    {
+        $name = $Identifier.text;
+        $args = $arguments.result;
+    }
     ;
 
 arguments
 returns [List<Expression> result]      
     :   '(' expressionList? ')'
         {
-            $result = $expressionList.ctx == null ? Collections.emptyList() : $expressionList.result.asList();
+            $result = $expressionList.ctx == null ? Collections.<Expression>emptyList() : $expressionList.result.asList();
         } 
     ;
 

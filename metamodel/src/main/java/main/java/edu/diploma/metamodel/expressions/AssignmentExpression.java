@@ -10,12 +10,12 @@ package main.java.edu.diploma.metamodel.expressions;
  *
  * @author alexander
  */
-public class AttributeAccess extends Expression {
-    private final Expression expr;
-    private final String name;
+public class AssignmentExpression extends Expression {
+    private final Expression lhs;
+    private final Expression rhs;
     
-    public AttributeAccess(final Expression expr, final String name) {
-        this.expr = expr;
-        this.name = name;
+    public AssignmentExpression(final Expression lhs, final Expression rhs) {
+        this.lhs = lhs;
+        this.rhs = rhs;
     }
 }

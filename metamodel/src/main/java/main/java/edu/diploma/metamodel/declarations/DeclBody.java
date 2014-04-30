@@ -28,10 +28,10 @@ public class DeclBody extends Declaration {
         this.decls = decls;
     }
     
-    public void addDeclaration(final Declaration decl) {
+    public void add(final Declaration decl) {
         decls.add(decl);
     }
-    public void addDeclarations(final List<Declaration> decls) {
+    public void addAll(final List<? extends Declaration> decls) {
         this.decls.addAll(decls);
     }
 }

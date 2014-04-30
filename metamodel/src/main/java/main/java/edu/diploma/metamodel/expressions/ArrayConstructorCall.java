@@ -10,6 +10,12 @@ package main.java.edu.diploma.metamodel.expressions;
  *
  * @author alexander
  */
-public class MethodCall extends Expression {
+public class ArrayConstructorCall extends Expression {
+    private final Expression inner;
+    private final Expression size;
     
+    public ArrayConstructorCall(final Expression inner, final Expression size) {
+        this.inner = inner;
+        this.size = size;
+    }
 }

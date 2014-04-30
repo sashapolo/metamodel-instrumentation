@@ -24,7 +24,7 @@ public class SwitchStatement extends Statement {
     }
     
     public static class Label {
-        private final static Label DEFAULT = new Label(null);
+        public final static Label DEFAULT = new Label(null);
         
         private final Expression expr;
         private final List<Statement> states = new LinkedList<>();

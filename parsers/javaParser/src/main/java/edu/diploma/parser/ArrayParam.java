@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package main.java.edu.diploma.metamodel.statements;
+package edu.diploma.parser;
 
 import main.java.edu.diploma.metamodel.expressions.Expression;
 
@@ -12,10 +12,14 @@ import main.java.edu.diploma.metamodel.expressions.Expression;
  *
  * @author alexander
  */
-public class ReturnStatement extends Statement {
-    private final Expression expr;
+public class ArrayParam {
+    private final Expression size;
     
-    public ReturnStatement(final Expression expr) {
-        this.expr = expr;
+    public ArrayParam(final Expression size) {
+        this.size = size;
+    }
+    
+    public Expression getSize() {
+        return size;
     }
 }

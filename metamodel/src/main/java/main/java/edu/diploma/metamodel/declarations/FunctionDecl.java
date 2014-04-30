@@ -25,20 +25,24 @@ public class FunctionDecl extends Declaration {
     public static class Builder {
         private final String name;
         private final Type retType;
-        private final List<ParameterDecl> params;
-        private final StatementBlock block;
+        private StatementBlock block = StatementBlock.EMPTY_BLOCK;
+        private List<ParameterDecl> params = Collections.emptyList();
         private List<String> exceptions = Collections.emptyList();
         private List<TemplateDecl> templates = Collections.emptyList();
 
-        public Builder(final Type retType, final String name,
-                       final List<ParameterDecl> params,
-                       final StatementBlock block) {
+        public Builder(final Type retType, final String name) {
             this.retType = retType;
             this.name = name;
-            this.params = params;
-            this.block = block;
         }
 
+        public Builder params(final List<ParameterDecl> params) {
+            this.params = params;
+            return this;
+        }
+        public Builder body(final StatementBlock body) {
+            this.block = body;
+            return this;
+        }
         public Builder exceptions(final List<String> exceptions) {
             this.exceptions = exceptions;
             return this;
