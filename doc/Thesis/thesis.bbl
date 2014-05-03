@@ -1,4 +1,4 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{1}
 \def\selectlanguageifdefined#1{
 \expandafter\ifx\csname date#1\endcsname\relax
 \else\selectlanguage{#1}\fi}
@@ -10,5 +10,14 @@
 \ProvideTextCommandDefault{\cyrdash}{\hbox to.8em{--\hss--}}
 \providecommand*{\BibDash}{\ifdim\lastskip>0pt\unskip\nobreak\hskip.2em\fi
 \cyrdash\hskip.2em\ignorespaces}
+
+\bibitem{itsykson}
+\selectlanguageifdefined{russian}
+\BibEmph{Глухих М.И., Ицыксон В.М.} Программная
+  инженерия. Обеспечение качества
+  программных средств методами
+  статического анализа. \BibDash
+\newblock Санкт Петербург~: Издательство
+  Политехнического университета, 2011.
 
 \end{thebibliography}

@@ -17,6 +17,11 @@
 
 % Компактные списки
 \usepackage{mdwlist}
+\let\stditemize\itemize
+\let\endstditemize\enditemize
+\let\itemize\undefined
+\makecompactlist{itemize}{stditemize}
+\makecompactlist{mdwenumerate}{enumerate}
 
 % Таблицы
 \usepackage{array}
