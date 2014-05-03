@@ -13,11 +13,44 @@
 
 \bibitem{itsykson}
 \selectlanguageifdefined{russian}
-\BibEmph{Глухих М.И., Ицыксон В.М.} Программная
+\BibEmph{М.И.~Глухих, В.М.~Ицыксон}. Программная
   инженерия. Обеспечение качества
   программных средств методами
   статического анализа. \BibDash
 \newblock Санкт Петербург~: Издательство
   Политехнического университета, 2011.
+
+\bibitem{kulyamin}
+\selectlanguageifdefined{russian}
+\BibEmph{В.В.~Кулямин}. {Методы верификации
+  программного обеспечения}. \BibDash
+\newblock {Институт системного
+  программирования РАН}, {2008}.
+
+\bibitem{formal_methods}
+\selectlanguageifdefined{russian}
+\BibEmph{Ковалёв~С.~П.} {Применение формальных
+  методов для обеспечения качества
+  вычислительных систем}~// \BibEmph{{Вестник
+  Новосибирского государственного
+  университета}}. \BibDash
+\newblock 2004. \BibDash
+\newblock Т.~IV, {№}~2. \BibDash
+\newblock {С.}~49–74.
+
+\bibitem{Vieira2006}
+\selectlanguageifdefined{english}
+Automation of GUI testing using a model-driven approach~/ Marlon~Vieira,
+  Johanne~Leduc, Bill~Hasling et~al.~// AST '06: Proceedings of the 2006
+  international workshop on Automation of software test. \BibDash
+\newblock New York, NY, USA~: ACM, 2006. \BibDash
+\newblock P.~9--14.
+
+\bibitem{runtime_verification}
+\selectlanguageifdefined{english}
+\BibEmph{Barnett~Mike, Schulte~Wolfram}. Spying on Components: A Runtime
+  Verification Technique~// Proc. of the Workshop on Specification and
+  Verification of Component- Based Systems OOPSLA 2001. \BibDash
+\newblock 2001.
 
 \end{thebibliography}
