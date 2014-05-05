@@ -4,44 +4,46 @@ The top-level auxiliary file: thesis.aux
 The style file: ugost2008.bst
 Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
 Database file #1: thesis.bib
-You've used 5 entries,
+Warning--empty booktitle in moose
+You've used 9 entries,
             3946 wiz_defined-function locations,
-            1121 strings with 10034 characters,
-and the built_in function-call counts, 1730 in all, are:
-= -- 214
-> -- 45
-< -- 7
-+ -- 15
-- -- 10
-* -- 80
-:= -- 184
-add.period$ -- 17
-call.type$ -- 5
+            1145 strings with 10801 characters,
+and the built_in function-call counts, 3214 in all, are:
+= -- 388
+> -- 89
+< -- 13
++ -- 29
+- -- 20
+* -- 166
+:= -- 339
+add.period$ -- 31
+call.type$ -- 9
 change.case$ -- 0
 chr.to.int$ -- 0
-cite$ -- 5
-duplicate$ -- 102
-empty$ -- 201
-format.name$ -- 10
-if$ -- 474
+cite$ -- 10
+duplicate$ -- 183
+empty$ -- 370
+format.name$ -- 20
+if$ -- 877
 int.to.chr$ -- 0
-int.to.str$ -- 5
+int.to.str$ -- 9
 missing$ -- 0
-newline$ -- 42
-num.names$ -- 15
-pop$ -- 41
+newline$ -- 65
+num.names$ -- 27
+pop$ -- 73
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 67
+skip$ -- 127
 stack$ -- 0
-substring$ -- 33
-swap$ -- 64
-text.length$ -- 2
+substring$ -- 92
+swap$ -- 117
+text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 0
-while$ -- 9
-width$ -- 6
-write$ -- 76
+warning$ -- 1
+while$ -- 17
+width$ -- 10
+write$ -- 127
+(There was 1 warning)

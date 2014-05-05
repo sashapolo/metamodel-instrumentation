@@ -53,4 +53,36 @@ Automation of GUI testing using a model-driven approach~/ Marlon~Vieira,
   Verification of Component- Based Systems OOPSLA 2001. \BibDash
 \newblock 2001.
 
+\bibitem{metamodeling}
+\selectlanguageifdefined{english}
+\BibEmph{Piefel~M.} A Common Metamodel for Code Generation~// Proceedings of
+  the 3rd International Conference on Cybernetics and Information Technologies,
+  Systems and Applications. \BibDash
+\newblock 2006.
+
+\bibitem{moose}
+\selectlanguageifdefined{english}
+\BibEmph{Nierstrasz~Oscar, Ducasse~Stéphane, Gîrba~Tudor}. The story of
+  moose: an agile reengineering environment. \BibDash
+\newblock ACM, 2005. \BibDash
+\newblock P.~1--10.
+
+\bibitem{smile}
+\selectlanguageifdefined{english}
+{A Programming Language Independent Framework for Metrics-based Software
+  Evolution and Analysis}~/ ~Črt~Gerlec, Gordana~Rakić, Zoran~Budimac,
+  Marjan~Heričko~// \BibEmph{{Computer Science and Information Systems}}.
+  \BibDash
+\newblock 2012. \BibDash Sep. \BibDash
+\newblock Vol.~{9}, no.~{3}. \BibDash
+\newblock P.~{1155--1186}.
+
+\bibitem{llvm}
+\selectlanguageifdefined{english}
+\BibEmph{Lattner~Chris, Adve~Vikram}. {LLVM: A Compilation Framework for
+  Lifelong Program Analysis \& Transformation}~// {Proceedings of the 2004
+  International Symposium on Code Generation and Optimization (CGO'04)}.
+  \BibDash
+\newblock Palo Alto, California, 2004. \BibDash Mar.
+
 \end{thebibliography}
