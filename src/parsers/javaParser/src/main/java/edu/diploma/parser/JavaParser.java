@@ -6,11 +6,13 @@
 
 package edu.diploma.parser;
 
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import main.java.edu.diploma.metamodel.TranslationUnit;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
 
 /**
  *
@@ -20,17 +22,23 @@ public class JavaParser {
 
     /**
      * @param args the command line arguments
+     * @throws java.lang.Exception
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         if (args.length != 1) {
             System.err.println("Usage: javaParser <file>");
             System.exit(1);
         }
+        
         ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(args[0]));
         JavaGrammarLexer lexer = new JavaGrammarLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         JavaGrammarParser parser = new JavaGrammarParser(tokens);
-        TranslationUnit result = parser.compilationUnit().result;
+        TranslationUnit unit = parser.compilationUnit().result;
+        
+        Serializer serializer = new Persister();
+        File result = new File("example.xml");
+        serializer.write(unit, result);
     }
     
 }

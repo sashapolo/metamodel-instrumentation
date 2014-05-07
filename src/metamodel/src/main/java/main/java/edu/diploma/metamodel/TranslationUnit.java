@@ -8,12 +8,13 @@ package main.java.edu.diploma.metamodel;
 
 import java.util.List;
 import main.java.edu.diploma.metamodel.declarations.Declaration;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
-
+@Default
 public class TranslationUnit extends Entity {
     private final List<Import> imports;
     private final List<Declaration> types;
