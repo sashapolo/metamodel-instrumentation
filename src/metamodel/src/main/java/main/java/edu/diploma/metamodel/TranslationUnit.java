@@ -13,6 +13,7 @@ import main.java.edu.diploma.metamodel.declarations.Declaration;
  *
  * @author alexander
  */
+
 public class TranslationUnit extends Entity {
     private final List<Import> imports;
     private final List<Declaration> types;
