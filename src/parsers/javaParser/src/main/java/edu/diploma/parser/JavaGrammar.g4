@@ -28,7 +28,9 @@
 
 grammar JavaGrammar;
 
-@header {  
+@header { 
+    package edu.diploma.parser;
+ 
     import java.util.Map;
     import java.util.LinkedList;
     import java.util.HashMap;
@@ -1262,11 +1264,12 @@ returns [Expression result]
 
 creator
 returns [Expression result]
-    :   nonWildcardTypeArguments createdName classCreatorRest
+locals [List<Type> types = Collections.emptyList()]
+    :   (nonWildcardTypeArguments {$types = $nonWildcardTypeArguments.result;})? createdName classCreatorRest
         {
             $result = new ConstructorCall($createdName.result, 
                                           $classCreatorRest.params, 
-                                          $nonWildcardTypeArguments.result, 
+                                          $types, 
                                           $classCreatorRest.body); 
         }
     |   createdName arrayCreatorRest

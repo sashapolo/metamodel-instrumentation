@@ -18,3 +18,5 @@
 /metamodel/target/
 /parsers/javaParser/target/
 *sublime*
+/src/metamodel/target/
+/src/parsers/javaParser/target/
