@@ -16,25 +16,24 @@ import main.java.edu.diploma.metamodel.types.Type;
  * @author alexander
  */
 public class ConstructorCall extends Expression {
-    private final Type type;
     private final List<Expression> params;
     private final List<Type> templates;
     private final DeclBody body;
     
     public ConstructorCall(final Type type, final List<Expression> params) {
-        this.type = type;
+        super(type);
         this.params = params;
         this.templates = Collections.emptyList();
         this.body = null;
     }
     public ConstructorCall(final Type type, final List<Expression> params, final List<Type> templates) {
-        this.type = type;
+        super(type);
         this.params = params;
         this.templates = templates;
         this.body = null;
     }
     public ConstructorCall(final Type type, final List<Expression> params, final List<Type> templates, final DeclBody body) {
-        this.type = type;
+        super(type);
         this.params = params;
         this.templates = templates;
         this.body = body;

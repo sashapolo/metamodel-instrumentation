@@ -13,11 +13,10 @@ import main.java.edu.diploma.metamodel.types.Type;
  * @author alexander
  */
 public class CastExpression extends Expression {
-    private final Type type;
     private final Expression param;
     
     public CastExpression(final Type type, final Expression param) {
-        this.type = type;
+        super(type);
         this.param = param;
     }
 }

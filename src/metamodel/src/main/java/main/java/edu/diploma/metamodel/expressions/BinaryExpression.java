@@ -6,6 +6,8 @@
 
 package main.java.edu.diploma.metamodel.expressions;
 
+import main.java.edu.diploma.metamodel.types.Type;
+
 /**
  *
  * @author alexander
@@ -16,6 +18,7 @@ public class BinaryExpression extends Expression {
     private final String operation;
     
     public BinaryExpression(final Expression lhs, final Expression rhs, final String operation) {
+        super(Type.UNKOWN_TYPE);
         this.lhs = lhs;
         this.rhs = rhs;
         this.operation = operation;

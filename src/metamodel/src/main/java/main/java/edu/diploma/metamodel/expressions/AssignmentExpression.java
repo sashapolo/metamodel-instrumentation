@@ -6,6 +6,8 @@
 
 package main.java.edu.diploma.metamodel.expressions;
 
+import main.java.edu.diploma.metamodel.types.Type;
+
 /**
  *
  * @author alexander
@@ -15,6 +17,7 @@ public class AssignmentExpression extends Expression {
     private final Expression rhs;
     
     public AssignmentExpression(final Expression lhs, final Expression rhs) {
+        super(Type.UNKOWN_TYPE);
         this.lhs = lhs;
         this.rhs = rhs;
     }

@@ -7,23 +7,22 @@
 package main.java.edu.diploma.metamodel.declarations;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
+import org.simpleframework.xml.Default;
+import org.simpleframework.xml.DefaultType;
+import org.simpleframework.xml.ElementList;
 
 /**
  *
  * @author alexander
  */
+@Default(DefaultType.FIELD)
 public class DeclBody extends Declaration {
     public static final DeclBody EMPTY = new DeclBody(Collections.<Declaration>emptyList());
     
     private final List<Declaration> decls;
     
-    public DeclBody() {
-        super("");
-        this.decls = new LinkedList<>();
-    }
-    public DeclBody(final List<Declaration> decls) {
+    public DeclBody(@ElementList(name = "decls") final List<Declaration> decls) {
         super("");
         this.decls = decls;
     }

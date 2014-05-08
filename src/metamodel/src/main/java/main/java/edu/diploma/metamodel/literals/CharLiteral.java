@@ -6,7 +6,7 @@
 
 package main.java.edu.diploma.metamodel.literals;
 
-import main.java.edu.diploma.metamodel.types.PrimitiveType;
+import main.java.edu.diploma.metamodel.types.Type;
 
 /**
  *
@@ -15,8 +15,8 @@ import main.java.edu.diploma.metamodel.types.PrimitiveType;
 public class CharLiteral extends Literal {
     private final String value;
     
-    public CharLiteral(final String value) {
-        super(PrimitiveType.CHAR);
+    public CharLiteral(final Type type, final String value) {
+        super(type);
         this.value = value;
     }
     

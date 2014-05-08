@@ -6,9 +6,6 @@
 
 package main.java.edu.diploma.metamodel.declarations;
 
-import main.java.edu.diploma.metamodel.expressions.Expression;
-import main.java.edu.diploma.metamodel.types.Type;
-
 /**
  *
  * @author alexander

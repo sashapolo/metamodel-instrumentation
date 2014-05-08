@@ -6,6 +6,8 @@
 
 package main.java.edu.diploma.metamodel.expressions;
 
+import main.java.edu.diploma.metamodel.types.Type;
+
 /**
  *
  * @author alexander
@@ -15,6 +17,7 @@ public class ArrayAccessExpression extends Expression {
     private final Expression param;
     
     public ArrayAccessExpression(final Expression caller, final Expression param) {
+        super(Type.UNKOWN_TYPE);
         this.caller = caller;
         this.param = param;
     }

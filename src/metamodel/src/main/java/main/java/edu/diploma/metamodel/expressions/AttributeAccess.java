@@ -6,6 +6,8 @@
 
 package main.java.edu.diploma.metamodel.expressions;
 
+import main.java.edu.diploma.metamodel.types.Type;
+
 /**
  *
  * @author alexander
@@ -15,6 +17,7 @@ public class AttributeAccess extends Expression {
     private final String name;
     
     public AttributeAccess(final Expression expr, final String name) {
+        super(Type.UNKOWN_TYPE);
         this.expr = expr;
         this.name = name;
     }

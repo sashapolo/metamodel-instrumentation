@@ -16,11 +16,11 @@ import main.java.edu.diploma.metamodel.types.Type;
 public class Expression extends Statement {
     private final Type type;
     
-    public Expression() {
-        this.type = Type.UNKOWN_TYPE;   
-    }
-    
     public Expression(final Type type) {
         this.type = type;
+    }
+
+    public Type getType() {
+        return type;
     }
 }

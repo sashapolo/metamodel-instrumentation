@@ -1,8 +1,7 @@
 package main.java.edu.diploma.metamodel.statements;
 
-import main.java.edu.diploma.metamodel.Entity;
-
 import java.util.List;
+import main.java.edu.diploma.metamodel.Entity;
 
 /**
  * Created by alexander on 4/26/14.

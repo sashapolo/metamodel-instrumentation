@@ -6,6 +6,8 @@
 
 package main.java.edu.diploma.metamodel.expressions;
 
+import main.java.edu.diploma.metamodel.types.Type;
+
 /**
  *
  * @author alexander
@@ -14,6 +16,7 @@ public class VariableReference extends Expression {
     private final String name;
 
     public VariableReference(final String name) {
+        super(Type.UNKOWN_TYPE);
         this.name = name;
     }
 }

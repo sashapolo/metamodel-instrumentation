@@ -1,6 +1,7 @@
 package main.java.edu.diploma.metamodel.types;
 
 import main.java.edu.diploma.metamodel.Entity;
+import org.simpleframework.xml.Default;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,6 +10,7 @@ import main.java.edu.diploma.metamodel.Entity;
  * Time: 11:18 PM
  * To change this template use File | Settings | File Templates.
  */
+@Default
 public abstract class Type extends Entity {
-    public final static Type UNKOWN_TYPE = new UnknownType();
+    public final static Type UNKOWN_TYPE = new PrimitiveType("unknown");
 }

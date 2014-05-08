@@ -10,13 +10,13 @@ package main.java.edu.diploma.metamodel.expressions;
  *
  * @author alexander
  */
-public class StaticMethodCall extends Expression {
-//    private final String qualifier;
-//    private final Method method;
-//    
-//    public StaticMethodCall(final String qualifier, final Method method) {
-//        super(method.getRetType());
-//        this.qualifier = qualifier;
-//        this.method = method;
-//    }
-}
+//public class StaticMethodCall extends Expression {
+////    private final String qualifier;
+////    private final Method method;
+////    
+////    public StaticMethodCall(final String qualifier, final Method method) {
+////        super(method.getRetType());
+////        this.qualifier = qualifier;
+////        this.method = method;
+////    }
+//}

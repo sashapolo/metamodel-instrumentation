@@ -6,6 +6,8 @@
 
 package main.java.edu.diploma.metamodel.expressions;
 
+import main.java.edu.diploma.metamodel.types.Type;
+
 /**
  *
  * @author alexander
@@ -16,6 +18,7 @@ public class TernaryExpression extends Expression {
     private final Expression elseBranch;
     
     public TernaryExpression(final Expression condition, final Expression ifBranch, final Expression elseBranch) {
+        super(Type.UNKOWN_TYPE);
         this.condition = condition;
         this.ifBranch = ifBranch;
         this.elseBranch = elseBranch;

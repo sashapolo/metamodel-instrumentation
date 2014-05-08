@@ -1,5 +1,9 @@
 package main.java.edu.diploma.metamodel;
 
+import org.simpleframework.xml.Default;
+import org.simpleframework.xml.DefaultType;
+import org.simpleframework.xml.Element;
+
 /**
  * Created with IntelliJ IDEA.
  * User: alexander
@@ -7,12 +11,16 @@ package main.java.edu.diploma.metamodel;
  * Time: 11:15 PM
  * To change this template use File | Settings | File Templates.
  */
+    
+@Default(DefaultType.FIELD)
 public class Import extends Entity {
     private final String name;
     private final boolean isStatic;
     private final boolean isWildcard;
     
-    public Import(final String name, boolean isStatic, boolean isWildcard) {
+    public Import(@Element(name = "name") final String name, 
+                  @Element(name = "isStatic") boolean isStatic, 
+                  @Element(name = "isWildcard") boolean isWildcard) {
         this.name = name;
         this.isStatic = isStatic;
         this.isWildcard = isWildcard;

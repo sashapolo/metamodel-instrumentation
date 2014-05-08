@@ -17,6 +17,7 @@ public class StaticAttributeAccess extends Expression {
     private final VariableReference attribute;
     
     public StaticAttributeAccess(final Type qualifier, final VariableReference attribute) {
+        super(Type.UNKOWN_TYPE);
         this.qualifier = qualifier;
         this.attribute = attribute;
     }

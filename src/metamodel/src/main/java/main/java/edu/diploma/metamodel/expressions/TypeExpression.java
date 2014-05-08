@@ -13,9 +13,7 @@ import main.java.edu.diploma.metamodel.types.Type;
  * @author alexander
  */
 public class TypeExpression extends Expression {
-    private final Type type;
-    
     public TypeExpression(final Type type) {
-        this.type = type;
+        super(type);
     }
 }

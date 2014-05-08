@@ -9,6 +9,7 @@ package main.java.edu.diploma.metamodel.expressions;
 import java.util.LinkedList;
 import java.util.List;
 import main.java.edu.diploma.metamodel.Entity;
+import main.java.edu.diploma.metamodel.types.Type;
 
 /**
  *
@@ -18,6 +19,7 @@ public class ArrayInitializer extends Expression {
     private final List<Entity> values = new LinkedList<>();
     
     public ArrayInitializer(final List<? extends Entity> values) {
+        super(Type.UNKOWN_TYPE);
         this.values.addAll(values);
     }
 }

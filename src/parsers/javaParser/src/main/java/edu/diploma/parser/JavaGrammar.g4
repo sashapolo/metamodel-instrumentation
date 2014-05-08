@@ -232,7 +232,7 @@ locals [List<Annotation> annos = new LinkedList<>(),
 enumBodyDeclarations
 returns [DeclBody result]
 @init {
-    $result = new DeclBody();       
+    $result = new DeclBody(new LinkedList<Declaration>());       
 }
     :   ';' ( classBodyDeclaration { $result.add($classBodyDeclaration.result);})*
     ;
@@ -259,7 +259,7 @@ returns [List<Type> result]
 classBody
 returns [DeclBody result]
 @init {
-    $result = new DeclBody();       
+    $result = new DeclBody(new LinkedList<Declaration>());       
 }
     :   '{' ( classBodyDeclaration { $result.add($classBodyDeclaration.result); })* '}'
     ;
@@ -267,7 +267,7 @@ returns [DeclBody result]
 interfaceBody
 returns [DeclBody result]
 @init {
-    $result = new DeclBody();
+    $result = new DeclBody(new LinkedList<Declaration>()); ;
 }
     :   '{' ( interfaceBodyDeclaration 
               { 
@@ -327,7 +327,7 @@ returns [FunctionDecl result]
 locals [Type retType, 
         List<String> exceptions = Collections.emptyList(),
         StatementBlock body = StatementBlock.EMPTY_BLOCK]  
-    :   (type {$retType = $type.result;} | 'void' {$retType = PrimitiveType.VOID;}) 
+    :   (type {$retType = $type.result;} | 'void' {$retType = new PrimitiveType("void");}) 
         Identifier formalParameters ('[' ']' { $retType = new ArrayType($retType); })*
         ('throws' qualifiedNameList { $exceptions = $qualifiedNameList.result; })?
         (   methodBody { $body = $methodBody.result; }
@@ -459,7 +459,7 @@ interfaceMethodDeclaration
 returns [FunctionDecl result]
 locals [Type retType, 
         List<String> exceptions = Collections.emptyList()]
-    :   (type {$retType = $type.result;} | 'void' {$retType = PrimitiveType.VOID;}) 
+    :   (type {$retType = $type.result;} | 'void' {$retType = new PrimitiveType("void");}) 
         Identifier formalParameters ('[' ']' { $retType = new ArrayType($retType); })*
         ('throws' qualifiedNameList { $exceptions = $qualifiedNameList.result; })?
         ';'
@@ -548,14 +548,14 @@ locals [List<TemplateParameter> templates = Collections.emptyList()]
 
 primitiveType
 returns [PrimitiveType result]
-    :   'boolean' { $result = PrimitiveType.BOOL; }
-    |   'char'    { $result = PrimitiveType.CHAR; }
-    |   'byte'    { $result = PrimitiveType.BYTE; }
-    |   'short'   { $result = PrimitiveType.SHORT; }
-    |   'int'     { $result = PrimitiveType.INT; }
-    |   'long'    { $result = PrimitiveType.LONG; }
-    |   'float'   { $result = PrimitiveType.FLOAT; }
-    |   'double'  { $result = PrimitiveType.DOUBLE; }
+    :   'boolean' { $result = new PrimitiveType("boolean"); }
+    |   'char'    { $result = new PrimitiveType("char"); }
+    |   'byte'    { $result = new PrimitiveType("byte"); }
+    |   'short'   { $result = new PrimitiveType("short"); }
+    |   'int'     { $result = new PrimitiveType("int"); }
+    |   'long'    { $result = new PrimitiveType("long"); }
+    |   'float'   { $result = new PrimitiveType("float"); }
+    |   'double'  { $result = new PrimitiveType("double"); }
     ;
 
 typeArguments
@@ -670,11 +670,11 @@ locals [StringBuilder res]
 
 literal
 returns [Literal result]
-    :   IntegerLiteral       {$result = new IntegerLiteral(PrimitiveType.INT, $IntegerLiteral.text);}
-    |   FloatingPointLiteral {$result = new FloatLiteral(PrimitiveType.DOUBLE, $FloatingPointLiteral.text);}
-    |   CharacterLiteral     {$result = new CharLiteral($CharacterLiteral.text);}
+    :   IntegerLiteral       {$result = new IntegerLiteral(new PrimitiveType("int"), $IntegerLiteral.text);}
+    |   FloatingPointLiteral {$result = new FloatLiteral(new PrimitiveType("double"), $FloatingPointLiteral.text);}
+    |   CharacterLiteral     {$result = new CharLiteral(new PrimitiveType("char"), $CharacterLiteral.text);}
     |   StringLiteral        {$result = new StringLiteral(new ClassType("java.lang.String"), $StringLiteral.text);}
-    |   BooleanLiteral       {$result = new BooleanLiteral($BooleanLiteral.text);}
+    |   BooleanLiteral       {$result = new BooleanLiteral(new PrimitiveType("boolean"), $BooleanLiteral.text);}
     |   'null'               {$result = new SpecialLiteral("null");}
     ;
 
@@ -744,7 +744,7 @@ returns [AnnotationDecl result]
 annotationTypeBody
 returns [DeclBody result]
 @init {
-    $result = new DeclBody();
+    $result = new DeclBody(new LinkedList<Declaration>()); ;
 }
     :   '{' 
         (
@@ -861,7 +861,7 @@ returns [Entity result]
 block
 returns [StatementBlock result]
 @init {
-    $result = new StatementBlock();       
+    $result = StatementBlock.create();       
 }
     :   '{' 
         ( blockStatement { $result.addAll($blockStatement.result); })* 
@@ -1255,9 +1255,9 @@ returns [Expression result]
         }
     |   'void' '.' 'class'
         {
-            Type type = TypeFactory.createJavaClassType(PrimitiveType.VOID);
+            Type type = TypeFactory.createJavaClassType(new PrimitiveType("void"));
             VariableReference var = new VariableReference("class"); 
-            $result = new StaticAttributeAccess(PrimitiveType.VOID, var);
+            $result = new StaticAttributeAccess(new PrimitiveType("void"), var);
         }
     //|   nonWildcardTypeArguments (explicitGenericInvocationSuffix | 'this' arguments)
     ;

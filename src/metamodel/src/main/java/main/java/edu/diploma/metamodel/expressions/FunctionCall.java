@@ -21,6 +21,7 @@ public class FunctionCall extends Expression {
     private final List<Type> templateParams;
     
     public FunctionCall(final String name, final Expression caller, final List<Expression> params) {
+        super(Type.UNKOWN_TYPE);
         this.name = name;
         this.caller = caller;
         this.params = params;
@@ -28,6 +29,7 @@ public class FunctionCall extends Expression {
     }
     public FunctionCall(final String name, final Expression caller, final List<Expression> params, 
             final List<Type> templateParams) {
+        super(Type.UNKOWN_TYPE);
         this.name = name;
         this.caller = caller;
         this.params = params;

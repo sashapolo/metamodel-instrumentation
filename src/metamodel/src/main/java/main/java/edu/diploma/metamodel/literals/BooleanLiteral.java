@@ -6,7 +6,7 @@
 
 package main.java.edu.diploma.metamodel.literals;
 
-import main.java.edu.diploma.metamodel.types.PrimitiveType;
+import main.java.edu.diploma.metamodel.types.Type;
 
 /**
  *
@@ -15,12 +15,12 @@ import main.java.edu.diploma.metamodel.types.PrimitiveType;
 public class BooleanLiteral extends Literal {
     private final boolean value;
     
-    public BooleanLiteral(final boolean value) {
-        super(PrimitiveType.BOOL);
+    public BooleanLiteral(final Type type, final boolean value) {
+        super(type);
         this.value = value;
     }
-    public BooleanLiteral(final String value) {
-        super(PrimitiveType.BOOL);
+    public BooleanLiteral(final Type type, final String value) {
+        super(type);
         this.value = Boolean.valueOf(value);
     }
 }

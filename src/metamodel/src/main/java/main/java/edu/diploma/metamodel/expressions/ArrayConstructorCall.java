@@ -6,6 +6,8 @@
 
 package main.java.edu.diploma.metamodel.expressions;
 
+import main.java.edu.diploma.metamodel.types.Type;
+
 /**
  *
  * @author alexander
@@ -15,6 +17,7 @@ public class ArrayConstructorCall extends Expression {
     private final Expression size;
     
     public ArrayConstructorCall(final Expression inner, final Expression size) {
+        super(Type.UNKOWN_TYPE);
         this.inner = inner;
         this.size = size;
     }
