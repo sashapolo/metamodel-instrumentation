@@ -18,15 +18,24 @@ import org.simpleframework.xml.ElementList;
  * @author alexander
  */
 public class Declaration {
-    @Element
+    @Element(required = false)
     private final String name;
     @ElementList(required = false)
-    private final List<String> modifiers = new LinkedList<>();
+    private final List<String> modifiers;
     @ElementList(required = false)
-    private final List<Annotation> annotations = new LinkedList<>();
+    private final List<Annotation> annotations;
     
     public Declaration(final String name) {
         this.name = name;
+        this.modifiers = new LinkedList<>();
+        this.annotations = new LinkedList<>();
+    }
+    public Declaration(@Element(name = "name") final String name, 
+                       @ElementList(name = "modifiers") final List<String> modifiers, 
+                       @ElementList(name = "annotations") final List<Annotation> annotations) {
+        this.name = name;
+        this.modifiers = modifiers;
+        this.annotations = annotations;
     }
     
     public void addAnnotations(final List<Annotation> annotations) {

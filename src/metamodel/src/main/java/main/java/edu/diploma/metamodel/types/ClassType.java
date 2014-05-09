@@ -20,17 +20,20 @@ public class ClassType extends Type {
     @ElementList
     private final List<TemplateParameter> templates;
     
-    public ClassType(final String name) {
+    public ClassType(@Element(name = "name") final String name) {
         this.name = name;
         this.templates = Collections.emptyList();
         this.outer = null;
     }
-    public ClassType(final String name, final List<TemplateParameter> templates) {
+    public ClassType(@Element(name = "name") final String name, 
+                     @ElementList(name = "templates") final List<TemplateParameter> templates) {
         this.name = name;
         this.templates = templates;
         this.outer = null;
     }
-    public ClassType(final String name, final List<TemplateParameter> templates, final ClassType outer) {
+    public ClassType(@Element(name = "name") final String name, 
+                     @ElementList(name = "templates") final List<TemplateParameter> templates, 
+                     @Element(name = "outer") final ClassType outer) {
         this.name = name;
         this.templates = templates;
         this.outer = outer;

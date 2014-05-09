@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.List;
 import main.java.edu.diploma.metamodel.declarations.Declaration;
 import org.simpleframework.xml.Default;
-import org.simpleframework.xml.DefaultType;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
@@ -19,7 +18,7 @@ import org.simpleframework.xml.Root;
  * @author alexander
  */
 @Root
-@Default(DefaultType.FIELD)
+@Default
 public class TranslationUnit extends Entity {
     private final List<Import> imports;
     private final List<Declaration> types;

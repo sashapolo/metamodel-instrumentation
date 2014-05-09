@@ -8,6 +8,7 @@ package main.java.edu.diploma.metamodel.literals;
 
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -17,7 +18,8 @@ import org.simpleframework.xml.Default;
 public class BooleanLiteral extends Literal {
     private final boolean value;
     
-    public BooleanLiteral(final Type type, final boolean value) {
+    public BooleanLiteral(@Element(name = "type") final Type type, 
+                          @Element(name = "value") final boolean value) {
         super(type);
         this.value = value;
     }

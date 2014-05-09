@@ -8,6 +8,7 @@ package main.java.edu.diploma.metamodel.literals;
 
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -17,7 +18,8 @@ import org.simpleframework.xml.Default;
 public class FloatLiteral extends Literal {
     private final double value;
     
-    public FloatLiteral(final Type type, final double value) {
+    public FloatLiteral(@Element(name = "type") final Type type, 
+                        @Element(name = "value") final double value) {
         super(type);
         this.value = value;
     }

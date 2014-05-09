@@ -8,6 +8,7 @@ package main.java.edu.diploma.metamodel.statements;
 
 import main.java.edu.diploma.metamodel.expressions.Expression;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -18,7 +19,8 @@ public class DoWhileStatement extends Statement {
     private final Expression condition;
     private final Statement body;
     
-    public DoWhileStatement(final Expression condition, final Statement body) {
+    public DoWhileStatement(@Element(name = "condition") final Expression condition, 
+                            @Element(name = "body") final Statement body) {
         this.condition = condition;
         this.body = body;
     }

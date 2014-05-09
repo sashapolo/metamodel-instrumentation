@@ -9,6 +9,7 @@ package main.java.edu.diploma.metamodel.expressions;
 import main.java.edu.diploma.metamodel.statements.Statement;
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -18,7 +19,7 @@ import org.simpleframework.xml.Default;
 public class Expression extends Statement {
     private final Type type;
     
-    public Expression(final Type type) {
+    public Expression(@Element(name = "type") final Type type) {
         this.type = type;
     }
 

@@ -8,9 +8,12 @@ package main.java.edu.diploma.metamodel.declarations;
 
 import java.util.Collections;
 import java.util.List;
+import main.java.edu.diploma.metamodel.Annotation;
 import main.java.edu.diploma.metamodel.statements.StatementBlock;
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 
 /**
  *
@@ -59,12 +62,28 @@ public class FunctionDecl extends Declaration {
         }
     }
 
-    private FunctionDecl(final Type retType, final String name,
-                         final List<ParameterDecl> params,
-                         final List<String> exceptions,
-                         final List<TemplateDecl> templates,
-                         final StatementBlock body) {
+    private FunctionDecl(@Element(name = "retType") final Type retType, 
+                         @Element(name = "name") final String name,
+                         @ElementList(name = "params") final List<ParameterDecl> params,
+                         @ElementList(name = "exceptions") final List<String> exceptions,
+                         @ElementList(name = "templates") final List<TemplateDecl> templates,
+                         @Element(name = "body") final StatementBlock body) {
         super(name);
+        this.retType = retType;
+        this.params = params;
+        this.exceptions = exceptions;
+        this.templates = templates;
+        this.body = body;
+    }
+    private FunctionDecl(@Element(name = "retType") final Type retType, 
+                         @Element(name = "name") final String name,
+                         @ElementList(name = "params") final List<ParameterDecl> params,
+                         @ElementList(name = "exceptions") final List<String> exceptions,
+                         @ElementList(name = "templates") final List<TemplateDecl> templates,
+                         @Element(name = "body") final StatementBlock body,
+                         @ElementList(name = "modifiers") final List<String> modifiers, 
+                         @ElementList(name = "annotations") final List<Annotation> annotations) {
+        super(name, modifiers, annotations);
         this.retType = retType;
         this.params = params;
         this.exceptions = exceptions;
@@ -77,13 +96,13 @@ public class FunctionDecl extends Declaration {
         return retType;
     }
     public List<String> getExceptions() {
-        return Collections.unmodifiableList(exceptions);
+        return exceptions;
     }
     public List<ParameterDecl> getParams() {
-        return Collections.unmodifiableList(params);
+        return params;
     }
     public List<TemplateDecl> getTemplates() {
-        return Collections.unmodifiableList(templates);
+        return templates;
     }
     public StatementBlock getBody() {
         return body;

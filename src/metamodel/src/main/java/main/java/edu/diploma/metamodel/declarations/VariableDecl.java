@@ -6,9 +6,12 @@
 
 package main.java.edu.diploma.metamodel.declarations;
 
+import java.util.List;
+import main.java.edu.diploma.metamodel.Annotation;
 import main.java.edu.diploma.metamodel.expressions.Expression;
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 
 /**
  *
@@ -20,6 +23,16 @@ public class VariableDecl extends Declaration {
     @Element(required = false)
     private final Expression value;
     
+    private VariableDecl(@Element(name = "name") String name, 
+                         @ElementList(name = "modifiers") final List<String> modifiers,
+                         @ElementList(name = "annotations") final List<Annotation> annotations,
+                         @Element(name = "type") final Type type, 
+                         @Element(name = "value") final Expression value) {
+        super(name, modifiers, annotations);
+        this.type = type;
+        this.value = value;
+    }
+    
     public VariableDecl(final Type type, final String name, final Expression value) {
         super(name);
         this.type = type;
@@ -29,5 +42,13 @@ public class VariableDecl extends Declaration {
         super(name);
         this.type = type;
         this.value = null;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public Expression getValue() {
+        return value;
     }
 }

@@ -8,6 +8,7 @@ package main.java.edu.diploma.metamodel.expressions;
 
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -18,9 +19,26 @@ public class AssignmentExpression extends Expression {
     private final Expression lhs;
     private final Expression rhs;
     
+    public AssignmentExpression(@Element(name = "type") final Type type, 
+                                @Element(name = "lhs") final Expression lhs, 
+                                @Element(name = "rhs") final Expression rhs) {
+        super(type);
+        this.lhs = lhs;
+        this.rhs = rhs;
+    }
     public AssignmentExpression(final Expression lhs, final Expression rhs) {
         super(Type.UNKOWN_TYPE);
         this.lhs = lhs;
         this.rhs = rhs;
     }
+
+    public Expression getLhs() {
+        return lhs;
+    }
+
+    public Expression getRhs() {
+        return rhs;
+    }
+    
+    
 }

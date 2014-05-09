@@ -8,6 +8,7 @@ package main.java.edu.diploma.metamodel.expressions;
 
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -21,4 +22,15 @@ public class VariableReference extends Expression {
         super(Type.UNKOWN_TYPE);
         this.name = name;
     }
+    public VariableReference(@Element(name = "type") final Type type, 
+                             @Element(name = "name") final String name) {
+        super(type);
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    
 }

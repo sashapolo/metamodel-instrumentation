@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 import main.java.edu.diploma.metamodel.expressions.Expression;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 
 /**
  *
@@ -20,7 +22,8 @@ public class SwitchStatement extends Statement {
     private final Expression condition;
     private final List<Label> cases;
 
-    public SwitchStatement(final Expression condition, final List<Label> cases) {
+    public SwitchStatement(@Element(name = "condition") final Expression condition, 
+                           @ElementList(name = "cases") final List<Label> cases) {
         this.condition = condition;
         this.cases = cases;
     }

@@ -7,6 +7,7 @@
 package main.java.edu.diploma.metamodel.statements;
 
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -19,7 +20,7 @@ public class ContinueStatement extends Statement {
     public ContinueStatement() {
         this.label = "";
     }
-    public ContinueStatement(final String label) {
+    public ContinueStatement(@Element(name= "label") final String label) {
         this.label = label;
     }
 }

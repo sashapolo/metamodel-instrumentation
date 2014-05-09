@@ -8,6 +8,7 @@ package main.java.edu.diploma.metamodel.expressions;
 
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -17,8 +18,15 @@ import org.simpleframework.xml.Default;
 public class CastExpression extends Expression {
     private final Expression param;
     
-    public CastExpression(final Type type, final Expression param) {
+    public CastExpression(@Element(name = "type") final Type type, 
+                          @Element(name = "param") final Expression param) {
         super(type);
         this.param = param;
     }
+
+    public Expression getParam() {
+        return param;
+    }
+    
+    
 }

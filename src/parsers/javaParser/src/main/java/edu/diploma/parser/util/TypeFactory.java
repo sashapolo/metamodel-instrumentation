@@ -6,6 +6,10 @@
 
 package edu.diploma.parser.util;
 
+import java.util.LinkedList;
+import java.util.List;
+import main.java.edu.diploma.metamodel.types.ClassType;
+import main.java.edu.diploma.metamodel.types.TemplateParameter;
 import main.java.edu.diploma.metamodel.types.Type;
 
 /**
@@ -14,8 +18,9 @@ import main.java.edu.diploma.metamodel.types.Type;
  */
 public class TypeFactory {
     public static Type createJavaClassType(final Type type) {
-        //TODO
-        throw new UnsupportedOperationException();
+        final List<TemplateParameter> params = new LinkedList<>();
+        params.add(new TemplateParameter(type));
+        return new ClassType("Class", params);
     }
 
     private TypeFactory() {

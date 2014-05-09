@@ -9,6 +9,7 @@ package main.java.edu.diploma.metamodel.literals;
 import java.math.BigInteger;
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -18,6 +19,11 @@ import org.simpleframework.xml.Default;
 public class IntegerLiteral extends Literal {
     private final BigInteger value;
     
+    public IntegerLiteral(@Element(name = "type") final Type type, 
+                          @Element(name = "value") final BigInteger value) {
+        super(type);
+        this.value = value;
+    }
     public IntegerLiteral(final Type type, final String value) {
         super(type);
         this.value = new BigInteger(value);

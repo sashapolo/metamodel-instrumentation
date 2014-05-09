@@ -5,17 +5,21 @@ import java.util.LinkedList;
 import java.util.List;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.DefaultType;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Transient;
 
 /**
  * Created by alexander on 4/26/14.
  */
 @Default
 public class StatementBlock extends Statement {
+    @Transient
     public final static StatementBlock EMPTY_BLOCK = new StatementBlock(Collections.<Statement>emptyList());
 
     private final List<Statement> statements;
 
-    public StatementBlock(final List<Statement> statements) {
+    public StatementBlock(@ElementList(name = "statements") final List<Statement> statements) {
         this.statements = statements;
     }
 

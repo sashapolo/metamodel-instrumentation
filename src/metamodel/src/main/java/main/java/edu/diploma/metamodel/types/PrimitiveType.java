@@ -7,6 +7,7 @@
 package main.java.edu.diploma.metamodel.types;
 
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -16,7 +17,7 @@ import org.simpleframework.xml.Default;
 public class PrimitiveType extends Type {   
     private final String name;
     
-    public PrimitiveType(final String name) {
+    public PrimitiveType(@Element(name = "name") final String name) {
         this.name = name;
     }
 }

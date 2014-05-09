@@ -7,6 +7,7 @@
 package main.java.edu.diploma.metamodel.types;
 
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -16,7 +17,7 @@ import org.simpleframework.xml.Default;
 public class ArrayType extends Type {
     private final Type type;
     
-    public ArrayType(final Type type) {
+    public ArrayType(@Element(name = "type") final Type type) {
         this.type = type;
     }
 }

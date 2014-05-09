@@ -8,6 +8,7 @@ package main.java.edu.diploma.metamodel.statements;
 
 import main.java.edu.diploma.metamodel.expressions.Expression;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -17,7 +18,7 @@ import org.simpleframework.xml.Default;
 public class ThrowStatement extends Statement {
     private final Expression expr;
     
-    public ThrowStatement(final Expression expr) {
+    public ThrowStatement(@Element(name = "expr") final Expression expr) {
         this.expr = expr;
     }
 }

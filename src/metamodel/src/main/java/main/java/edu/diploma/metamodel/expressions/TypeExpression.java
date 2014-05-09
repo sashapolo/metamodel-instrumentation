@@ -8,6 +8,7 @@ package main.java.edu.diploma.metamodel.expressions;
 
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -15,7 +16,7 @@ import org.simpleframework.xml.Default;
  */
 @Default
 public class TypeExpression extends Expression {
-    public TypeExpression(final Type type) {
+    public TypeExpression(@Element(name = "type") final Type type) {
         super(type);
     }
 }

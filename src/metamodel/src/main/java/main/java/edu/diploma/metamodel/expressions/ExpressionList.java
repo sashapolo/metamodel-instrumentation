@@ -5,16 +5,24 @@ import java.util.LinkedList;
 import java.util.List;
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 
 /**
  * Created by alexander on 4/26/14.
  */
 @Default
 public class ExpressionList extends Expression {
-    private final List<Expression> expressions = new LinkedList<>();
+    private final List<Expression> expressions;
     
     public ExpressionList() {
         super(Type.UNKOWN_TYPE);
+        this.expressions = new LinkedList<>();
+    }
+    public ExpressionList(@Element(name = "type") final Type type,
+                          @ElementList(name = "expressions") final List<Expression> expressions) {
+        super(type);
+        this.expressions = expressions;
     }
     
     public void add(final Expression expr) {
@@ -22,6 +30,6 @@ public class ExpressionList extends Expression {
     }
     
     public List<Expression> asList() {
-        return Collections.unmodifiableList(expressions);
+        return expressions;
     }
 }

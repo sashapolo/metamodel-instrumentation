@@ -8,6 +8,7 @@ package main.java.edu.diploma.metamodel.expressions;
 
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -18,9 +19,26 @@ public class ArrayConstructorCall extends Expression {
     private final Expression inner;
     private final Expression size;
     
+    public ArrayConstructorCall(@Element(name = "type") final Type type, 
+                                @Element(name = "inner") final Expression inner, 
+                                @Element(name = "size") final Expression size) {
+        super(type);
+        this.inner = inner;
+        this.size = size;
+    }
     public ArrayConstructorCall(final Expression inner, final Expression size) {
         super(Type.UNKOWN_TYPE);
         this.inner = inner;
         this.size = size;
     }
+
+    public Expression getInner() {
+        return inner;
+    }
+
+    public Expression getSize() {
+        return size;
+    }
+    
+    
 }

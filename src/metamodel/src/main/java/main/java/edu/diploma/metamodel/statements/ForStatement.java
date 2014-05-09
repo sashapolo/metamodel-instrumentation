@@ -8,6 +8,7 @@ package main.java.edu.diploma.metamodel.statements;
 
 import main.java.edu.diploma.metamodel.expressions.Expression;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -20,7 +21,10 @@ public class ForStatement extends Statement {
     private final Statement action;
     private final Statement body;
     
-    public ForStatement(final Statement init, final Expression condition, final Statement action, final Statement body) {
+    public ForStatement(@Element(name = "init") final Statement init, 
+                        @Element(name = "condition") final Expression condition, 
+                        @Element(name = "action") final Statement action, 
+                        @Element(name = "body") final Statement body) {
         this.init = init;
         this.condition = condition;
         this.action = action;

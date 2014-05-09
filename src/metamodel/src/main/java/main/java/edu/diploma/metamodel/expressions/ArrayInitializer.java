@@ -11,6 +11,8 @@ import java.util.List;
 import main.java.edu.diploma.metamodel.Entity;
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 
 /**
  *
@@ -20,8 +22,18 @@ import org.simpleframework.xml.Default;
 public class ArrayInitializer extends Expression {
     private final List<Entity> values = new LinkedList<>();
     
+    public ArrayInitializer(@Element(name = "type") final Type type, 
+                            @ElementList(name = "values") final List<? extends Entity> values) {
+        super(type);
+        this.values.addAll(values);
+    }
     public ArrayInitializer(final List<? extends Entity> values) {
         super(Type.UNKOWN_TYPE);
         this.values.addAll(values);
     }
+
+    public List<Entity> getValues() {
+        return values;
+    }
+    
 }

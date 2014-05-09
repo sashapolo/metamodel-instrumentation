@@ -8,6 +8,7 @@ package main.java.edu.diploma.metamodel.literals;
 
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -16,8 +17,9 @@ import org.simpleframework.xml.Default;
 @Default
 public class CharLiteral extends Literal {
     private final String value;
-    
-    public CharLiteral(final Type type, final String value) {
+        
+    public CharLiteral(@Element(name = "type") final Type type,
+                       @Element(name = "value") final String value) {
         super(type);
         this.value = value;
     }

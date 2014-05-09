@@ -7,6 +7,7 @@
 package main.java.edu.diploma.metamodel.statements;
 
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -17,7 +18,8 @@ public class CatchStatement extends Statement {
     private final VariableDeclStatement exception;
     private final Statement body;
     
-    public CatchStatement(final VariableDeclStatement exception, final Statement body) {
+    public CatchStatement(@Element(name = "exception") final VariableDeclStatement exception, 
+                          @Element(name = "body") final Statement body) {
         this.exception = exception;
         this.body = body;
     }

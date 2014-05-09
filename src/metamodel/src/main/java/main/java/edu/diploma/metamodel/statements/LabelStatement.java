@@ -7,6 +7,7 @@
 package main.java.edu.diploma.metamodel.statements;
 
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -17,7 +18,8 @@ public class LabelStatement extends Statement {
     private final String name;
     private final Statement statement;
     
-    public LabelStatement(final String name, final Statement statement) {
+    public LabelStatement(@Element(name = "name") final String name, 
+                          @Element(name = "statement") final Statement statement) {
         this.name = name;
         this.statement = statement;
     }

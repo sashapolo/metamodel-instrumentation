@@ -26,8 +26,8 @@ public class DeclBody extends Declaration {
                      @ElementList(name = "decls") final List<Declaration> decls,
                      @ElementList(name = "modifiers") final List<String> modifiers,
                      @ElementList(name = "annotations") final List<Annotation> annotations) {
-        super(name);
-        throw new IllegalStateException("Calling a workaround constructor!");
+        super(name, modifiers, annotations);
+        this.decls = decls;
     }
     public DeclBody(@ElementList(name = "decls") final List<Declaration> decls) {
         super("");
@@ -39,5 +39,9 @@ public class DeclBody extends Declaration {
     }
     public void addAll(final List<? extends Declaration> decls) {
         this.decls.addAll(decls);
+    }
+
+    public List<Declaration> getDecls() {
+        return decls;
     }
 }

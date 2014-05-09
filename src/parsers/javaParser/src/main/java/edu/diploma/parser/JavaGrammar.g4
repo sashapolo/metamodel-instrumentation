@@ -1105,8 +1105,13 @@ returns [ForEachStatement result]
 
 forInit
 returns [Statement result]
-    :   localVariableDeclaration { $result = new StatementList($localVariableDeclaration.result); }
-    |   expressionList           { $result = $expressionList.result; }
+    :   localVariableDeclaration 
+        { 
+            StatementList t = new StatementList();
+            t.addAll($localVariableDeclaration.result);
+            $result = t;
+        }
+    |   expressionList { $result = $expressionList.result; }
     ;
 
 enhancedForControl
@@ -1167,36 +1172,36 @@ expression
 returns [Expression result]
 locals [String operation]
     :   primary { $result = $primary.result; }
-    |   expression '.' Identifier 
-        { $result = new AttributeAccess($expression.result, $Identifier.text); }
-    |   expression '.' 'this'
-        { $result = new AttributeAccess($expression.result, "this"); }
+    |   param=expression '.' Identifier 
+        { $result = new AttributeAccess($param.result, $Identifier.text); }
+    |   param=expression '.' 'this'
+        { $result = new AttributeAccess($param.result, "this"); }
     //|   expression '.' 'new' nonWildcardTypeArguments? innerCreator
     //|   expression '.' 'super' superSuffix
-    |   expression '.' explicitGenericInvocation
+    |   param=expression '.' explicitGenericInvocation
         { 
             $result = new FunctionCall($explicitGenericInvocation.name, 
-                                       $expression.result, 
+                                       $param.result, 
                                        $explicitGenericInvocation.params, 
                                        $explicitGenericInvocation.templates); 
         }
     |   caller=expression '[' param=expression ']'
         { $result = new ArrayAccessExpression($caller.result, $param.result); }
-    |   expression '.' Identifier '(' expressionList? ')'
+    |   param=expression '.' Identifier '(' expressionList? ')'
         { 
             List<Expression> params = $expressionList.ctx == null ? Collections.<Expression>emptyList() : $expressionList.result.asList();
-            $result = new FunctionCall($Identifier.text, $expression.result, params);
+            $result = new FunctionCall($Identifier.text, $param.result, params);
         }
     |   'new' creator { $result = $creator.result; }
-    |   '(' type ')' expression 
-        { $result = new CastExpression($type.result, $expression.result); }
-    |   expression ('++' { $operation = "++"; } | '--' { $operation = "--"; })
-        { $result = new UnaryExpression($expression.result, $operation, true); }
+    |   '(' type ')' param=expression 
+        { $result = new CastExpression($type.result, $param.result); }
+    |   param=expression ('++' { $operation = "++"; } | '--' { $operation = "--"; })
+        { $result = new UnaryExpression($param.result, $operation, true); }
     |   ('+' { $operation = "+"; } | '-' { $operation = "-"; } | '++' { $operation = "++"; } | '--' { $operation = "--"; }) 
-        expression
-        { $result = new UnaryExpression($expression.result, $operation); } 
-    |   ('~' { $operation = "~"; } | '!' { $operation = "!"; }) expression
-        { $result = new UnaryExpression($expression.result, $operation); } 
+        param=expression
+        { $result = new UnaryExpression($param.result, $operation); } 
+    |   ('~' { $operation = "~"; } | '!' { $operation = "!"; }) param=expression
+        { $result = new UnaryExpression($param.result, $operation); } 
     |   lhs=expression ('*' { $operation = "*"; } | '/' { $operation = "/"; } | '%' { $operation = "%"; }) rhs=expression
         { $result = new BinaryExpression($lhs.result, $rhs.result, $operation); } 
     |   lhs=expression ('+' { $operation = "+"; } | '-' { $operation = "-"; }) rhs=expression

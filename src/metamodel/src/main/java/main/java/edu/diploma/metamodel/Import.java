@@ -1,7 +1,6 @@
 package main.java.edu.diploma.metamodel;
 
 import org.simpleframework.xml.Default;
-import org.simpleframework.xml.DefaultType;
 import org.simpleframework.xml.Element;
 
 /**
@@ -12,7 +11,7 @@ import org.simpleframework.xml.Element;
  * To change this template use File | Settings | File Templates.
  */
     
-@Default(DefaultType.FIELD)
+@Default
 public class Import extends Entity {
     private final String name;
     private final boolean isStatic;

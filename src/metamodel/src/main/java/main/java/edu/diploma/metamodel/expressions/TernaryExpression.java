@@ -8,6 +8,7 @@ package main.java.edu.diploma.metamodel.expressions;
 
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -25,4 +26,27 @@ public class TernaryExpression extends Expression {
         this.ifBranch = ifBranch;
         this.elseBranch = elseBranch;
     }
+    public TernaryExpression(@Element(name = "type") final Type type, 
+                             @Element(name = "condition") final Expression condition, 
+                             @Element(name = "ifBranch") final Expression ifBranch, 
+                             @Element(name = "elseBranch") final Expression elseBranch) {
+        super(type);
+        this.condition = condition;
+        this.ifBranch = ifBranch;
+        this.elseBranch = elseBranch;
+    }
+
+    public Expression getCondition() {
+        return condition;
+    }
+
+    public Expression getIfBranch() {
+        return ifBranch;
+    }
+
+    public Expression getElseBranch() {
+        return elseBranch;
+    }
+    
+    
 }

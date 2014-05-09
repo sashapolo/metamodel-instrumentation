@@ -8,6 +8,7 @@ package main.java.edu.diploma.metamodel.statements;
 
 import main.java.edu.diploma.metamodel.expressions.Expression;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -19,7 +20,9 @@ public class ForEachStatement extends Statement {
     private final Expression range;
     private final Statement body;
     
-    public ForEachStatement(final VariableDeclStatement init, final Expression range, final Statement body) {
+    public ForEachStatement(@Element(name = "init") final VariableDeclStatement init, 
+                            @Element(name = "range") final Expression range, 
+                            @Element(name = "body") final Statement body) {
         this.init = init;
         this.range = range;
         this.body = body;

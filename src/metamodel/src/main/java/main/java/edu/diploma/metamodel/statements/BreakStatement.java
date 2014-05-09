@@ -7,6 +7,7 @@
 package main.java.edu.diploma.metamodel.statements;
 
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -19,7 +20,7 @@ public class BreakStatement extends Statement {
     public BreakStatement() {
         this.label = "";
     }
-    public BreakStatement(final String label) {
+    public BreakStatement(@Element(name = "label") final String label) {
         this.label = label;
     }
 }

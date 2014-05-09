@@ -8,6 +8,7 @@ package main.java.edu.diploma.metamodel.expressions;
 
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
@@ -30,5 +31,26 @@ public class UnaryExpression extends Expression {
         this.operand = operand;
         this.operation = operation;
         this.postfix = postfix;
+    }
+    public UnaryExpression(@Element(name = "type") final Type type, 
+                           @Element(name = "operand") final Expression operand, 
+                           @Element(name = "operation") final String operation, 
+                           @Element(name = "postfix") boolean postfix) {
+        super(type);
+        this.operand = operand;
+        this.operation = operation;
+        this.postfix = postfix;
+    }
+
+    public Expression getOperand() {
+        return operand;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+
+    public boolean isPostfix() {
+        return postfix;
     }
 }

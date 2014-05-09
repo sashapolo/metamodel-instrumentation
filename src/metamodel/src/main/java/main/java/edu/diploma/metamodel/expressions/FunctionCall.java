@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.List;
 import main.java.edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 
 /**
  *
@@ -37,4 +39,33 @@ public class FunctionCall extends Expression {
         this.params = params;
         this.templateParams = templateParams;
     }
+    public FunctionCall(@Element(name = "type") final Type type, 
+                        @Element(name = "name") final String name, 
+                        @Element(name = "caller") final Expression caller, 
+                        @ElementList(name = "params") final List<Expression> params, 
+                        @ElementList(name = "templateParams") final List<Type> templateParams) {
+        super(type);
+        this.name = name;
+        this.caller = caller;
+        this.params = params;
+        this.templateParams = templateParams;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Expression getCaller() {
+        return caller;
+    }
+
+    public List<Expression> getParams() {
+        return params;
+    }
+
+    public List<Type> getTemplateParams() {
+        return templateParams;
+    }
+    
+    
 }

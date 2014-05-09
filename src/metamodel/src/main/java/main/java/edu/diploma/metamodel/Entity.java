@@ -1,7 +1,6 @@
 package main.java.edu.diploma.metamodel;
 
 import org.simpleframework.xml.Default;
-import org.simpleframework.xml.DefaultType;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,6 +10,6 @@ import org.simpleframework.xml.DefaultType;
  * To change this template use File | Settings | File Templates.
  */
 
-@Default(DefaultType.FIELD)
+@Default
 public class Entity {
 }
