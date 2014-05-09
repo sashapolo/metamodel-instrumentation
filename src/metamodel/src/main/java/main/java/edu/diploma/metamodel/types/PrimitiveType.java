@@ -6,10 +6,13 @@
 
 package main.java.edu.diploma.metamodel.types;
 
+import org.simpleframework.xml.Default;
+
 /**
  *
  * @author alexander
  */
+@Default
 public class PrimitiveType extends Type {   
     private final String name;
     

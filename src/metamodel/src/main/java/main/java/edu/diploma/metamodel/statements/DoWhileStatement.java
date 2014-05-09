@@ -7,11 +7,13 @@
 package main.java.edu.diploma.metamodel.statements;
 
 import main.java.edu.diploma.metamodel.expressions.Expression;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
+@Default
 public class DoWhileStatement extends Statement {
     private final Expression condition;
     private final Statement body;

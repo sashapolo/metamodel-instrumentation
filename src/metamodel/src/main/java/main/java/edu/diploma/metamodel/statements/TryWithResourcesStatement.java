@@ -8,11 +8,13 @@ package main.java.edu.diploma.metamodel.statements;
 
 import java.util.List;
 import main.java.edu.diploma.metamodel.declarations.VariableDecl;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
+@Default
 public class TryWithResourcesStatement extends Statement {
     private final List<VariableDecl> resources;
     private final Statement body;

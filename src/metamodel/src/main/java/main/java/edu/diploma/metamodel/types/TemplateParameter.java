@@ -6,10 +6,13 @@
 
 package main.java.edu.diploma.metamodel.types;
 
+import org.simpleframework.xml.Default;
+
 /**
  *
  * @author alexander
  */
+@Default
 public class TemplateParameter extends Type {
     private final Type type;
     private final boolean isSuper;

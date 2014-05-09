@@ -8,11 +8,13 @@ package main.java.edu.diploma.metamodel.literals;
 
 import java.math.BigInteger;
 import main.java.edu.diploma.metamodel.types.Type;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
+@Default
 public class IntegerLiteral extends Literal {
     private final BigInteger value;
     

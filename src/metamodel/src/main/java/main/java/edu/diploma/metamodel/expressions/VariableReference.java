@@ -7,11 +7,13 @@
 package main.java.edu.diploma.metamodel.expressions;
 
 import main.java.edu.diploma.metamodel.types.Type;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
+@Default
 public class VariableReference extends Expression {
     private final String name;
 

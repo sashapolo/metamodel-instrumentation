@@ -7,11 +7,13 @@
 package main.java.edu.diploma.metamodel.statements;
 
 import main.java.edu.diploma.metamodel.expressions.Expression;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
+@Default
 public class ForStatement extends Statement {
     private final Statement init;
     private final Expression condition;

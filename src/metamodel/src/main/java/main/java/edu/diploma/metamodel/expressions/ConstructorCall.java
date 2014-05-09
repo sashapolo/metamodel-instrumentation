@@ -10,11 +10,13 @@ import java.util.Collections;
 import java.util.List;
 import main.java.edu.diploma.metamodel.declarations.DeclBody;
 import main.java.edu.diploma.metamodel.types.Type;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
+@Default
 public class ConstructorCall extends Expression {
     private final List<Expression> params;
     private final List<Type> templates;

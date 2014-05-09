@@ -9,7 +9,7 @@ import org.simpleframework.xml.DefaultType;
 /**
  * Created by alexander on 4/26/14.
  */
-@Default(DefaultType.FIELD)
+@Default
 public class StatementBlock extends Statement {
     public final static StatementBlock EMPTY_BLOCK = new StatementBlock(Collections.<Statement>emptyList());
 

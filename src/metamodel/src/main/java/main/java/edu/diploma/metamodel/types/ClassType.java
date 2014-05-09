@@ -2,6 +2,8 @@ package main.java.edu.diploma.metamodel.types;
 
 import java.util.Collections;
 import java.util.List;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,8 +13,11 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class ClassType extends Type {
+    @Element
     private final String name;
+    @Element(required = false)
     private final ClassType outer;
+    @ElementList
     private final List<TemplateParameter> templates;
     
     public ClassType(final String name) {

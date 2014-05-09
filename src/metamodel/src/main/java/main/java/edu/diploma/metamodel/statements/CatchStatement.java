@@ -6,10 +6,13 @@
 
 package main.java.edu.diploma.metamodel.statements;
 
+import org.simpleframework.xml.Default;
+
 /**
  *
  * @author alexander
  */
+@Default
 public class CatchStatement extends Statement {
     private final VariableDeclStatement exception;
     private final Statement body;

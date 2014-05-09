@@ -7,11 +7,13 @@
 package main.java.edu.diploma.metamodel.statements;
 
 import main.java.edu.diploma.metamodel.expressions.Expression;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
+@Default
 public class ForEachStatement extends Statement {
     private final VariableDeclStatement init;
     private final Expression range;

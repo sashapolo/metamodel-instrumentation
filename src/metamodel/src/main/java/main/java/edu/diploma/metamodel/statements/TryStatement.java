@@ -7,11 +7,13 @@
 package main.java.edu.diploma.metamodel.statements;
 
 import java.util.List;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
+@Default
 public class TryStatement extends Statement {
     private final Statement body;
     private final Statement finallyBlock;

@@ -9,11 +9,13 @@ package main.java.edu.diploma.metamodel.statements;
 import java.util.LinkedList;
 import java.util.List;
 import main.java.edu.diploma.metamodel.expressions.Expression;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
+@Default
 public class SwitchStatement extends Statement {
     private final Expression condition;
     private final List<Label> cases;

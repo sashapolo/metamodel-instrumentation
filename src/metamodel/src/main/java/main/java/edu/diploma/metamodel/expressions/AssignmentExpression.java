@@ -7,11 +7,13 @@
 package main.java.edu.diploma.metamodel.expressions;
 
 import main.java.edu.diploma.metamodel.types.Type;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
+@Default
 public class AssignmentExpression extends Expression {
     private final Expression lhs;
     private final Expression rhs;

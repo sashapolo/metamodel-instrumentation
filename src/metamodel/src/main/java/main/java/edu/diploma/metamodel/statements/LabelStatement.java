@@ -6,10 +6,13 @@
 
 package main.java.edu.diploma.metamodel.statements;
 
+import org.simpleframework.xml.Default;
+
 /**
  *
  * @author alexander
  */
+@Default
 public class LabelStatement extends Statement {
     private final String name;
     private final Statement statement;

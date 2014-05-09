@@ -8,11 +8,13 @@ package main.java.edu.diploma.metamodel.expressions;
 
 import main.java.edu.diploma.metamodel.statements.Statement;
 import main.java.edu.diploma.metamodel.types.Type;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
+@Default
 public class Expression extends Statement {
     private final Type type;
     
