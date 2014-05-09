@@ -8,20 +8,27 @@ package main.java.edu.diploma.metamodel.declarations;
 
 import java.util.Collections;
 import java.util.List;
-import org.simpleframework.xml.Default;
-import org.simpleframework.xml.DefaultType;
+import main.java.edu.diploma.metamodel.Annotation;
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 
 /**
  *
  * @author alexander
  */
-@Default(DefaultType.FIELD)
 public class DeclBody extends Declaration {
     public static final DeclBody EMPTY = new DeclBody(Collections.<Declaration>emptyList());
     
+    @ElementList
     private final List<Declaration> decls;
     
+    private DeclBody(@Element(name = "name") String name, 
+                     @ElementList(name = "decls") final List<Declaration> decls,
+                     @ElementList(name = "modifiers") final List<String> modifiers,
+                     @ElementList(name = "annotations") final List<Annotation> annotations) {
+        super(name);
+        throw new IllegalStateException("Calling a workaround constructor!");
+    }
     public DeclBody(@ElementList(name = "decls") final List<Declaration> decls) {
         super("");
         this.decls = decls;

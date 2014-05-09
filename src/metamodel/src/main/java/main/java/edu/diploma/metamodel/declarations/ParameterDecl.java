@@ -6,10 +6,13 @@
 
 package main.java.edu.diploma.metamodel.declarations;
 
+import org.simpleframework.xml.Default;
+
 /**
  *
  * @author alexander
  */
+@Default
 public class ParameterDecl extends Declaration {
     private final VariableDecl value;
     private final boolean variadic;

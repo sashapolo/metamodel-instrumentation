@@ -8,11 +8,13 @@ package main.java.edu.diploma.metamodel.declarations;
 
 import java.util.List;
 import main.java.edu.diploma.metamodel.expressions.Expression;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
+@Default
 public class EnumValue extends Declaration {
     private final List<Expression> value;
     private final DeclBody body;

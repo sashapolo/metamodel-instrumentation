@@ -37,7 +37,7 @@ public class JavaParser {
         TranslationUnit unit = parser.compilationUnit().result;
         
         Serializer serializer = new Persister();
-        File result = new File("example.xml");
+        File result = new File("metamodel.xml");
         serializer.write(unit, result);
     }
     

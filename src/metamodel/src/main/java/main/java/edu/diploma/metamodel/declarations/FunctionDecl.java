@@ -10,11 +10,13 @@ import java.util.Collections;
 import java.util.List;
 import main.java.edu.diploma.metamodel.statements.StatementBlock;
 import main.java.edu.diploma.metamodel.types.Type;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
+@Default
 public class FunctionDecl extends Declaration {
     private final Type retType;
     private final List<String> exceptions;

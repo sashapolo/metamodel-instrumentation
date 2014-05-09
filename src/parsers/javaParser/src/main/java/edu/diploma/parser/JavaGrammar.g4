@@ -664,7 +664,7 @@ returns [String result]
 locals [StringBuilder res]
     :   Identifier
         { $res = new StringBuilder($Identifier.text); }
-        ( '.' Identifier { $res.append($Identifier.text); } )*
+        ( '.' Identifier { $res.append(".").append($Identifier.text); } )*
         { $result = $res.toString(); }
     ;
 

@@ -9,11 +9,13 @@ package main.java.edu.diploma.metamodel.declarations;
 import java.util.Collections;
 import java.util.List;
 import main.java.edu.diploma.metamodel.types.Type;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
+@Default
 public class EnumDecl extends Declaration {
     private final List<Type> inherits;
     private final List<EnumValue> enums;

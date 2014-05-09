@@ -8,11 +8,13 @@ package main.java.edu.diploma.metamodel.declarations;
 
 import java.util.List;
 import main.java.edu.diploma.metamodel.types.Type;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
+@Default
 public class TemplateDecl extends Declaration {
     private final List<Type> bounds;
     

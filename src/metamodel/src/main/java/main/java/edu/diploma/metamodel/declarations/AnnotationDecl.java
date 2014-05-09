@@ -6,10 +6,13 @@
 
 package main.java.edu.diploma.metamodel.declarations;
 
+import org.simpleframework.xml.Default;
+
 /**
  *
  * @author alexander
  */
+@Default
 public class AnnotationDecl extends Declaration {
     private final DeclBody body;
     
