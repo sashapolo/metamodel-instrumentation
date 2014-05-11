@@ -1187,6 +1187,11 @@ locals [String operation]
         }
     |   caller=expression '[' param=expression ']'
         { $result = new ArrayAccessExpression($caller.result, $param.result); }
+    |   Identifier '(' expressionList? ')'
+        { 
+            List<Expression> params = $expressionList.ctx == null ? Collections.<Expression>emptyList() : $expressionList.result.asList();
+            $result = new FunctionCall($Identifier.text, null, params);
+        }
     |   param=expression '.' Identifier '(' expressionList? ')'
         { 
             List<Expression> params = $expressionList.ctx == null ? Collections.<Expression>emptyList() : $expressionList.result.asList();

@@ -6,6 +6,7 @@ public class Test {
 
     public static void main(String[] args) throws Exception {
         int z = 5;
+        x(z);
         return 2 + x(z);
     }
 

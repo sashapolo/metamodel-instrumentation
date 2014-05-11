@@ -9,7 +9,6 @@ package main.java.edu.diploma.metamodel.expressions;
 import java.util.Collections;
 import java.util.List;
 import main.java.edu.diploma.metamodel.types.Type;
-import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 
@@ -17,11 +16,14 @@ import org.simpleframework.xml.ElementList;
  *
  * @author alexander
  */
-@Default
 public class FunctionCall extends Expression {
+    @Element
     private final String name;
+    @Element(required = false)
     private final Expression caller;
+    @ElementList
     private final List<Expression> params;
+    @ElementList
     private final List<Type> templateParams;
     
     public FunctionCall(final String name, final Expression caller, final List<Expression> params) {
