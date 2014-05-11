@@ -4,22 +4,19 @@
  * and open the template in the editor.
  */
 
-package edu.diploma.parser;
+package edu.diploma.metamodel.literals;
 
 import edu.diploma.metamodel.expressions.Expression;
+import edu.diploma.metamodel.types.Type;
+import org.simpleframework.xml.Default;
 
 /**
  *
  * @author alexander
  */
-public class ArrayParam {
-    private final Expression size;
-    
-    public ArrayParam(final Expression size) {
-        this.size = size;
-    }
-    
-    public Expression getSize() {
-        return size;
+@Default
+public class Literal extends Expression {
+    public Literal(final Type type) {
+        super(type);
     }
 }

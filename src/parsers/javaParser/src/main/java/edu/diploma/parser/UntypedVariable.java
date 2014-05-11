@@ -6,10 +6,10 @@
 
 package edu.diploma.parser;
 
-import main.java.edu.diploma.metamodel.declarations.VariableDecl;
-import main.java.edu.diploma.metamodel.expressions.Expression;
-import main.java.edu.diploma.metamodel.types.ArrayType;
-import main.java.edu.diploma.metamodel.types.Type;
+import edu.diploma.metamodel.declarations.VariableDecl;
+import edu.diploma.metamodel.expressions.Expression;
+import edu.diploma.metamodel.types.ArrayType;
+import edu.diploma.metamodel.types.Type;
 
 /**
  *
