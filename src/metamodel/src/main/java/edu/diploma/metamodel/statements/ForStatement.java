@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.statements;
 
 import edu.diploma.metamodel.expressions.Expression;
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -15,7 +16,7 @@ import org.simpleframework.xml.Element;
  * @author alexander
  */
 @Default
-public class ForStatement extends Statement {
+public class ForStatement implements Statement {
     private final Statement init;
     private final Expression condition;
     private final Statement action;
@@ -29,5 +30,13 @@ public class ForStatement extends Statement {
         this.condition = condition;
         this.action = action;
         this.body = body;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(init);
+        visitor.visit(condition);
+        visitor.visit(action);
+        visitor.visit(body);
     }
 }

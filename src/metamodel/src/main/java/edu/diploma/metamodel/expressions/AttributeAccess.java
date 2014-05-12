@@ -7,16 +7,17 @@
 package edu.diploma.metamodel.expressions;
 
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
+import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
 /**
  *
  * @author alexander
  */
+@Default
 public class AttributeAccess extends Expression {
-    @Element
     private final Expression expr;
-    @Element
     private final String name;
     
     private AttributeAccess(@Element(name = "type") final Type type,
@@ -40,5 +41,10 @@ public class AttributeAccess extends Expression {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(expr);
     }
 }

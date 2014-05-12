@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.expressions;
 
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -47,6 +48,11 @@ public class BinaryExpression extends Expression {
     public String getOperation() {
         return operation;
     }
-    
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(lhs);
+        visitor.visit(rhs);
+    }
     
 }

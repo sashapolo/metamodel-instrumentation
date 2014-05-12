@@ -8,6 +8,7 @@ package edu.diploma.metamodel.expressions;
 
 import edu.diploma.metamodel.declarations.DeclBody;
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
 import java.util.Collections;
 import java.util.List;
 import org.simpleframework.xml.Element;
@@ -48,15 +49,28 @@ public class ConstructorCall extends Expression {
     }
 
     public List<Expression> getParams() {
-        return params;
+        return Collections.unmodifiableList(params);
     }
 
     public List<Type> getTemplates() {
-        return templates;
+        return Collections.unmodifiableList(templates);
     }
 
     public DeclBody getBody() {
         return body;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        for (final Expression expr : params) {
+            visitor.visit(expr);
+        }
+        for (final Type type : templates) {
+            visitor.visit(type);
+        }
+        if (body != null) {
+            visitor.visit(body);
+        }
     }
     
 }

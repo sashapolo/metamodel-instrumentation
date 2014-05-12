@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.expressions;
 
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -52,5 +53,10 @@ public class UnaryExpression extends Expression {
 
     public boolean isPostfix() {
         return postfix;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(operand);
     }
 }

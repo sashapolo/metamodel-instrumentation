@@ -6,6 +6,7 @@
 
 package edu.diploma.metamodel.statements;
 
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -14,7 +15,7 @@ import org.simpleframework.xml.Element;
  * @author alexander
  */
 @Default
-public class LabelStatement extends Statement {
+public class LabelStatement implements Statement {
     private final String name;
     private final Statement statement;
     
@@ -22,5 +23,10 @@ public class LabelStatement extends Statement {
                           @Element(name = "statement") final Statement statement) {
         this.name = name;
         this.statement = statement;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(statement);
     }
 }

@@ -16,7 +16,7 @@ import org.simpleframework.xml.Element;
  * @author alexander
  */
 @Default
-public class Expression extends Statement {
+public abstract class Expression implements Statement {
     private final Type type;
     
     public Expression(@Element(name = "type") final Type type) {

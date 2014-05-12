@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.statements;
 
 import edu.diploma.metamodel.expressions.Expression;
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -15,7 +16,7 @@ import org.simpleframework.xml.Element;
  * @author alexander
  */
 @Default
-public class ForEachStatement extends Statement {
+public class ForEachStatement implements Statement {
     private final VariableDeclStatement init;
     private final Expression range;
     private final Statement body;
@@ -26,5 +27,12 @@ public class ForEachStatement extends Statement {
         this.init = init;
         this.range = range;
         this.body = body;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(init);
+        visitor.visit(range);
+        visitor.visit(body);
     }
 }

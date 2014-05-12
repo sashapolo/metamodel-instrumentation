@@ -8,6 +8,8 @@ package edu.diploma.metamodel.expressions;
 
 import edu.diploma.metamodel.Entity;
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import org.simpleframework.xml.Default;
@@ -33,7 +35,14 @@ public class ArrayInitializer extends Expression {
     }
 
     public List<Entity> getValues() {
-        return values;
+        return Collections.unmodifiableList(values);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        for (final Entity val : values) {
+            visitor.visit(val);
+        }
     }
     
 }

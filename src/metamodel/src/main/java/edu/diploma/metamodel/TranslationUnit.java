@@ -7,6 +7,7 @@
 package edu.diploma.metamodel;
 
 import edu.diploma.metamodel.declarations.Declaration;
+import edu.diploma.visitors.Visitor;
 import java.util.Collections;
 import java.util.List;
 import org.simpleframework.xml.Default;
@@ -19,7 +20,7 @@ import org.simpleframework.xml.Root;
  */
 @Root
 @Default
-public class TranslationUnit extends Entity {
+public class TranslationUnit implements Entity {
     private final List<Import> imports;
     private final List<Declaration> types;
     
@@ -35,5 +36,15 @@ public class TranslationUnit extends Entity {
 
     public List<Declaration> getTypes() {
         return Collections.unmodifiableList(types);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        for (final Import i : imports) {
+            visitor.visit(i);
+        }
+        for (final Declaration d : types) {
+            visitor.visit(d);
+        }
     }
 }

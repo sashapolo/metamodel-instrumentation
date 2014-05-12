@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.expressions;
 
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -38,6 +39,12 @@ public class ArrayConstructorCall extends Expression {
 
     public Expression getSize() {
         return size;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(inner);
+        visitor.visit(size);
     }
     
     

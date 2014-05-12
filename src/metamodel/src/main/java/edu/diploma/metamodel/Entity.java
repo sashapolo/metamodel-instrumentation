@@ -1,5 +1,6 @@
 package edu.diploma.metamodel;
 
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 
 /**
@@ -11,5 +12,6 @@ import org.simpleframework.xml.Default;
  */
 
 @Default
-public class Entity {
+public interface Entity {
+    public void accept(final Visitor visitor);
 }

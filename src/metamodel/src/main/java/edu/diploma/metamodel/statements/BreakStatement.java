@@ -6,6 +6,7 @@
 
 package edu.diploma.metamodel.statements;
 
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -14,7 +15,7 @@ import org.simpleframework.xml.Element;
  * @author alexander
  */
 @Default
-public class BreakStatement extends Statement {
+public class BreakStatement implements Statement {
     private final String label;
     
     public BreakStatement() {
@@ -23,4 +24,7 @@ public class BreakStatement extends Statement {
     public BreakStatement(@Element(name = "label") final String label) {
         this.label = label;
     }
+
+    @Override
+    public void accept(Visitor visitor) {}
 }

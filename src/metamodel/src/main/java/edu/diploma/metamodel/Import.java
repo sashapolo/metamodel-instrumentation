@@ -1,5 +1,6 @@
 package edu.diploma.metamodel;
 
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -12,7 +13,7 @@ import org.simpleframework.xml.Element;
  */
     
 @Default
-public class Import extends Entity {
+public class Import implements Entity {
     private final String name;
     private final boolean isStatic;
     private final boolean isWildcard;
@@ -24,4 +25,7 @@ public class Import extends Entity {
         this.isStatic = isStatic;
         this.isWildcard = isWildcard;
     }
+
+    @Override
+    public void accept(Visitor visitor) {}
 }

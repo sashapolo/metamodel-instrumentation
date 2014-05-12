@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.expressions;
 
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -30,6 +31,10 @@ public class VariableReference extends Expression {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
     }
     
     

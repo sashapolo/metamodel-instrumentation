@@ -6,6 +6,7 @@
 
 package edu.diploma.metamodel.statements;
 
+import edu.diploma.visitors.Visitor;
 import java.util.List;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -14,7 +15,7 @@ import org.simpleframework.xml.ElementList;
  *
  * @author alexander
  */
-public class TryStatement extends Statement {
+public class TryStatement implements Statement {
     @Element
     private final Statement body;
     @Element(required = false)
@@ -33,5 +34,16 @@ public class TryStatement extends Statement {
         this.body = body;
         this.catches = catches;
         this.finallyBlock = finallyBlock;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(body);
+        for (final CatchStatement c : catches) {
+            visitor.visit(c);
+        }
+        if (finallyBlock != null) {
+            visitor.visit(finallyBlock);
+        }
     }
 }

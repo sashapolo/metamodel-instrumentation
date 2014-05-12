@@ -1,6 +1,7 @@
 package edu.diploma.metamodel.expressions;
 
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
 import java.util.LinkedList;
 import java.util.List;
 import org.simpleframework.xml.Default;
@@ -30,5 +31,12 @@ public class ExpressionList extends Expression {
     
     public List<Expression> asList() {
         return expressions;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        for (final Expression expr : expressions) {
+            visitor.visit(expr);
+        }
     }
 }

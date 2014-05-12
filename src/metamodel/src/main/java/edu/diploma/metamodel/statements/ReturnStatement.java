@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.statements;
 
 import edu.diploma.metamodel.expressions.Expression;
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -15,10 +16,15 @@ import org.simpleframework.xml.Element;
  * @author alexander
  */
 @Default
-public class ReturnStatement extends Statement {
+public class ReturnStatement implements Statement {
     private final Expression expr;
     
     public ReturnStatement(@Element(name = "expr") final Expression expr) {
         this.expr = expr;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(expr);
     }
 }

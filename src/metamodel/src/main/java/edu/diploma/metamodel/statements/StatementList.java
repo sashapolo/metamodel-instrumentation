@@ -6,6 +6,7 @@
 
 package edu.diploma.metamodel.statements;
 
+import edu.diploma.visitors.Visitor;
 import java.util.LinkedList;
 import java.util.List;
 import org.simpleframework.xml.Default;
@@ -16,7 +17,7 @@ import org.simpleframework.xml.ElementList;
  * @author alexander
  */
 @Default
-public class StatementList extends Statement {
+public class StatementList implements Statement {
     private final List<Statement> statements;
     
     public StatementList(@ElementList(name = "statements") final List<Statement> statements) {
@@ -28,5 +29,12 @@ public class StatementList extends Statement {
     
     public void addAll(final List<? extends Statement> statements) {
         this.statements.addAll(statements);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        for (final Statement state : statements) {
+            visitor.visit(state);
+        }
     }
 }

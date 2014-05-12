@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.statements;
 
 import edu.diploma.metamodel.declarations.VariableDecl;
+import edu.diploma.visitors.Visitor;
 import java.util.List;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -15,7 +16,7 @@ import org.simpleframework.xml.ElementList;
  *
  * @author alexander
  */
-public class TryWithResourcesStatement extends Statement {
+public class TryWithResourcesStatement implements Statement {
     @ElementList
     private final List<VariableDecl> resources;
     @Element
@@ -40,5 +41,19 @@ public class TryWithResourcesStatement extends Statement {
         this.body = body;
         this.catches = catches;
         this.finallyBlock = finallyBlock;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        for (final VariableDecl var : resources) {
+            visitor.visit(var);
+        }
+        visitor.visit(body);
+        for (final CatchStatement c : catches) {
+            visitor.visit(c);
+        }
+        if (finallyBlock != null) {
+            visitor.visit(finallyBlock);
+        }
     }
 }

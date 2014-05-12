@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.literals;
 
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -26,5 +27,9 @@ public class FloatLiteral extends Literal {
     public FloatLiteral(final Type type, final String value) {
         super(type);
         this.value = Double.valueOf(value);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
     }
 }

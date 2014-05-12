@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.expressions;
 
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
 import java.util.Collections;
 import java.util.List;
 import org.simpleframework.xml.Element;
@@ -62,11 +63,24 @@ public class FunctionCall extends Expression {
     }
 
     public List<Expression> getParams() {
-        return params;
+        return Collections.unmodifiableList(params);
     }
 
     public List<Type> getTemplateParams() {
-        return templateParams;
+        return Collections.unmodifiableList(templateParams);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        if (caller != null) {
+            visitor.visit(caller);
+        }
+        for (final Expression expr : params) {
+            visitor.visit(expr);
+        }
+        for (final Type type : templateParams) {
+            visitor.visit(type);
+        }
     }
     
     

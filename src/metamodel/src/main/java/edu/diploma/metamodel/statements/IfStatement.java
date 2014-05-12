@@ -1,12 +1,13 @@
 package edu.diploma.metamodel.statements;
 
 import edu.diploma.metamodel.expressions.Expression;
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Element;
 
 /**
  * Created by alexander on 4/26/14.
  */
-public class IfStatement extends Statement {
+public class IfStatement implements Statement {
     @Element
     private final Expression condition;
     @Element
@@ -20,5 +21,14 @@ public class IfStatement extends Statement {
         this.condition = condition;
         this.ifer = ifer;
         this.elser = elser;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(condition);
+        visitor.visit(ifer);
+        if (elser != null) {
+            visitor.visit(elser);
+        }
     }
 }

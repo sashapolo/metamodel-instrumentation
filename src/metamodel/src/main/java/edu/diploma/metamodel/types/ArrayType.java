@@ -6,6 +6,7 @@
 
 package edu.diploma.metamodel.types;
 
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -14,10 +15,15 @@ import org.simpleframework.xml.Element;
  * @author alexander
  */
 @Default
-public class ArrayType extends Type {
+public class ArrayType implements Type {
     private final Type type;
     
     public ArrayType(@Element(name = "type") final Type type) {
         this.type = type;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(type);
     }
 }

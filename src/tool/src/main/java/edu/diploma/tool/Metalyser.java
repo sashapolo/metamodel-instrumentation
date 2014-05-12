@@ -74,6 +74,11 @@ public class Metalyser extends javax.swing.JFrame {
 
         cfgMenuItem.setText("Control Flow Graph");
         cfgMenuItem.setToolTipText("");
+        cfgMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cfgMenuItemActionPerformed(evt);
+            }
+        });
         viewMenu.add(cfgMenuItem);
 
         jMenuBar1.add(viewMenu);
@@ -117,6 +122,10 @@ public class Metalyser extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_openMenuItemActionPerformed
+
+    private void cfgMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cfgMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cfgMenuItemActionPerformed
     
     /**
      * @param args the command line arguments

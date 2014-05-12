@@ -6,6 +6,7 @@
 
 package edu.diploma.metamodel.types;
 
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -14,10 +15,13 @@ import org.simpleframework.xml.Element;
  * @author alexander
  */
 @Default
-public class PrimitiveType extends Type {   
+public class PrimitiveType implements Type {   
     private final String name;
     
     public PrimitiveType(@Element(name = "name") final String name) {
         this.name = name;
     }
+
+    @Override
+    public void accept(Visitor visitor) {}
 }

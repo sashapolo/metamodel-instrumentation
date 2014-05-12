@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.statements;
 
 import edu.diploma.metamodel.expressions.Expression;
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -15,7 +16,7 @@ import org.simpleframework.xml.Element;
  * @author alexander
  */
 @Default
-public class WhileStatement extends Statement {
+public class WhileStatement implements Statement {
     private final Expression condition;
     private final Statement body;
     
@@ -23,5 +24,11 @@ public class WhileStatement extends Statement {
                           @Element(name = "body") final Statement body) {
         this.condition = condition;
         this.body = body;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(condition);
+        visitor.visit(body);
     }
 }

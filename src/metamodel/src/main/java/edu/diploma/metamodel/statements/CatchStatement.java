@@ -6,6 +6,7 @@
 
 package edu.diploma.metamodel.statements;
 
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -14,7 +15,7 @@ import org.simpleframework.xml.Element;
  * @author alexander
  */
 @Default
-public class CatchStatement extends Statement {
+public class CatchStatement implements Statement {
     private final VariableDeclStatement exception;
     private final Statement body;
     
@@ -22,6 +23,12 @@ public class CatchStatement extends Statement {
                           @Element(name = "body") final Statement body) {
         this.exception = exception;
         this.body = body;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(exception);
+        visitor.visit(body);
     }
     
     

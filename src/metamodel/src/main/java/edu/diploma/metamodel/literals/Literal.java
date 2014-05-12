@@ -15,7 +15,7 @@ import org.simpleframework.xml.Default;
  * @author alexander
  */
 @Default
-public class Literal extends Expression {
+public abstract class Literal extends Expression {
     public Literal(final Type type) {
         super(type);
     }

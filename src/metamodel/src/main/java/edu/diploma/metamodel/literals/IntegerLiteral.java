@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.literals;
 
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
 import java.math.BigInteger;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
@@ -27,5 +28,9 @@ public class IntegerLiteral extends Literal {
     public IntegerLiteral(final Type type, final String value) {
         super(type);
         this.value = new BigInteger(value);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
     }
 }

@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.expressions;
 
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -18,5 +19,10 @@ import org.simpleframework.xml.Element;
 public class TypeExpression extends Expression {
     public TypeExpression(@Element(name = "type") final Type type) {
         super(type);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(getType());
     }
 }

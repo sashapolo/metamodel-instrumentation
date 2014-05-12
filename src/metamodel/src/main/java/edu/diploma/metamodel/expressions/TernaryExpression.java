@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.expressions;
 
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -46,6 +47,13 @@ public class TernaryExpression extends Expression {
 
     public Expression getElseBranch() {
         return elseBranch;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(condition);
+        visitor.visit(ifBranch);
+        visitor.visit(elseBranch);
     }
     
     

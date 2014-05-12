@@ -1,5 +1,6 @@
 package edu.diploma.metamodel.types;
 
+import edu.diploma.visitors.Visitor;
 import java.util.Collections;
 import java.util.List;
 import org.simpleframework.xml.Element;
@@ -12,7 +13,7 @@ import org.simpleframework.xml.ElementList;
  * Time: 11:18 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ClassType extends Type {
+public class ClassType implements Type {
     @Element
     private final String name;
     @Element(required = false)
@@ -41,5 +42,15 @@ public class ClassType extends Type {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        if (outer != null) {
+            visitor.visit(outer);
+        }
+        for (final TemplateParameter param : templates) {
+            visitor.visit(param);
+        }
     }
 }

@@ -6,14 +6,16 @@
 
 package edu.diploma.metamodel.types;
 
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
  * @author alexander
  */
 @Default
-public class TemplateParameter extends Type {
+public class TemplateParameter implements Type {
     private final Type type;
     private final boolean isSuper;
     private final boolean isExtends;
@@ -24,7 +26,9 @@ public class TemplateParameter extends Type {
         this.isExtends = false;
     }
     
-    private TemplateParameter(final Type type, boolean isSuper, boolean isExtends) {
+    private TemplateParameter(@Element(name = "type") final Type type, 
+                              @Element(name = "isSuper") boolean isSuper, 
+                              @Element(name = "isExtends") boolean isExtends) {
         this.type = type;
         this.isSuper = isSuper;
         this.isExtends = isExtends;
@@ -32,6 +36,11 @@ public class TemplateParameter extends Type {
     
     public static TemplateParameter createWildcardTemplate(final Type type, boolean isSuper) {
         return new TemplateParameter(type, isSuper, !isSuper);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(type);
     }
     
 }

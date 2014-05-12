@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.literals;
 
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -26,5 +27,9 @@ public class SpecialLiteral extends Literal {
     public SpecialLiteral(final String value) {
         super(Type.UNKOWN_TYPE);
         this.value = value;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
     }
 }

@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.literals;
 
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -22,6 +23,10 @@ public class CharLiteral extends Literal {
                        @Element(name = "value") final String value) {
         super(type);
         this.value = value;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
     }
     
 }

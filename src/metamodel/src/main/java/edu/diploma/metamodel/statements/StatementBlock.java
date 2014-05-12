@@ -1,5 +1,6 @@
 package edu.diploma.metamodel.statements;
 
+import edu.diploma.visitors.Visitor;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +12,7 @@ import org.simpleframework.xml.Transient;
  * Created by alexander on 4/26/14.
  */
 @Default
-public class StatementBlock extends Statement {
+public class StatementBlock implements Statement {
     @Transient
     public final static StatementBlock EMPTY_BLOCK = new StatementBlock(Collections.<Statement>emptyList());
 
@@ -30,5 +31,12 @@ public class StatementBlock extends Statement {
     }
     public void addAll(final List<Statement> statements) {
         this.statements.addAll(statements);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        for (final Statement state : statements) {
+            visitor.visit(state);
+        }
     }
 }

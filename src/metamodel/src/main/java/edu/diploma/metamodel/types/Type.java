@@ -11,6 +11,6 @@ import org.simpleframework.xml.Default;
  * To change this template use File | Settings | File Templates.
  */
 @Default
-public abstract class Type extends Entity {
+public interface Type extends Entity {
     public final static Type UNKOWN_TYPE = new PrimitiveType("unknown");
 }
