@@ -6,10 +6,10 @@
 
 package edu.diploma.metamodel.declarations;
 
+import edu.diploma.metamodel.Annotation;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import edu.diploma.metamodel.Annotation;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 

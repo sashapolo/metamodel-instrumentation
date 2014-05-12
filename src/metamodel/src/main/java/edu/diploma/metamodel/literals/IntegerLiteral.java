@@ -6,8 +6,8 @@
 
 package edu.diploma.metamodel.literals;
 
-import java.math.BigInteger;
 import edu.diploma.metamodel.types.Type;
+import java.math.BigInteger;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 

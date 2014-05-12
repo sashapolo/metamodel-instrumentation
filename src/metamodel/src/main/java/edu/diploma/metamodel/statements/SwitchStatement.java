@@ -6,9 +6,9 @@
 
 package edu.diploma.metamodel.statements;
 
+import edu.diploma.metamodel.expressions.Expression;
 import java.util.LinkedList;
 import java.util.List;
-import edu.diploma.metamodel.expressions.Expression;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;

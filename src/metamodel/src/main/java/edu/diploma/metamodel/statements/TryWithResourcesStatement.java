@@ -6,9 +6,8 @@
 
 package edu.diploma.metamodel.statements;
 
-import java.util.List;
 import edu.diploma.metamodel.declarations.VariableDecl;
-import org.simpleframework.xml.Default;
+import java.util.List;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 

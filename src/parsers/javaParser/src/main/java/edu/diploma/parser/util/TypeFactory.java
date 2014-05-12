@@ -6,11 +6,11 @@
 
 package edu.diploma.parser.util;
 
-import java.util.LinkedList;
-import java.util.List;
 import edu.diploma.metamodel.types.ClassType;
 import edu.diploma.metamodel.types.TemplateParameter;
 import edu.diploma.metamodel.types.Type;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *

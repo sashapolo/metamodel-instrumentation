@@ -6,9 +6,9 @@
 
 package edu.diploma.metamodel;
 
+import edu.diploma.metamodel.declarations.Declaration;
 import java.util.Collections;
 import java.util.List;
-import edu.diploma.metamodel.declarations.Declaration;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;

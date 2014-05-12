@@ -6,10 +6,10 @@
 
 package edu.diploma.metamodel.declarations;
 
-import java.util.List;
 import edu.diploma.metamodel.Annotation;
 import edu.diploma.metamodel.expressions.Expression;
 import edu.diploma.metamodel.types.Type;
+import java.util.List;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 

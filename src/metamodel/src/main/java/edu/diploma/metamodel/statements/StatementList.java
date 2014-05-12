@@ -9,7 +9,6 @@ package edu.diploma.metamodel.statements;
 import java.util.LinkedList;
 import java.util.List;
 import org.simpleframework.xml.Default;
-import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 
 /**

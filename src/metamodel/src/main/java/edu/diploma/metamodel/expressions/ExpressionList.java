@@ -1,9 +1,8 @@
 package edu.diploma.metamodel.expressions;
 
-import java.util.Collections;
+import edu.diploma.metamodel.types.Type;
 import java.util.LinkedList;
 import java.util.List;
-import edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;

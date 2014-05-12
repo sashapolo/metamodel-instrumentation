@@ -6,10 +6,10 @@
 
 package edu.diploma.metamodel.expressions;
 
-import java.util.LinkedList;
-import java.util.List;
 import edu.diploma.metamodel.Entity;
 import edu.diploma.metamodel.types.Type;
+import java.util.LinkedList;
+import java.util.List;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;

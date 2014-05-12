@@ -15,9 +15,9 @@
 # IntelliJ #
 .idea
 *.iml
-/metamodel/target/
-/parsers/javaParser/target/
+
+# NetBeans #
+nbactions.xml
+
+*target*
 *sublime*
-/src/metamodel/target/
-/src/parsers/javaParser/target/
-/src/tool/target/

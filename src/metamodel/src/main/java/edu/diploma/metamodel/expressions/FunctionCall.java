@@ -6,9 +6,9 @@
 
 package edu.diploma.metamodel.expressions;
 
+import edu.diploma.metamodel.types.Type;
 import java.util.Collections;
 import java.util.List;
-import edu.diploma.metamodel.types.Type;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 
