@@ -36,12 +36,12 @@ grammar JavaGrammar;
     import java.util.HashMap;
     import java.util.Collections;
          
-    import main.java.edu.diploma.metamodel.*;
-    import main.java.edu.diploma.metamodel.types.*;
-    import main.java.edu.diploma.metamodel.expressions.*;
-    import main.java.edu.diploma.metamodel.statements.*;
-    import main.java.edu.diploma.metamodel.declarations.*;
-    import main.java.edu.diploma.metamodel.literals.*;
+    import edu.diploma.metamodel.*;
+    import edu.diploma.metamodel.types.*;
+    import edu.diploma.metamodel.expressions.*;
+    import edu.diploma.metamodel.statements.*;
+    import edu.diploma.metamodel.declarations.*;
+    import edu.diploma.metamodel.literals.*;
     import edu.diploma.parser.util.TypeFactory;
     import edu.diploma.parser.UntypedVariable;
     import edu.diploma.parser.ArrayParam;

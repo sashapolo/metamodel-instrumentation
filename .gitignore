@@ -20,3 +20,4 @@
 *sublime*
 /src/metamodel/target/
 /src/parsers/javaParser/target/
+/src/tool/target/
