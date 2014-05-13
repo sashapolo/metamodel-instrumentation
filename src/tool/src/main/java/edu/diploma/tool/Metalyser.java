@@ -7,6 +7,8 @@
 package edu.diploma.tool;
 
 import edu.diploma.metamodel.TranslationUnit;
+import edu.diploma.tool.visitors.CfgDrawVisitor;
+import edu.diploma.visitors.Visitor;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.logging.Level;
@@ -38,6 +40,7 @@ public class Metalyser extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
         javax.swing.JMenuBar jMenuBar1 = new javax.swing.JMenuBar();
         final javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem openMenuItem = new javax.swing.JMenuItem();
@@ -47,6 +50,13 @@ public class Metalyser extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Metalyser");
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(800, 500));
+
+        drawPanel.setName(""); // NOI18N
+        drawPanel.setPreferredSize(new java.awt.Dimension(800, 500));
+        drawPanel.setLayout(new java.awt.BorderLayout());
+        jScrollPane1.setViewportView(drawPanel);
 
         fileMenu.setText("File");
 
@@ -89,11 +99,11 @@ public class Metalyser extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 784, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 825, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 498, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
         );
 
         pack();
@@ -112,6 +122,11 @@ public class Metalyser extends javax.swing.JFrame {
             final File file = chooser.getSelectedFile();
             try {
                 metamodel = serializer.read(TranslationUnit.class, file);
+                JOptionPane.showMessageDialog(
+                        this, 
+                        "Metamodel successfully imported", 
+                        "Success!", 
+                        JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(
                         this, 
@@ -124,7 +139,8 @@ public class Metalyser extends javax.swing.JFrame {
     }//GEN-LAST:event_openMenuItemActionPerformed
 
     private void cfgMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cfgMenuItemActionPerformed
-        // TODO add your handling code here:
+        final Visitor v = new CfgDrawVisitor(drawPanel);
+        v.dispatch(metamodel);
     }//GEN-LAST:event_cfgMenuItemActionPerformed
     
     /**
@@ -142,5 +158,6 @@ public class Metalyser extends javax.swing.JFrame {
 
     private TranslationUnit metamodel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private final javax.swing.JPanel drawPanel = new javax.swing.JPanel();
     // End of variables declaration//GEN-END:variables
 }
