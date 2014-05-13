@@ -45,6 +45,6 @@ public class AttributeAccess extends Expression {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(expr);
+        visitor.dispatch(expr);
     }
 }

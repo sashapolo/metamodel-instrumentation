@@ -28,7 +28,7 @@ public class WhileStatement implements Statement {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(condition);
-        visitor.visit(body);
+        visitor.dispatch(condition);
+        visitor.dispatch(body);
     }
 }

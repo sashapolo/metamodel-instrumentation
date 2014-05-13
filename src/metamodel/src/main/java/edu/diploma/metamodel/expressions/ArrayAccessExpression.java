@@ -43,8 +43,8 @@ public class ArrayAccessExpression extends Expression {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(caller);
-        visitor.visit(param);
+        visitor.dispatch(caller);
+        visitor.dispatch(param);
     }
     
     

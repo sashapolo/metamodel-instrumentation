@@ -41,7 +41,7 @@ public class ArrayInitializer extends Expression {
     @Override
     public void accept(Visitor visitor) {
         for (final Entity val : values) {
-            visitor.visit(val);
+            visitor.dispatch(val);
         }
     }
     

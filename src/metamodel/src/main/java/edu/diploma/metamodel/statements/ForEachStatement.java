@@ -31,8 +31,8 @@ public class ForEachStatement implements Statement {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(init);
-        visitor.visit(range);
-        visitor.visit(body);
+        visitor.dispatch(init);
+        visitor.dispatch(range);
+        visitor.dispatch(body);
     }
 }

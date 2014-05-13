@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class VisitorAdapter implements Visitor {
     @Override
-    public void visit(final Entity entity) {
+    public void dispatch(final Entity entity) {
         if (entity == null) return;
         try {
             final Method m = getClass().getMethod("visit", new Class[] { entity.getClass() });
@@ -26,11 +26,11 @@ public class VisitorAdapter implements Visitor {
         } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(VisitorAdapter.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
-        defaultDispatch(entity);
+        navigate(entity);
     }
 
     @Override
-    public void defaultDispatch(Entity entity) {
+    public void navigate(Entity entity) {
         entity.accept(this);
     }
 }

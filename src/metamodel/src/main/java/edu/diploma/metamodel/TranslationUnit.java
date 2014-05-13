@@ -41,10 +41,10 @@ public class TranslationUnit implements Entity {
     @Override
     public void accept(Visitor visitor) {
         for (final Import i : imports) {
-            visitor.visit(i);
+            visitor.dispatch(i);
         }
         for (final Declaration d : types) {
-            visitor.visit(d);
+            visitor.dispatch(d);
         }
     }
 }

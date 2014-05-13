@@ -9,6 +9,7 @@ package edu.diploma.metamodel.declarations;
 import edu.diploma.metamodel.Annotation;
 import edu.diploma.metamodel.statements.StatementBlock;
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
 import java.util.Collections;
 import java.util.List;
 import org.simpleframework.xml.Default;
@@ -26,6 +27,21 @@ public class FunctionDecl extends Declaration {
     private final List<ParameterDecl> params;
     private final List<TemplateDecl> templates;
     private final StatementBlock body;
+
+    @Override
+    public void accept(Visitor visitor) {
+        for (final Annotation anno : getAnnotations()) {
+            visitor.dispatch(anno);
+        }
+        visitor.dispatch(retType);
+        for (final ParameterDecl param : params) {
+            visitor.dispatch(param);
+        }
+        for (final TemplateDecl templ : templates) {
+            visitor.dispatch(templ);
+        }
+        visitor.dispatch(body);
+    }
 
     public static class Builder {
         private final String name;
@@ -96,13 +112,13 @@ public class FunctionDecl extends Declaration {
         return retType;
     }
     public List<String> getExceptions() {
-        return exceptions;
+        return Collections.unmodifiableList(exceptions);
     }
     public List<ParameterDecl> getParams() {
-        return params;
+        return Collections.unmodifiableList(params);
     }
     public List<TemplateDecl> getTemplates() {
-        return templates;
+        return Collections.unmodifiableList(templates);
     }
     public StatementBlock getBody() {
         return body;

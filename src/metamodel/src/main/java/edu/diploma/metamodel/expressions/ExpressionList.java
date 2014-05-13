@@ -36,7 +36,7 @@ public class ExpressionList extends Expression {
     @Override
     public void accept(Visitor visitor) {
         for (final Expression expr : expressions) {
-            visitor.visit(expr);
+            visitor.dispatch(expr);
         }
     }
 }

@@ -34,7 +34,7 @@ public class StatementList implements Statement {
     @Override
     public void accept(Visitor visitor) {
         for (final Statement state : statements) {
-            visitor.visit(state);
+            visitor.dispatch(state);
         }
     }
 }

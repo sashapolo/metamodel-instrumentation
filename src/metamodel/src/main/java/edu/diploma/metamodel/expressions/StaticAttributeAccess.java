@@ -43,8 +43,8 @@ public class StaticAttributeAccess extends Expression {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(qualifier);
-        visitor.visit(attribute);
+        visitor.dispatch(qualifier);
+        visitor.dispatch(attribute);
     }
     
     

@@ -8,6 +8,8 @@ package edu.diploma.metamodel.declarations;
 
 import edu.diploma.metamodel.Annotation;
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
+import java.util.Collections;
 import java.util.List;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
@@ -59,15 +61,29 @@ public class ClassDecl extends Declaration {
     }
 
     public List<TemplateDecl> getTemplates() {
-        return templates;
+        return Collections.unmodifiableList(templates);
     }
     public List<Type> getInherits() {
-        return inherits;
+        return Collections.unmodifiableList(inherits);
     }
     public DeclBody getBody() {
         return body;
     }
     public boolean isAbstract() {
         return isAbstract;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        for (final Annotation anno : getAnnotations()) {
+            visitor.dispatch(anno);
+        }
+        for (final TemplateDecl templ : templates) {
+            visitor.dispatch(templ);
+        }
+        for (final Type inh : inherits) {
+            visitor.dispatch(inh);
+        }
+        visitor.dispatch(body);
     }
 }

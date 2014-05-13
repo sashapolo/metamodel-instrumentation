@@ -27,8 +27,8 @@ public class CatchStatement implements Statement {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(exception);
-        visitor.visit(body);
+        visitor.dispatch(exception);
+        visitor.dispatch(body);
     }
     
     

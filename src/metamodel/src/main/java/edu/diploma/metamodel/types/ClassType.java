@@ -47,10 +47,10 @@ public class ClassType implements Type {
     @Override
     public void accept(Visitor visitor) {
         if (outer != null) {
-            visitor.visit(outer);
+            visitor.dispatch(outer);
         }
         for (final TemplateParameter param : templates) {
-            visitor.visit(param);
+            visitor.dispatch(param);
         }
     }
 }

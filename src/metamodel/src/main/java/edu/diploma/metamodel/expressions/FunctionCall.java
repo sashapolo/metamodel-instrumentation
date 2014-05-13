@@ -73,13 +73,13 @@ public class FunctionCall extends Expression {
     @Override
     public void accept(Visitor visitor) {
         if (caller != null) {
-            visitor.visit(caller);
+            visitor.dispatch(caller);
         }
         for (final Expression expr : params) {
-            visitor.visit(expr);
+            visitor.dispatch(expr);
         }
         for (final Type type : templateParams) {
-            visitor.visit(type);
+            visitor.dispatch(type);
         }
     }
     

@@ -13,6 +13,6 @@ import edu.diploma.metamodel.Entity;
  * @author alexander
  */
 public interface Visitor {
-    public void visit(final Entity entity);
-    public void defaultDispatch(final Entity entity);
+    public void dispatch(final Entity entity);
+    public void navigate(final Entity entity);
 }

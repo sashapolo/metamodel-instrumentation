@@ -51,9 +51,9 @@ public class TernaryExpression extends Expression {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(condition);
-        visitor.visit(ifBranch);
-        visitor.visit(elseBranch);
+        visitor.dispatch(condition);
+        visitor.dispatch(ifBranch);
+        visitor.dispatch(elseBranch);
     }
     
     

@@ -24,7 +24,7 @@ public class ArbitraryStatement implements Statement {
     @Override
     public void accept(Visitor visitor) {
         for (final Entity entity : stuff) {
-            visitor.visit(entity);
+            visitor.dispatch(entity);
         }
     }
 }

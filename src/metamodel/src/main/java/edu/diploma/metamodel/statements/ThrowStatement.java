@@ -25,6 +25,6 @@ public class ThrowStatement implements Statement {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(expr);
+        visitor.dispatch(expr);
     }
 }

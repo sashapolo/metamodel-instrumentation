@@ -8,6 +8,8 @@ package edu.diploma.metamodel.declarations;
 
 import edu.diploma.metamodel.Annotation;
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
+import java.util.Collections;
 import java.util.List;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
@@ -35,7 +37,17 @@ public class TemplateDecl extends Declaration {
     }
 
     public List<Type> getBounds() {
-        return bounds;
+        return Collections.unmodifiableList(bounds);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        for (final Annotation anno : getAnnotations()) {
+            visitor.dispatch(anno);
+        }
+        for (final Type type : bounds) {
+            visitor.dispatch(type);
+        }
     }
     
 }

@@ -43,8 +43,8 @@ public class AssignmentExpression extends Expression {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(lhs);
-        visitor.visit(rhs);
+        visitor.dispatch(lhs);
+        visitor.dispatch(rhs);
     }
     
     

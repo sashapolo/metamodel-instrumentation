@@ -25,10 +25,10 @@ public class IfStatement implements Statement {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(condition);
-        visitor.visit(ifer);
+        visitor.dispatch(condition);
+        visitor.dispatch(ifer);
         if (elser != null) {
-            visitor.visit(elser);
+            visitor.dispatch(elser);
         }
     }
 }

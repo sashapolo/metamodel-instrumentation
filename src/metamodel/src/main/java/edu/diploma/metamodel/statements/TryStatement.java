@@ -38,12 +38,12 @@ public class TryStatement implements Statement {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(body);
+        visitor.dispatch(body);
         for (final CatchStatement c : catches) {
-            visitor.visit(c);
+            visitor.dispatch(c);
         }
         if (finallyBlock != null) {
-            visitor.visit(finallyBlock);
+            visitor.dispatch(finallyBlock);
         }
     }
 }

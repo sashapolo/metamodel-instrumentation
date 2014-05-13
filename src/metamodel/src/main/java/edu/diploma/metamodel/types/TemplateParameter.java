@@ -40,7 +40,7 @@ public class TemplateParameter implements Type {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(type);
+        visitor.dispatch(type);
     }
     
 }

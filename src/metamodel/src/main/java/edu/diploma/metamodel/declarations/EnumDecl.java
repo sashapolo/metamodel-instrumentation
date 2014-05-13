@@ -8,6 +8,7 @@ package edu.diploma.metamodel.declarations;
 
 import edu.diploma.metamodel.Annotation;
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
 import java.util.Collections;
 import java.util.List;
 import org.simpleframework.xml.Default;
@@ -50,14 +51,28 @@ public class EnumDecl extends Declaration {
     }
 
     public List<Type> getInherits() {
-        return inherits;
+        return Collections.unmodifiableList(inherits);
     }
 
     public List<EnumValue> getEnums() {
-        return enums;
+        return Collections.unmodifiableList(enums);
     }
 
     public DeclBody getBody() {
         return body;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        for (final Annotation anno : getAnnotations()) {
+            visitor.dispatch(anno);
+        }
+        for (final Type type : inherits) {
+            visitor.dispatch(type);
+        }
+        for (final EnumValue val : enums) {
+            visitor.dispatch(val);
+        }
+        visitor.dispatch(body);
     }
 }

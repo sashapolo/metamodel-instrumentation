@@ -9,6 +9,7 @@ package edu.diploma.metamodel.declarations;
 import edu.diploma.metamodel.Annotation;
 import edu.diploma.metamodel.expressions.Expression;
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.visitors.Visitor;
 import java.util.List;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -50,5 +51,16 @@ public class VariableDecl extends Declaration {
 
     public Expression getValue() {
         return value;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        for (final Annotation anno : getAnnotations()) {
+            visitor.dispatch(anno);
+        }
+        visitor.dispatch(type);
+        if (value != null) {
+            visitor.dispatch(value);
+        }
     }
 }

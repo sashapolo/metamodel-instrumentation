@@ -8,6 +8,8 @@ package edu.diploma.metamodel.declarations;
 
 import edu.diploma.metamodel.Annotation;
 import edu.diploma.metamodel.expressions.Expression;
+import edu.diploma.visitors.Visitor;
+import java.util.Collections;
 import java.util.List;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
@@ -44,10 +46,21 @@ public class EnumValue extends Declaration {
     }
 
     public List<Expression> getValue() {
-        return value;
+        return Collections.unmodifiableList(value);
     }
 
     public DeclBody getBody() {
         return body;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        for (final Annotation anno : getAnnotations()) {
+            visitor.dispatch(anno);
+        }
+        for (final Expression expr : value) {
+            visitor.dispatch(expr);
+        }
+        visitor.dispatch(body);
     }
 }

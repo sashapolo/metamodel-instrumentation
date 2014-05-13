@@ -63,13 +63,13 @@ public class ConstructorCall extends Expression {
     @Override
     public void accept(Visitor visitor) {
         for (final Expression expr : params) {
-            visitor.visit(expr);
+            visitor.dispatch(expr);
         }
         for (final Type type : templates) {
-            visitor.visit(type);
+            visitor.dispatch(type);
         }
         if (body != null) {
-            visitor.visit(body);
+            visitor.dispatch(body);
         }
     }
     

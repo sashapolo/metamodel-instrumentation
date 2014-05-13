@@ -46,14 +46,14 @@ public class TryWithResourcesStatement implements Statement {
     @Override
     public void accept(Visitor visitor) {
         for (final VariableDecl var : resources) {
-            visitor.visit(var);
+            visitor.dispatch(var);
         }
-        visitor.visit(body);
+        visitor.dispatch(body);
         for (final CatchStatement c : catches) {
-            visitor.visit(c);
+            visitor.dispatch(c);
         }
         if (finallyBlock != null) {
-            visitor.visit(finallyBlock);
+            visitor.dispatch(finallyBlock);
         }
     }
 }

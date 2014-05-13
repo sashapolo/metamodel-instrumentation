@@ -1,6 +1,7 @@
 package edu.diploma.metamodel;
 
 import edu.diploma.visitors.Visitor;
+import java.util.Collections;
 import java.util.Map;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
@@ -43,14 +44,26 @@ public class Annotation implements Entity {
         this.value = null;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public Map<String, Entity> getValues() {
+        return Collections.unmodifiableMap(values);
+    }
+
+    public Entity getValue() {
+        return value;
+    }
+
     @Override
     public void accept(Visitor visitor) {
         if (values != null) {
             for (final Entity val : values.values()) {
-                visitor.visit(val);
+                visitor.dispatch(val);
             }
         } else if (value != null) {
-            visitor.visit(value);
+            visitor.dispatch(value);
         }
     }
 }

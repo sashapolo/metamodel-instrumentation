@@ -27,6 +27,6 @@ public class LabelStatement implements Statement {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(statement);
+        visitor.dispatch(statement);
     }
 }

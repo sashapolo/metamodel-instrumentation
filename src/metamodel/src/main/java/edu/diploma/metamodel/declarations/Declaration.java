@@ -8,7 +8,6 @@ package edu.diploma.metamodel.declarations;
 
 import edu.diploma.metamodel.Annotation;
 import edu.diploma.metamodel.Entity;
-import edu.diploma.visitors.Visitor;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +18,7 @@ import org.simpleframework.xml.ElementList;
  *
  * @author alexander
  */
-public class Declaration implements Entity {
+public abstract class Declaration implements Entity {
     @Element(required = false)
     private final String name;
     @ElementList(required = false)
@@ -62,12 +61,4 @@ public class Declaration implements Entity {
     public List<Annotation> getAnnotations() {
         return Collections.unmodifiableList(annotations);
     }
-
-    @Override
-    public void accept(Visitor visitor) {
-        for (final Annotation anno : annotations) {
-            visitor.visit(anno);
-        }
-    }
-    
 }

@@ -23,6 +23,6 @@ public class TypeExpression extends Expression {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(getType());
+        visitor.dispatch(getType());
     }
 }

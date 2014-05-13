@@ -34,9 +34,9 @@ public class ForStatement implements Statement {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(init);
-        visitor.visit(condition);
-        visitor.visit(action);
-        visitor.visit(body);
+        visitor.dispatch(init);
+        visitor.dispatch(condition);
+        visitor.dispatch(action);
+        visitor.dispatch(body);
     }
 }

@@ -31,6 +31,6 @@ public class CastExpression extends Expression {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(param);
+        visitor.dispatch(param);
     }
 }

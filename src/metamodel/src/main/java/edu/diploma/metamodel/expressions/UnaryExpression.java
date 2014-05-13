@@ -57,6 +57,6 @@ public class UnaryExpression extends Expression {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(operand);
+        visitor.dispatch(operand);
     }
 }

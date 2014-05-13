@@ -31,9 +31,9 @@ public class SwitchStatement implements Statement {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(condition);
+        visitor.dispatch(condition);
         for (final Label state : cases) {
-            visitor.visit(state);
+            visitor.dispatch(state);
         }
     }
     
@@ -56,9 +56,9 @@ public class SwitchStatement implements Statement {
 
         @Override
         public void accept(Visitor visitor) {
-            visitor.visit(expr);
+            visitor.dispatch(expr);
             for (final Statement state : states) {
-                visitor.visit(state);
+                visitor.dispatch(state);
             }
         }
     }

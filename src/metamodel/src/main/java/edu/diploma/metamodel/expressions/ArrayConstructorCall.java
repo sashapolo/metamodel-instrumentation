@@ -43,8 +43,8 @@ public class ArrayConstructorCall extends Expression {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(inner);
-        visitor.visit(size);
+        visitor.dispatch(inner);
+        visitor.dispatch(size);
     }
     
     

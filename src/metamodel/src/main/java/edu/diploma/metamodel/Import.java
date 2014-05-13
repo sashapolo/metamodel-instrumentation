@@ -26,6 +26,18 @@ public class Import implements Entity {
         this.isWildcard = isWildcard;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public boolean isStatic() {
+        return isStatic;
+    }
+
+    public boolean isWildcard() {
+        return isWildcard;
+    }
+
     @Override
     public void accept(Visitor visitor) {}
 }

@@ -18,6 +18,6 @@ public class VariableDeclStatement implements Statement {
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.visit(variable);
+        visitor.dispatch(variable);
     }
 }

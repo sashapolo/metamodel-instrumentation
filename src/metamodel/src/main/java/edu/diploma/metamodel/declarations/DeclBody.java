@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.declarations;
 
 import edu.diploma.metamodel.Annotation;
+import edu.diploma.visitors.Visitor;
 import java.util.Collections;
 import java.util.List;
 import org.simpleframework.xml.Element;
@@ -42,6 +43,16 @@ public class DeclBody extends Declaration {
     }
 
     public List<Declaration> getDecls() {
-        return decls;
+        return Collections.unmodifiableList(decls);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        for (final Annotation anno : getAnnotations()) {
+            visitor.dispatch(anno);
+        }
+        for (final Declaration decl : decls) {
+            visitor.dispatch(decl);
+        }
     }
 }

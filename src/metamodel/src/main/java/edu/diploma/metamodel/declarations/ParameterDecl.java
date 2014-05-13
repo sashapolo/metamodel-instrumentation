@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.declarations;
 
 import edu.diploma.metamodel.Annotation;
+import edu.diploma.visitors.Visitor;
 import java.util.List;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
@@ -43,6 +44,14 @@ public class ParameterDecl extends Declaration {
 
     public VariableDecl getValue() {
         return value;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        for (final Annotation anno : getAnnotations()) {
+            visitor.dispatch(anno);
+        }
+        visitor.dispatch(value);
     }
     
 }
