@@ -8,6 +8,7 @@ package edu.diploma.visitors;
 
 import edu.diploma.metamodel.Annotation;
 import edu.diploma.metamodel.Import;
+import edu.diploma.metamodel.Metamodel;
 import edu.diploma.metamodel.TranslationUnit;
 import edu.diploma.metamodel.declarations.AnnotationDecl;
 import edu.diploma.metamodel.declarations.ClassDecl;
@@ -75,6 +76,7 @@ public abstract class DefaultVisitor extends VisitorAdapter {
     public abstract void visit(final Annotation entity);
     public abstract void visit(final Import entity);
     public abstract void visit(final TranslationUnit entity);
+    public abstract void visit(final Metamodel entity);
     
     // Declarations
     public abstract void visit(final AnnotationDecl entity);

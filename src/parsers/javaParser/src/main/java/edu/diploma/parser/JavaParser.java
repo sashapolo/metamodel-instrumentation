@@ -6,9 +6,14 @@
 
 package edu.diploma.parser;
 
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
+import edu.diploma.metamodel.Metamodel;
 import edu.diploma.metamodel.TranslationUnit;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.LinkedList;
+import java.util.List;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.simpleframework.xml.Serializer;
@@ -19,26 +24,35 @@ import org.simpleframework.xml.core.Persister;
  * @author alexander
  */
 public class JavaParser {
+    private static class Params {
+        @Parameter
+        public List<String> inputs = new LinkedList<>();
 
+        @Parameter(names = "-o")
+        public String output = "metamodel.xml";
+    }
+    
     /**
      * @param args the command line arguments
      * @throws java.lang.Exception
      */
     public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
-            System.err.println("Usage: javaParser <file>");
-            System.exit(1);
-        }
+        final Params params = new Params();
+        final JCommander commandParser = new JCommander(params);
+        commandParser.parse(args);
         
-        ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(args[0]));
-        JavaGrammarLexer lexer = new JavaGrammarLexer(input);
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        JavaGrammarParser parser = new JavaGrammarParser(tokens);
-        TranslationUnit unit = parser.compilationUnit().result;
+        List<TranslationUnit> result = new LinkedList<>();
+        for (final String input : params.inputs) {
+            ANTLRInputStream in = new ANTLRInputStream(new FileInputStream(input));
+            JavaGrammarLexer lexer = new JavaGrammarLexer(in);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            JavaGrammarParser parser = new JavaGrammarParser(tokens);
+            result.add(parser.compilationUnit().result);
+        }      
         
         Serializer serializer = new Persister();
-        File result = new File("metamodel.xml");
-        serializer.write(unit, result);
+        File xmlresult = new File(params.output);
+        serializer.write(new Metamodel(result), xmlresult);
     }
     
 }

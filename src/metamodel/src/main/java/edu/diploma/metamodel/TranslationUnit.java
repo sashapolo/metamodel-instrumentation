@@ -18,7 +18,6 @@ import org.simpleframework.xml.Root;
  *
  * @author alexander
  */
-@Root
 @Default
 public class TranslationUnit implements Entity {
     private final List<Import> imports;

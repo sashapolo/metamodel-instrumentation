@@ -8,6 +8,7 @@ package edu.diploma.visitors;
 
 import edu.diploma.metamodel.Annotation;
 import edu.diploma.metamodel.Import;
+import edu.diploma.metamodel.Metamodel;
 import edu.diploma.metamodel.TranslationUnit;
 import edu.diploma.metamodel.declarations.AnnotationDecl;
 import edu.diploma.metamodel.declarations.ClassDecl;
@@ -370,6 +371,11 @@ public class TestPrintVisitor extends DefaultVisitor {
 
     @Override
     public void visit(Type entity) {
+        System.out.println(entity.getClass().getName());
+    }
+
+    @Override
+    public void visit(Metamodel entity) {
         System.out.println(entity.getClass().getName());
     }
 

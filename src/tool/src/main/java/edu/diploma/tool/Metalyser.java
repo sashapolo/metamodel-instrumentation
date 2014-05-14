@@ -7,6 +7,7 @@
 package edu.diploma.tool;
 
 import com.mxgraph.view.mxGraph;
+import edu.diploma.metamodel.Metamodel;
 import edu.diploma.metamodel.TranslationUnit;
 import edu.diploma.tool.visitors.CfgDrawVisitor;
 import edu.diploma.visitors.Visitor;
@@ -131,7 +132,7 @@ public class Metalyser extends javax.swing.JFrame {
             final Serializer serializer = new Persister();
             final File file = chooser.getSelectedFile();
             try {
-                metamodel = serializer.read(TranslationUnit.class, file);
+                metamodel = serializer.read(Metamodel.class, file);
                 JOptionPane.showMessageDialog(
                         this, 
                         "Metamodel successfully imported", 
@@ -174,7 +175,7 @@ public class Metalyser extends javax.swing.JFrame {
         });
     }
 
-    private TranslationUnit metamodel;
+    private Metamodel metamodel;
     private mxGraph graph;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private final javax.swing.JMenuItem cfgMenuItem = new javax.swing.JMenuItem();

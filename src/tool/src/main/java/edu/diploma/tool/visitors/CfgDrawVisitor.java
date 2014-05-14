@@ -10,6 +10,7 @@ import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 import edu.diploma.metamodel.Entity;
+import edu.diploma.metamodel.Metamodel;
 import edu.diploma.metamodel.TranslationUnit;
 import edu.diploma.metamodel.declarations.ClassDecl;
 import edu.diploma.metamodel.declarations.DeclBody;
@@ -441,6 +442,10 @@ public class CfgDrawVisitor extends VisitorAdapter {
     }
 
     public void visit(final ExpressionList entity) {
+        entity.accept(this);
+    }
+    
+    public void visit(final Metamodel entity) {
         entity.accept(this);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
