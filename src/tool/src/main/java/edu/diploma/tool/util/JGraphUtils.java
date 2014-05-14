@@ -9,6 +9,8 @@ package edu.diploma.tool.util;
 import com.mxgraph.util.mxRectangle;
 import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxGraph;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,6 +32,22 @@ public class JGraphUtils {
     public static Object createEmptyVertex(final mxGraph graph) {
         final Map<String, Object> style = graph.getStylesheet().getDefaultVertexStyle();
         return graph.createVertex(graph.getDefaultParent(), null, "", 0, 0, 20, 20, null);
+    }
+    
+    public static void insertEdge(final mxGraph graph, final Object source, final Object dest) {
+        graph.insertEdge(graph.getDefaultParent(), null, "", source, dest);
+    }
+    
+    public static int removeOrphanes(final mxGraph graph) {
+        final Object[] vertices = graph.getChildVertices(graph.getDefaultParent());
+        final List<Object> remove = new LinkedList<>();
+        for (final Object vertex : vertices) {
+            if (graph.getConnections(vertex).length == 0) {
+                remove.add(vertex);
+            }
+        }
+        graph.removeCells(remove.toArray());
+        return remove.size();
     }
 
     private JGraphUtils() {

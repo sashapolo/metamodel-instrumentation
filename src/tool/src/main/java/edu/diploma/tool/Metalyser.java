@@ -8,9 +8,7 @@ package edu.diploma.tool;
 
 import com.mxgraph.view.mxGraph;
 import edu.diploma.metamodel.Metamodel;
-import edu.diploma.metamodel.TranslationUnit;
 import edu.diploma.tool.visitors.CfgDrawVisitor;
-import edu.diploma.visitors.Visitor;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.logging.Level;
