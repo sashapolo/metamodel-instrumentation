@@ -87,12 +87,17 @@ public class CfgDrawVisitor extends VisitorAdapter {
         return result;
     }
 
-    private Object insertDefaultVertex(final Entity entity) {
+    private Object insertVertex(final Entity entity) {
+        return insertVertex(entity, JGraphUtils.Shape.DEFAULT);
+    }
+    private Object insertVertex(final Entity entity, final JGraphUtils.Shape shape) {
         graph.getModel().beginUpdate();
         try {
-            final Object vertex = JGraphUtils.createVertex(graph, entity.toString());
+            final Object vertex = JGraphUtils.createVertex(graph, entity.toString(), shape);
             graph.addCell(vertex);
-            JGraphUtils.insertEdge(graph, parentVertex, vertex);
+            if (parentVertex != null) {
+                JGraphUtils.insertEdge(graph, parentVertex, vertex);
+            } 
             parentVertex = vertex;
             return vertex;
         } finally {
@@ -103,7 +108,7 @@ public class CfgDrawVisitor extends VisitorAdapter {
     private void createCycle(final String label, final Entity body) {
         graph.getModel().beginUpdate();
         try {
-            final Object vertex = JGraphUtils.createVertex(graph, label);
+            final Object vertex = JGraphUtils.createVertex(graph, label, JGraphUtils.Shape.RHOMBUS);
             graph.addCell(vertex);
             JGraphUtils.insertEdge(graph, parentVertex, vertex);
 
@@ -225,18 +230,13 @@ public class CfgDrawVisitor extends VisitorAdapter {
     }
 
     public void visit(ClassDecl entity) {
-        final Object vertex = JGraphUtils.createVertex(graph, entity.toString());
-        graph.addCell(vertex);
-        if (parentVertex != null) {
-            JGraphUtils.insertEdge(graph, parentVertex, vertex);
-        } 
-        parentVertex = vertex;
+        insertVertex(entity, JGraphUtils.Shape.ELLIPSE);
         visit(entity.getBody());
     }
 
     public void visit(final VariableDecl entity) {
-        final Object t = parentVertex;
-        lastVertex = insertDefaultVertex(entity);
+        final Object t = parentVertex;        
+        insertVertex(entity, JGraphUtils.Shape.ELLIPSE);
         parentVertex = t;
     }
 
@@ -246,7 +246,7 @@ public class CfgDrawVisitor extends VisitorAdapter {
 
     public void visit(FunctionDecl entity) {
         final Object t = parentVertex;
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity, JGraphUtils.Shape.ELLIPSE);
         visit(entity.getBody());
         parentVertex = t;
     }
@@ -259,7 +259,7 @@ public class CfgDrawVisitor extends VisitorAdapter {
             final mxICell edge = (mxICell) graph.getOutgoingEdges(start)[0];
             final Object returnPoint = edge.getTerminal(false);
 
-            final Object vertex = JGraphUtils.createVertex(graph, "while (" + entity.getCondition() + ")");
+            final Object vertex = JGraphUtils.createVertex(graph, "while (" + entity.getCondition() + ")", JGraphUtils.Shape.RHOMBUS);
             graph.addCell(vertex);
             graph.insertEdge(graph.getDefaultParent(), null, "", parentVertex, vertex);
             graph.insertEdge(graph.getDefaultParent(), null, "", vertex, returnPoint);
@@ -273,7 +273,7 @@ public class CfgDrawVisitor extends VisitorAdapter {
     public void visit(IfStatement entity) {
         graph.getModel().beginUpdate();
         try {
-            final Object vertex = JGraphUtils.createVertex(graph, "if (" + entity.getCondition() + ")");
+            final Object vertex = JGraphUtils.createVertex(graph, "if (" + entity.getCondition() + ")", JGraphUtils.Shape.RHOMBUS);
             graph.addCell(vertex);
             JGraphUtils.insertEdge(graph, parentVertex, vertex);
             parentVertex = vertex;
@@ -328,7 +328,7 @@ public class CfgDrawVisitor extends VisitorAdapter {
         graph.getModel().beginUpdate();
         try {
             final String label = "switch (" + entity.getCondition() + ")";
-            final Object vertex = JGraphUtils.createVertex(graph, label);
+            final Object vertex = JGraphUtils.createVertex(graph, label, JGraphUtils.Shape.RHOMBUS);
             graph.addCell(vertex);
             JGraphUtils.insertEdge(graph, parentVertex, vertex);
             parentVertex = vertex;
@@ -370,33 +370,33 @@ public class CfgDrawVisitor extends VisitorAdapter {
     // default stuff
     ////////////////////////////////////////////////////////////////////////////////////////////////
     public void visit(BinaryExpression entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(VariableDeclStatement entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(ReturnStatement entity) {
-        insertDefaultVertex(entity);
+        insertVertex(entity);
         parentVertex = null;
         lastVertex = null;
     }
 
     public void visit(FunctionCall entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final BreakStatement entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final ContinueStatement entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final CatchStatement entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
         dispatch(entity.getBody());
     }
 
@@ -404,59 +404,59 @@ public class CfgDrawVisitor extends VisitorAdapter {
     }
 
     public void visit(final LabelStatement entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final ThrowStatement entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final ArrayAccessExpression entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final ArrayConstructorCall entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final ArrayInitializer entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final AssignmentExpression entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final AttributeAccess entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final CastExpression entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final ConstructorCall entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final StaticAttributeAccess entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final TernaryExpression entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final TypeExpression entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final UnaryExpression entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final VariableReference entity) {
-        lastVertex = insertDefaultVertex(entity);
+        lastVertex = insertVertex(entity);
     }
 
     public void visit(final StatementList entity) {
