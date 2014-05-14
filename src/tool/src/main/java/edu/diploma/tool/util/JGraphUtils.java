@@ -10,7 +10,6 @@ import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxRectangle;
 import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxStylesheet;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,6 +40,23 @@ public class JGraphUtils {
         }
     }
     
+    public static class Options {
+        private final Map<String, String> values = new HashMap<>();
+        
+        public void add(final String key, final String value) {
+            values.put(key, value);
+        }
+
+        @Override
+        public String toString() {
+            final StringBuilder result = new StringBuilder("default;");
+            for (final Map.Entry<String, String> entry : values.entrySet()) {
+                result.append(entry.getKey()).append("=").append(entry.getValue()).append(";");
+            }
+            return result.toString();
+        }
+    }
+    
     private static mxRectangle getVertexSize(final mxGraph graph, final String label, final Shape shape) {
         final Map<String, Object> style = graph.getStylesheet().getDefaultVertexStyle();
         final mxRectangle size = mxUtils.getLabelSize(label, style, false, 1);
@@ -66,6 +82,12 @@ public class JGraphUtils {
         return createVertex(graph, label, Shape.DEFAULT);
     }
     
+    public static Object createVertex(final mxGraph graph, final String label, final Options options) {
+        final mxRectangle size = getVertexSize(graph, label, Shape.DEFAULT);
+        return graph.createVertex(graph.getDefaultParent(), null, label, 0, 0, 
+                                  size.getWidth(), size.getHeight(), options.toString());
+    }
+    
     public static Object createVertex(final mxGraph graph, final String label, final Shape shape) {
         final mxRectangle size = getVertexSize(graph, label, shape);
         return graph.createVertex(graph.getDefaultParent(), null, label, 0, 0, 
@@ -74,6 +96,11 @@ public class JGraphUtils {
     
     public static Object createEmptyVertex(final mxGraph graph) {
         final Object result = graph.createVertex(graph.getDefaultParent(), null, "", 0, 0, 20, 20, Shape.ELLIPSE.toString());
+        return result;
+    }
+    public static Object createEmptyVertex(final mxGraph graph, final Options options) {
+        options.add(mxConstants.STYLE_SHAPE, mxConstants.SHAPE_ELLIPSE);
+        final Object result = graph.createVertex(graph.getDefaultParent(), null, "", 0, 0, 20, 20, options.toString());
         return result;
     }
     

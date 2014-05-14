@@ -8,6 +8,7 @@ package edu.diploma.tool.visitors;
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
 import edu.diploma.metamodel.Entity;
 import edu.diploma.metamodel.Metamodel;
@@ -67,7 +68,7 @@ public class CfgDrawVisitor extends VisitorAdapter {
     private final mxGraph graph;
     private Object parentVertex;
     private Object lastVertex;
-    
+
     private Object[] toggleSubtree(final mxGraph graph, final Object cell, boolean show) {
         final List<Object> cells = new LinkedList<>();
 
@@ -90,6 +91,7 @@ public class CfgDrawVisitor extends VisitorAdapter {
     private Object insertVertex(final Entity entity) {
         return insertVertex(entity, JGraphUtils.Shape.DEFAULT);
     }
+
     private Object insertVertex(final Entity entity, final JGraphUtils.Shape shape) {
         graph.getModel().beginUpdate();
         try {
@@ -97,7 +99,7 @@ public class CfgDrawVisitor extends VisitorAdapter {
             graph.addCell(vertex);
             if (parentVertex != null) {
                 JGraphUtils.insertEdge(graph, parentVertex, vertex);
-            } 
+            }
             parentVertex = vertex;
             return vertex;
         } finally {
@@ -108,13 +110,16 @@ public class CfgDrawVisitor extends VisitorAdapter {
     private void createCycle(final String label, final Entity body) {
         graph.getModel().beginUpdate();
         try {
-            final Object vertex = JGraphUtils.createVertex(graph, label, JGraphUtils.Shape.RHOMBUS);
+            final JGraphUtils.Options opts = new JGraphUtils.Options();
+            opts.add(mxConstants.STYLE_FILLCOLOR, "yellow");
+            opts.add(mxConstants.STYLE_GRADIENTCOLOR, "white");
+            final Object vertex = JGraphUtils.createVertex(graph, label, opts);
             graph.addCell(vertex);
             JGraphUtils.insertEdge(graph, parentVertex, vertex);
 
-            final Object exit = JGraphUtils.createEmptyVertex(graph);
+            final Object exit = JGraphUtils.createEmptyVertex(graph, opts);
             graph.addCell(exit);
-            
+
             lastVertex = vertex;
             parentVertex = vertex;
 
@@ -128,8 +133,8 @@ public class CfgDrawVisitor extends VisitorAdapter {
             graph.getModel().endUpdate();
         }
     }
-    
-    private void drawTryStatement(final Entity body, final List<CatchStatement> catches, 
+
+    private void drawTryStatement(final Entity body, final List<CatchStatement> catches,
             final Entity finallyBlock, final String label) {
         graph.getModel().beginUpdate();
         try {
@@ -235,7 +240,7 @@ public class CfgDrawVisitor extends VisitorAdapter {
     }
 
     public void visit(final VariableDecl entity) {
-        final Object t = parentVertex;        
+        final Object t = parentVertex;
         insertVertex(entity, JGraphUtils.Shape.ELLIPSE);
         parentVertex = t;
     }
@@ -259,7 +264,10 @@ public class CfgDrawVisitor extends VisitorAdapter {
             final mxICell edge = (mxICell) graph.getOutgoingEdges(start)[0];
             final Object returnPoint = edge.getTerminal(false);
 
-            final Object vertex = JGraphUtils.createVertex(graph, "while (" + entity.getCondition() + ")", JGraphUtils.Shape.RHOMBUS);
+            final JGraphUtils.Options opts = new JGraphUtils.Options();
+            opts.add(mxConstants.STYLE_FILLCOLOR, "yellow");
+            opts.add(mxConstants.STYLE_GRADIENTCOLOR, "white");
+            final Object vertex = JGraphUtils.createVertex(graph, "while (" + entity.getCondition() + ")", opts);
             graph.addCell(vertex);
             graph.insertEdge(graph.getDefaultParent(), null, "", parentVertex, vertex);
             graph.insertEdge(graph.getDefaultParent(), null, "", vertex, returnPoint);
@@ -273,12 +281,15 @@ public class CfgDrawVisitor extends VisitorAdapter {
     public void visit(IfStatement entity) {
         graph.getModel().beginUpdate();
         try {
-            final Object vertex = JGraphUtils.createVertex(graph, "if (" + entity.getCondition() + ")", JGraphUtils.Shape.RHOMBUS);
+            final JGraphUtils.Options opts = new JGraphUtils.Options();
+            opts.add(mxConstants.STYLE_FILLCOLOR, "red");
+            opts.add(mxConstants.STYLE_GRADIENTCOLOR, "white");
+            final Object vertex = JGraphUtils.createVertex(graph, "if (" + entity.getCondition() + ")", opts);
             graph.addCell(vertex);
             JGraphUtils.insertEdge(graph, parentVertex, vertex);
             parentVertex = vertex;
 
-            final Object exit = JGraphUtils.createEmptyVertex(graph);
+            final Object exit = JGraphUtils.createEmptyVertex(graph, opts);
             graph.addCell(exit);
 
             lastVertex = null;
@@ -297,7 +308,7 @@ public class CfgDrawVisitor extends VisitorAdapter {
                 }
             } else {
                 JGraphUtils.insertEdge(graph, vertex, exit);
-            }     
+            }
 
             parentVertex = exit;
             lastVertex = exit;
@@ -328,12 +339,15 @@ public class CfgDrawVisitor extends VisitorAdapter {
         graph.getModel().beginUpdate();
         try {
             final String label = "switch (" + entity.getCondition() + ")";
-            final Object vertex = JGraphUtils.createVertex(graph, label, JGraphUtils.Shape.RHOMBUS);
+            final JGraphUtils.Options opts = new JGraphUtils.Options();
+            opts.add(mxConstants.STYLE_FILLCOLOR, "red");
+            opts.add(mxConstants.STYLE_GRADIENTCOLOR, "white");
+            final Object vertex = JGraphUtils.createVertex(graph, label, opts);
             graph.addCell(vertex);
             JGraphUtils.insertEdge(graph, parentVertex, vertex);
             parentVertex = vertex;
 
-            final Object exit = JGraphUtils.createEmptyVertex(graph);
+            final Object exit = JGraphUtils.createEmptyVertex(graph, opts);
             graph.addCell(exit);
 
             for (final SwitchStatement.Label state : entity.getCases()) {
@@ -360,8 +374,8 @@ public class CfgDrawVisitor extends VisitorAdapter {
     public void visit(final TryStatement entity) {
         drawTryStatement(entity.getBody(), entity.getCatches(), entity.getFinallyBlock(), "try");
     }
-    
-    public void visit (final TryWithResourcesStatement entity) {
+
+    public void visit(final TryWithResourcesStatement entity) {
         final String label = "try (" + Stringifier.toString(entity.getResources()) + ")";
         drawTryStatement(entity.getBody(), entity.getCatches(), entity.getFinallyBlock(), label);
     }
@@ -470,7 +484,7 @@ public class CfgDrawVisitor extends VisitorAdapter {
     public void visit(final ExpressionList entity) {
         entity.accept(this);
     }
-    
+
     public void visit(final Metamodel entity) {
         entity.accept(this);
     }
