@@ -2,6 +2,7 @@ package edu.diploma.metamodel.types;
 
 import edu.diploma.visitors.Visitor;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -53,4 +54,27 @@ public class ClassType implements Type {
             visitor.dispatch(param);
         }
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder result = new StringBuilder();
+        if (outer != null) {
+            result.append(outer.toString());
+        }
+        result.append(name);
+        if (!templates.isEmpty()) {
+            result.append('<');
+            final Iterator<TemplateParameter> it = templates.iterator();
+            while (it.hasNext()) {
+                result.append(it.next());
+                if (it.hasNext()) {
+                    result.append(", ");
+                }
+            }
+            result.append('>');
+        }
+        return result.toString();
+    }
+    
+    
 }

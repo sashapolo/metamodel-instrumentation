@@ -20,4 +20,9 @@ public class VariableDeclStatement implements Statement {
     public void accept(Visitor visitor) {
         visitor.dispatch(variable);
     }
+
+    @Override
+    public String toString() {
+        return variable.toString();
+    }
 }

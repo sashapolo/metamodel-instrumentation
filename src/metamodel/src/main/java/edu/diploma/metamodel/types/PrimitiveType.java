@@ -24,4 +24,9 @@ public class PrimitiveType implements Type {
 
     @Override
     public void accept(Visitor visitor) {}
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -26,4 +26,9 @@ public class ArrayType implements Type {
     public void accept(Visitor visitor) {
         visitor.dispatch(type);
     }
+
+    @Override
+    public String toString() {
+        return type.toString() + "[]";
+    }
 }

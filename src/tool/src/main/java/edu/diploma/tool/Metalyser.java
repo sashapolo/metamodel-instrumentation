@@ -6,6 +6,7 @@
 
 package edu.diploma.tool;
 
+import com.mxgraph.view.mxGraph;
 import edu.diploma.metamodel.TranslationUnit;
 import edu.diploma.tool.visitors.CfgDrawVisitor;
 import edu.diploma.visitors.Visitor;
@@ -46,7 +47,6 @@ public class Metalyser extends javax.swing.JFrame {
         javax.swing.JMenuItem openMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenuItem closeMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu viewMenu = new javax.swing.JMenu();
-        javax.swing.JMenuItem cfgMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Metalyser");
@@ -84,12 +84,22 @@ public class Metalyser extends javax.swing.JFrame {
 
         cfgMenuItem.setText("Control Flow Graph");
         cfgMenuItem.setToolTipText("");
+        cfgMenuItem.setEnabled(false);
         cfgMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cfgMenuItemActionPerformed(evt);
             }
         });
         viewMenu.add(cfgMenuItem);
+
+        foldGraphMenuItem.setText("Fold graph");
+        foldGraphMenuItem.setEnabled(false);
+        foldGraphMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                foldGraphMenuItemActionPerformed(evt);
+            }
+        });
+        viewMenu.add(foldGraphMenuItem);
 
         jMenuBar1.add(viewMenu);
 
@@ -136,12 +146,20 @@ public class Metalyser extends javax.swing.JFrame {
                 Logger.getLogger(Metalyser.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
         }
+        cfgMenuItem.setEnabled(true);
     }//GEN-LAST:event_openMenuItemActionPerformed
 
     private void cfgMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cfgMenuItemActionPerformed
-        final Visitor v = new CfgDrawVisitor(drawPanel);
+        final CfgDrawVisitor v = new CfgDrawVisitor(drawPanel);
         v.dispatch(metamodel);
+        graph = v.getGraph();
+        foldGraphMenuItem.setEnabled(true);
+        
     }//GEN-LAST:event_cfgMenuItemActionPerformed
+
+    private void foldGraphMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_foldGraphMenuItemActionPerformed
+        graph.foldCells(true, true, graph.getChildVertices(graph.getDefaultParent()));
+    }//GEN-LAST:event_foldGraphMenuItemActionPerformed
     
     /**
      * @param args the command line arguments
@@ -157,7 +175,10 @@ public class Metalyser extends javax.swing.JFrame {
     }
 
     private TranslationUnit metamodel;
+    private mxGraph graph;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private final javax.swing.JMenuItem cfgMenuItem = new javax.swing.JMenuItem();
     private final javax.swing.JPanel drawPanel = new javax.swing.JPanel();
+    private final javax.swing.JMenuItem foldGraphMenuItem = new javax.swing.JMenuItem();
     // End of variables declaration//GEN-END:variables
 }

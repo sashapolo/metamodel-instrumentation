@@ -9,8 +9,10 @@ package edu.diploma.metamodel.declarations;
 import edu.diploma.metamodel.Annotation;
 import edu.diploma.metamodel.statements.StatementBlock;
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.util.Stringifier;
 import edu.diploma.visitors.Visitor;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
@@ -122,5 +124,20 @@ public class FunctionDecl extends Declaration {
     }
     public StatementBlock getBody() {
         return body;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder result = new StringBuilder();
+        
+        if (!templates.isEmpty()) {
+            result.append('<').append(Stringifier.toString(templates)).append(">\n");
+        }
+        
+        result.append(Stringifier.toString(modifiers, " ")).append(' ');
+        result.append(retType.toString()).append(' ').append(name);
+        result.append('(').append(Stringifier.toString(params)).append(')');
+        
+        return result.toString();
     }
 }

@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.declarations;
 
 import edu.diploma.metamodel.Annotation;
+import edu.diploma.util.Stringifier;
 import edu.diploma.visitors.Visitor;
 import java.util.List;
 import org.simpleframework.xml.Default;
@@ -53,5 +54,17 @@ public class ParameterDecl extends Declaration {
         }
         visitor.dispatch(value);
     }
-    
+
+    @Override
+    public String toString() {
+        final StringBuilder result = new StringBuilder(Stringifier.toString(modifiers, " "));
+        if (!modifiers.isEmpty()) {
+            result.append(' ');
+        }
+        result.append(value.toString());
+        if (variadic) {
+            result.append("...");
+        }
+        return result.toString();
+    }
 }

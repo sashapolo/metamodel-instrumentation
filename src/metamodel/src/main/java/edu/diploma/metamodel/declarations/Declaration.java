@@ -20,11 +20,11 @@ import org.simpleframework.xml.ElementList;
  */
 public abstract class Declaration implements Entity {
     @Element(required = false)
-    private final String name;
+    protected final String name;
     @ElementList(required = false)
-    private final List<String> modifiers;
+    protected final List<String> modifiers;
     @ElementList(required = false)
-    private final List<Annotation> annotations;
+    protected final List<Annotation> annotations;
     
     public Declaration(final String name) {
         this.name = name;
@@ -40,13 +40,17 @@ public abstract class Declaration implements Entity {
     }
     
     public void addAnnotations(final List<Annotation> annotations) {
-        this.annotations.addAll(annotations);
+        for (final Annotation anno : annotations) {
+            addAnnotation(anno);
+        }
     }
     public void addAnnotation(final Annotation annotation) {
         this.annotations.add(annotation);
     }
     public void addModifiers(final List<String> modifiers) {
-        this.modifiers.addAll(modifiers);
+        for (final String mod : modifiers) {
+            addModifier(mod);
+        }
     }
     public void addModifier(final String modifier) {
         this.modifiers.add(modifier);

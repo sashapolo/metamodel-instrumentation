@@ -8,6 +8,7 @@ package edu.diploma.metamodel.declarations;
 
 import edu.diploma.metamodel.Annotation;
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.util.Stringifier;
 import edu.diploma.visitors.Visitor;
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +25,6 @@ public class ClassDecl extends Declaration {
     private final List<TemplateDecl> templates;
     private final List<Type> inherits;
     private final DeclBody body;
-    private boolean isAbstract;
     
     private ClassDecl(@Element(name = "name") String name, 
                       @ElementList(name = "modifiers") final List<String> modifiers,
@@ -45,20 +45,6 @@ public class ClassDecl extends Declaration {
         this.inherits = inherits;
         this.body = body;
     }
-    
-    @Override
-    public void addModifiers(final List<String> modifiers) {
-        for (final String mod : modifiers) {
-            addModifier(mod);
-        }
-    }
-    @Override
-    public void addModifier(String modifier) {
-        if ("abstract".equals(modifier)) {
-            isAbstract = true;
-        }
-        super.addModifier(modifier);
-    }
 
     public List<TemplateDecl> getTemplates() {
         return Collections.unmodifiableList(templates);
@@ -68,9 +54,6 @@ public class ClassDecl extends Declaration {
     }
     public DeclBody getBody() {
         return body;
-    }
-    public boolean isAbstract() {
-        return isAbstract;
     }
 
     @Override
@@ -86,4 +69,22 @@ public class ClassDecl extends Declaration {
         }
         visitor.dispatch(body);
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder result = new StringBuilder();
+        
+        result.append(Stringifier.toString(modifiers, " ")).append(' ');
+        result.append("class ").append(name);
+        
+        if (!templates.isEmpty()) {
+            result.append('<').append(Stringifier.toString(templates)).append('>');
+        }
+        if (!inherits.isEmpty()) {
+            result.append(" extends ").append(Stringifier.toString(inherits));
+        }
+        return result.toString();
+    }
+    
+    
 }

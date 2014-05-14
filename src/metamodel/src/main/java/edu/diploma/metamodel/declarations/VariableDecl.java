@@ -9,6 +9,7 @@ package edu.diploma.metamodel.declarations;
 import edu.diploma.metamodel.Annotation;
 import edu.diploma.metamodel.expressions.Expression;
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.util.Stringifier;
 import edu.diploma.visitors.Visitor;
 import java.util.List;
 import org.simpleframework.xml.Element;
@@ -55,12 +56,28 @@ public class VariableDecl extends Declaration {
 
     @Override
     public void accept(Visitor visitor) {
-        for (final Annotation anno : getAnnotations()) {
+        for (final Annotation anno : annotations) {
             visitor.dispatch(anno);
         }
         visitor.dispatch(type);
         if (value != null) {
             visitor.dispatch(value);
         }
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder result = new StringBuilder(Stringifier.toString(modifiers, " "));
+        
+        if (!modifiers.isEmpty()) {
+            result.append(' ');
+        }
+        result.append(type.toString()).append(' ').append(name);
+        
+        if (value != null) {
+            result.append(" = ").append(value.toString());
+        }
+        
+        return result.toString();
     }
 }

@@ -54,5 +54,11 @@ public class BinaryExpression extends Expression {
         visitor.dispatch(lhs);
         visitor.dispatch(rhs);
     }
-    
+
+    @Override
+    public String toString() {
+        final StringBuilder result = new StringBuilder(lhs.toString());
+        result.append(" ").append(operation).append(" ").append(rhs.toString());
+        return result.toString();
+    }
 }

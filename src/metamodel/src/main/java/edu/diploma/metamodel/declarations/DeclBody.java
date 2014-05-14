@@ -9,6 +9,7 @@ package edu.diploma.metamodel.declarations;
 import edu.diploma.metamodel.Annotation;
 import edu.diploma.visitors.Visitor;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -30,7 +31,11 @@ public class DeclBody extends Declaration {
         super(name, modifiers, annotations);
         this.decls = decls;
     }
-    public DeclBody(@ElementList(name = "decls") final List<Declaration> decls) {
+    public DeclBody() {
+        super("");
+        this.decls = new LinkedList<>();
+    }
+    public DeclBody(final List<Declaration> decls) {
         super("");
         this.decls = decls;
     }
@@ -40,6 +45,20 @@ public class DeclBody extends Declaration {
     }
     public void addAll(final List<? extends Declaration> decls) {
         this.decls.addAll(decls);
+    }
+
+    @Override
+    public void addModifier(String modifier) {
+        for (final Declaration decl : decls) {
+            decl.addModifier(modifier);
+        }
+    }
+
+    @Override
+    public void addAnnotation(Annotation annotation) {
+        for (final Declaration decl : decls) {
+            decl.addAnnotation(annotation);
+        }
     }
 
     public List<Declaration> getDecls() {

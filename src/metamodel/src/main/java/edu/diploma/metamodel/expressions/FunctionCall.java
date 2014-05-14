@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.expressions;
 
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.util.Stringifier;
 import edu.diploma.visitors.Visitor;
 import java.util.Collections;
 import java.util.List;
@@ -81,6 +82,20 @@ public class FunctionCall extends Expression {
         for (final Type type : templateParams) {
             visitor.dispatch(type);
         }
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder result = new StringBuilder();
+        if (caller != null) {
+            result.append(caller.toString()).append('.');
+        }
+        result.append(name);
+        if (!templateParams.isEmpty()) {
+            result.append('<').append(Stringifier.toString(templateParams)).append('>');
+        }
+        result.append('(').append(Stringifier.toString(params)).append(')');
+        return result.toString();
     }
     
     

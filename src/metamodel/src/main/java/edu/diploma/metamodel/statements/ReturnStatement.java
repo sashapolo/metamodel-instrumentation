@@ -27,4 +27,9 @@ public class ReturnStatement implements Statement {
     public void accept(Visitor visitor) {
         visitor.dispatch(expr);
     }
+
+    @Override
+    public String toString() {
+        return "return " + expr.toString();
+    }
 }

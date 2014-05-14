@@ -8,8 +8,10 @@ package edu.diploma.metamodel.declarations;
 
 import edu.diploma.metamodel.Annotation;
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.util.Stringifier;
 import edu.diploma.visitors.Visitor;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
@@ -49,5 +51,13 @@ public class TemplateDecl extends Declaration {
             visitor.dispatch(type);
         }
     }
-    
+
+    @Override
+    public String toString() {
+        final StringBuilder result = new StringBuilder(name);
+        if (!bounds.isEmpty()) {
+            result.append(" extends ").append(Stringifier.toString(bounds, " & "));
+        }
+        return result.toString();
+    }
 }

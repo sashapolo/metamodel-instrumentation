@@ -36,6 +36,9 @@ public class VariableReference extends Expression {
     @Override
     public void accept(Visitor visitor) {
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

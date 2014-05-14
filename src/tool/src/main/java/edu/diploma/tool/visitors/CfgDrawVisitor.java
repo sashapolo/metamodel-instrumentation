@@ -73,8 +73,6 @@ import edu.diploma.metamodel.types.TemplateParameter;
 import edu.diploma.metamodel.types.Type;
 import edu.diploma.tool.util.JGraphUtils;
 import edu.diploma.visitors.DefaultVisitor;
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JComponent;
@@ -107,6 +105,18 @@ public class CfgDrawVisitor extends DefaultVisitor {
         return result;
     }
     
+    private void insertDefaultVertex(final Entity entity) {
+        graph.getModel().beginUpdate();
+        try {
+            final Object vertex = JGraphUtils.createVertex(graph, entity.toString());
+            graph.addCell(vertex);
+            graph.insertEdge(graph.getDefaultParent(), null, "", parentVertex, vertex);
+            parentVertex = vertex;
+        } finally {
+           graph.getModel().endUpdate();
+        }
+    }
+    
     public CfgDrawVisitor(final JComponent parent) {
         this.drawBoard = parent;
         this.graph = new mxGraph() {
@@ -131,6 +141,7 @@ public class CfgDrawVisitor extends DefaultVisitor {
                 }
             }
         };
+        
         graph.setAllowLoops(true);
         graph.setCellsMovable(true);
         graph.setCellsResizable(false);
@@ -155,11 +166,8 @@ public class CfgDrawVisitor extends DefaultVisitor {
         graph.getModel().beginUpdate();
         try {
             for (final Declaration decl : entity.getTypes()) {
-                parentVertex = JGraphUtils.createVertex(graph, decl.getName());
-                graph.addCell(parentVertex);
                 dispatch(decl);
             }
-            graph.foldCells(true, true, graph.getChildVertices(graph.getDefaultParent()));
         } finally {
            graph.getModel().endUpdate();
         }
@@ -180,14 +188,14 @@ public class CfgDrawVisitor extends DefaultVisitor {
 
     @Override
     public void visit(ClassDecl entity) {
+        parentVertex = JGraphUtils.createVertex(graph, entity.toString());
+        graph.addCell(parentVertex);
         visit(entity.getBody());
     }
 
     @Override
     public void visit(DeclBody entity) {
-        for (final Declaration decl : entity.getDecls()) {
-            dispatch(decl);
-        }
+        entity.accept(this);
     }
 
     @Override
@@ -207,14 +215,10 @@ public class CfgDrawVisitor extends DefaultVisitor {
 
     @Override
     public void visit(FunctionDecl entity) {
-        graph.getModel().beginUpdate();
-        try {
-            final Object vertex = JGraphUtils.createVertex(graph, entity.getName());
-            graph.addCell(vertex);
-            graph.insertEdge(graph.getDefaultParent(), null, "", parentVertex, vertex);
-        } finally {
-           graph.getModel().endUpdate();
-        }
+        final Object t = parentVertex;
+        insertDefaultVertex(entity);
+        visit(entity.getBody());
+        parentVertex = t;
     }
 
     @Override
@@ -259,7 +263,7 @@ public class CfgDrawVisitor extends DefaultVisitor {
 
     @Override
     public void visit(BinaryExpression entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        insertDefaultVertex(entity);
     }
 
     @Override
@@ -284,7 +288,7 @@ public class CfgDrawVisitor extends DefaultVisitor {
 
     @Override
     public void visit(FunctionCall entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        insertDefaultVertex(entity);
     }
 
     @Override
@@ -399,7 +403,7 @@ public class CfgDrawVisitor extends DefaultVisitor {
 
     @Override
     public void visit(ReturnStatement entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        insertDefaultVertex(entity);
     }
 
     @Override
@@ -409,7 +413,7 @@ public class CfgDrawVisitor extends DefaultVisitor {
 
     @Override
     public void visit(StatementBlock entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        entity.accept(this);
     }
 
     @Override
@@ -439,7 +443,7 @@ public class CfgDrawVisitor extends DefaultVisitor {
 
     @Override
     public void visit(VariableDeclStatement entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        insertDefaultVertex(entity);
     }
 
     @Override
@@ -471,5 +475,8 @@ public class CfgDrawVisitor extends DefaultVisitor {
     public void visit(Type entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    public mxGraph getGraph() {
+        return graph;
+    }
 }

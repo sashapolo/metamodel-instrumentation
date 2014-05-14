@@ -259,7 +259,7 @@ returns [List<Type> result]
 classBody
 returns [DeclBody result]
 @init {
-    $result = new DeclBody(new LinkedList<Declaration>());       
+    $result = new DeclBody();       
 }
     :   '{' ( classBodyDeclaration { $result.add($classBodyDeclaration.result); })* '}'
     ;
@@ -295,26 +295,23 @@ locals [List<String> mods = new LinkedList<>(),
           }
         )* memberDeclaration
         {
-            $result = new DeclBody($memberDeclaration.result);
+            $result = $memberDeclaration.result;
             $result.addModifiers($mods);
             $result.addAnnotations($annos);
         }
     ;
 
 memberDeclaration
-returns [List<Declaration> result]
-@init {
-    $result = new LinkedList<>();       
-}
-    :   methodDeclaration             { $result.add($methodDeclaration.result); }
-    |   genericMethodDeclaration      { $result.add($genericMethodDeclaration.result); }
-    |   fieldDeclaration              { $result.addAll($fieldDeclaration.result); }
-    |   constructorDeclaration        { $result.add($constructorDeclaration.result); }
-    |   genericConstructorDeclaration { $result.add($genericConstructorDeclaration.result); }
-    |   interfaceDeclaration          { $result.add($interfaceDeclaration.result); }
-    |   annotationTypeDeclaration     { $result.add($annotationTypeDeclaration.result); }
-    |   classDeclaration              { $result.add($classDeclaration.result); }
-    |   enumDeclaration               { $result.add($enumDeclaration.result); }
+returns [Declaration result]
+    :   methodDeclaration             { $result = $methodDeclaration.result; }
+    |   genericMethodDeclaration      { $result = $genericMethodDeclaration.result; }
+    |   fieldDeclaration              { $result = $fieldDeclaration.result; }
+    |   constructorDeclaration        { $result = $constructorDeclaration.result; }
+    |   genericConstructorDeclaration { $result = $genericConstructorDeclaration.result; }
+    |   interfaceDeclaration          { $result = $interfaceDeclaration.result; }
+    |   annotationTypeDeclaration     { $result = $annotationTypeDeclaration.result; }
+    |   classDeclaration              { $result = $classDeclaration.result; }
+    |   enumDeclaration               { $result = $enumDeclaration.result; }
     ;
 
 /* We use rule this even for void methods which cannot have [] after parameters.
@@ -387,9 +384,9 @@ returns [FunctionDecl result]
     ;
 
 fieldDeclaration
-returns [List<VariableDecl> result]
+returns [DeclBody result]
 @init {
-    $result = new LinkedList<>();
+    $result = new DeclBody();
 }       
     :   type variableDeclarators ';'
         {
