@@ -7,6 +7,7 @@
 package edu.diploma.tool.visitors;
 
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
+import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 import edu.diploma.metamodel.Annotation;
@@ -243,12 +244,12 @@ public class CfgDrawVisitor extends DefaultVisitor {
 
     @Override
     public void visit(ArrayConstructorCall entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Should not happen");
     }
 
     @Override
     public void visit(ArrayInitializer entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Should not happen");
     }
 
     @Override
@@ -373,7 +374,21 @@ public class CfgDrawVisitor extends DefaultVisitor {
 
     @Override
     public void visit(DoWhileStatement entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        graph.getModel().beginUpdate();
+        try {
+            final Object start = parentVertex;
+            dispatch(entity.getBody());
+            final mxICell edge = (mxICell) graph.getOutgoingEdges(start)[0];
+            final Object returnPoint = edge.getTerminal(false);
+            
+            final Object vertex = JGraphUtils.createVertex(graph, "while (" + entity.getCondition() + ")");
+            graph.addCell(vertex);
+            graph.insertEdge(graph.getDefaultParent(), null, "", parentVertex, vertex);
+            graph.insertEdge(graph.getDefaultParent(), null, "", vertex, returnPoint);
+            parentVertex = vertex;
+        } finally {
+           graph.getModel().endUpdate();
+        }
     }
 
     @Override

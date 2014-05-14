@@ -929,10 +929,10 @@ locals [List<SwitchStatement.Label> labels = new LinkedList<>(),
         } 
     |   forStatement     { $result = $forStatement.result; }
     |   forEach          { $result = $forEach.result; }
-    |   'while' parExpression statement 
-        { $result = new WhileStatement($parExpression.result, $statement.result); }
-    |   'do' statement 'while' parExpression ';' 
-        { $result = new DoWhileStatement($parExpression.result, $statement.result); }
+    |   'while' parExpression state=statement 
+        { $result = new WhileStatement($parExpression.result, $state.result); }
+    |   'do' state=statement 'while' parExpression ';' 
+        { $result = new DoWhileStatement($parExpression.result, $state.result); }
     |   'try' block 
         (
             (catchClause {$catches.addAll($catchClause.result);})+ 
