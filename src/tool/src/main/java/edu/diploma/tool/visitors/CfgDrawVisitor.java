@@ -47,9 +47,11 @@ import edu.diploma.metamodel.statements.StatementList;
 import edu.diploma.metamodel.statements.SwitchStatement;
 import edu.diploma.metamodel.statements.ThrowStatement;
 import edu.diploma.metamodel.statements.TryStatement;
+import edu.diploma.metamodel.statements.TryWithResourcesStatement;
 import edu.diploma.metamodel.statements.VariableDeclStatement;
 import edu.diploma.metamodel.statements.WhileStatement;
 import edu.diploma.tool.util.JGraphUtils;
+import edu.diploma.util.Stringifier;
 import edu.diploma.visitors.VisitorAdapter;
 import java.util.LinkedList;
 import java.util.List;
@@ -114,6 +116,52 @@ public class CfgDrawVisitor extends VisitorAdapter {
             dispatch(body);
             graph.insertEdge(graph.getDefaultParent(), null, "", lastVertex, exit);
             graph.insertEdge(graph.getDefaultParent(), null, "", exit, vertex);
+            parentVertex = exit;
+        } finally {
+            graph.getModel().endUpdate();
+        }
+    }
+    
+    private void drawTryStatement(final Entity body, final List<CatchStatement> catches, 
+            final Entity finallyBlock, final String label) {
+        graph.getModel().beginUpdate();
+        try {
+            final Object vertex = JGraphUtils.createVertex(graph, label);
+            graph.addCell(vertex);
+            graph.insertEdge(graph.getDefaultParent(), null, "", parentVertex, vertex);
+            parentVertex = vertex;
+
+            final Object exit = JGraphUtils.createEmptyVertex(graph);
+            graph.addCell(exit);
+
+            lastVertex = null;
+            dispatch(body);
+            if (lastVertex != null) {
+                graph.insertEdge(graph.getDefaultParent(), null, "", lastVertex, exit);
+            }
+
+            for (final CatchStatement state : catches) {
+                lastVertex = null;
+                parentVertex = vertex;
+                dispatch(state);
+                if (lastVertex != null) {
+                    graph.insertEdge(graph.getDefaultParent(), null, "", lastVertex, exit);
+                }
+            }
+
+            if (finallyBlock != null) {
+                final Object fin = JGraphUtils.createVertex(graph, "finally");
+                graph.addCell(fin);
+                graph.insertEdge(graph.getDefaultParent(), null, "", vertex, fin);
+
+                parentVertex = fin;
+                lastVertex = null;
+                dispatch(finallyBlock);
+                if (lastVertex != null) {
+                    graph.insertEdge(graph.getDefaultParent(), null, "", lastVertex, exit);
+                }
+            }
+
             parentVertex = exit;
         } finally {
             graph.getModel().endUpdate();
@@ -298,48 +346,12 @@ public class CfgDrawVisitor extends VisitorAdapter {
     }
 
     public void visit(final TryStatement entity) {
-        graph.getModel().beginUpdate();
-        try {
-            final Object vertex = JGraphUtils.createVertex(graph, "try");
-            graph.addCell(vertex);
-            graph.insertEdge(graph.getDefaultParent(), null, "", parentVertex, vertex);
-            parentVertex = vertex;
-
-            final Object exit = JGraphUtils.createEmptyVertex(graph);
-            graph.addCell(exit);
-
-            lastVertex = null;
-            dispatch(entity.getBody());
-            if (lastVertex != null) {
-                graph.insertEdge(graph.getDefaultParent(), null, "", lastVertex, exit);
-            }
-
-            for (final CatchStatement state : entity.getCatches()) {
-                lastVertex = null;
-                parentVertex = vertex;
-                dispatch(state);
-                if (lastVertex != null) {
-                    graph.insertEdge(graph.getDefaultParent(), null, "", lastVertex, exit);
-                }
-            }
-
-            if (entity.getFinallyBlock() != null) {
-                final Object fin = JGraphUtils.createVertex(graph, "finally");
-                graph.addCell(fin);
-                graph.insertEdge(graph.getDefaultParent(), null, "", vertex, fin);
-
-                parentVertex = fin;
-                lastVertex = null;
-                dispatch(entity.getFinallyBlock());
-                if (lastVertex != null) {
-                    graph.insertEdge(graph.getDefaultParent(), null, "", lastVertex, exit);
-                }
-            }
-
-            parentVertex = exit;
-        } finally {
-            graph.getModel().endUpdate();
-        }
+        drawTryStatement(entity.getBody(), entity.getCatches(), entity.getFinallyBlock(), "try");
+    }
+    
+    public void visit (final TryWithResourcesStatement entity) {
+        final String label = "try (" + Stringifier.toString(entity.getResources()) + ")";
+        drawTryStatement(entity.getBody(), entity.getCatches(), entity.getFinallyBlock(), label);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

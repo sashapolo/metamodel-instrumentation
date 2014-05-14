@@ -21,12 +21,16 @@ import org.simpleframework.xml.ElementList;
  *
  * @author alexander
  */
-@Default
 public class FunctionDecl extends Declaration {
+    @Element(required = false)
     private final Type retType;
+    @ElementList
     private final List<String> exceptions;
+    @ElementList
     private final List<ParameterDecl> params;
+    @ElementList
     private final List<TemplateDecl> templates;
+    @Element
     private final StatementBlock body;
 
     @Override
@@ -79,12 +83,9 @@ public class FunctionDecl extends Declaration {
         }
     }
 
-    private FunctionDecl(@Element(name = "retType") final Type retType, 
-                         @Element(name = "name") final String name,
-                         @ElementList(name = "params") final List<ParameterDecl> params,
-                         @ElementList(name = "exceptions") final List<String> exceptions,
-                         @ElementList(name = "templates") final List<TemplateDecl> templates,
-                         @Element(name = "body") final StatementBlock body) {
+    private FunctionDecl(final Type retType, final String name, final List<ParameterDecl> params,
+                         final List<String> exceptions, final List<TemplateDecl> templates,
+                         final StatementBlock body) {
         super(name);
         this.retType = retType;
         this.params = params;
@@ -134,8 +135,10 @@ public class FunctionDecl extends Declaration {
         }
         
         result.append(Stringifier.toString(modifiers, " ")).append(' ');
-        result.append(retType.toString()).append(' ').append(name);
-        result.append('(').append(Stringifier.toString(params)).append(')');
+        if (retType != null) {
+            result.append(retType.toString()).append(' ');
+        }
+        result.append(name).append('(').append(Stringifier.toString(params)).append(')');
         
         return result.toString();
     }

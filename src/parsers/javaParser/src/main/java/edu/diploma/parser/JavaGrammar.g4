@@ -1183,6 +1183,11 @@ locals [String operation]
             List<Expression> params = $expressionList.ctx == null ? Collections.<Expression>emptyList() : $expressionList.result.asList();
             $result = new FunctionCall($Identifier.text, null, params);
         }
+    |   'this' '(' expressionList? ')'
+        { 
+            List<Expression> params = $expressionList.ctx == null ? Collections.<Expression>emptyList() : $expressionList.result.asList();
+            $result = new FunctionCall("this", null, params);
+        }
     |   param=expression '.' Identifier '(' expressionList? ')'
         { 
             List<Expression> params = $expressionList.ctx == null ? Collections.<Expression>emptyList() : $expressionList.result.asList();

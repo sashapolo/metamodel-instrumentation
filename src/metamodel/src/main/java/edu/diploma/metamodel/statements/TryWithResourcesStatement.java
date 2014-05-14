@@ -8,6 +8,7 @@ package edu.diploma.metamodel.statements;
 
 import edu.diploma.metamodel.declarations.VariableDecl;
 import edu.diploma.visitors.Visitor;
+import java.util.Collections;
 import java.util.List;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -41,6 +42,22 @@ public class TryWithResourcesStatement implements Statement {
         this.body = body;
         this.catches = catches;
         this.finallyBlock = finallyBlock;
+    }
+
+    public List<VariableDecl> getResources() {
+        return Collections.unmodifiableList(resources);
+    }
+
+    public Statement getBody() {
+        return body;
+    }
+
+    public Statement getFinallyBlock() {
+        return finallyBlock;
+    }
+
+    public List<CatchStatement> getCatches() {
+        return Collections.unmodifiableList(catches);
     }
 
     @Override
