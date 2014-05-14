@@ -23,6 +23,18 @@ public class IfStatement implements Statement {
         this.elser = elser;
     }
 
+    public Expression getCondition() {
+        return condition;
+    }
+
+    public Statement getIfer() {
+        return ifer;
+    }
+
+    public Statement getElser() {
+        return elser;
+    }
+    
     @Override
     public void accept(Visitor visitor) {
         visitor.dispatch(condition);

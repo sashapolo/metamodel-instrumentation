@@ -47,4 +47,11 @@ public class AttributeAccess extends Expression {
     public void accept(Visitor visitor) {
         visitor.dispatch(expr);
     }
+
+    @Override
+    public String toString() {
+        return expr.toString() + "." + name;
+    }
+    
+    
 }

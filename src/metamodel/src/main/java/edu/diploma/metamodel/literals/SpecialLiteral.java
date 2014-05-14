@@ -30,6 +30,10 @@ public class SpecialLiteral extends Literal {
     }
 
     @Override
-    public void accept(Visitor visitor) {
+    public void accept(Visitor visitor) {}
+    
+    @Override
+    public String toString() {
+        return value;
     }
 }

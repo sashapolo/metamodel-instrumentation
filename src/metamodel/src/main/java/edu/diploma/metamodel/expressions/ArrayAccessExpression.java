@@ -46,6 +46,11 @@ public class ArrayAccessExpression extends Expression {
         visitor.dispatch(caller);
         visitor.dispatch(param);
     }
+
+    @Override
+    public String toString() {
+        return caller.toString() + "[" + param.toString() + "]";
+    }
     
     
 }

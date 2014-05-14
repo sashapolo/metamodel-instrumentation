@@ -200,7 +200,7 @@ public class CfgDrawVisitor extends DefaultVisitor {
 
     @Override
     public void visit(Declaration entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Should not happen");
     }
 
     @Override
@@ -223,22 +223,22 @@ public class CfgDrawVisitor extends DefaultVisitor {
 
     @Override
     public void visit(ParameterDecl entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Should not happen");
     }
 
     @Override
     public void visit(TemplateDecl entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Should not happen");
     }
 
     @Override
     public void visit(VariableDecl entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Should not happen");
     }
 
     @Override
     public void visit(ArrayAccessExpression entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Should not happen");
     }
 
     @Override
@@ -393,7 +393,18 @@ public class CfgDrawVisitor extends DefaultVisitor {
 
     @Override
     public void visit(IfStatement entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        graph.getModel().beginUpdate();
+        try {
+            final Object vertex = JGraphUtils.createVertex(graph, "if (" + entity.getCondition() + ")");
+            graph.addCell(vertex);
+            graph.insertEdge(graph.getDefaultParent(), null, "", parentVertex, vertex);
+            parentVertex = vertex;
+            dispatch(entity.getIfer());
+            parentVertex = vertex;
+            dispatch(entity.getElser());
+        } finally {
+           graph.getModel().endUpdate();
+        }
     }
 
     @Override

@@ -29,4 +29,8 @@ public class CharLiteral extends Literal {
     public void accept(Visitor visitor) {
     }
     
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
 }

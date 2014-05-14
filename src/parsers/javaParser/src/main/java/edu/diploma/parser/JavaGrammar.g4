@@ -1277,13 +1277,13 @@ locals [List<Type> types = Collections.emptyList()]
             $result = new ConstructorCall($createdName.result, 
                                           $classCreatorRest.params, 
                                           $types, 
-                                          $classCreatorRest.body); 
+                                          $classCreatorRest.body, true); 
         }
     |   createdName arrayCreatorRest
         {
-            $result = new ConstructorCall($createdName.result, Collections.<Expression>emptyList());
+            $result = new ConstructorCall($createdName.result, Collections.<Expression>emptyList(), true);
             for (final ArrayParam param : $arrayCreatorRest.params) {
-                $result = new ArrayConstructorCall($result, param.getSize());
+                $result = new ArrayConstructorCall($result, param.getSize(), true);
             }                                                          
         }
     ;

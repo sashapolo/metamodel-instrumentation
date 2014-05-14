@@ -8,6 +8,7 @@ package edu.diploma.metamodel.expressions;
 
 import edu.diploma.metamodel.declarations.DeclBody;
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.util.Stringifier;
 import edu.diploma.visitors.Visitor;
 import java.util.Collections;
 import java.util.List;
@@ -25,27 +26,34 @@ public class ConstructorCall extends Expression {
     private final List<Type> templates;
     @Element(required = false)
     private final DeclBody body;
+    @Element
+    private final boolean heap;
     
-    public ConstructorCall(final Type type, final List<Expression> params) {
+    public ConstructorCall(final Type type, final List<Expression> params, boolean heap) {
         super(type);
         this.params = params;
         this.templates = Collections.emptyList();
         this.body = null;
+        this.heap = heap;
     }
-    public ConstructorCall(final Type type, final List<Expression> params, final List<Type> templates) {
+    public ConstructorCall(final Type type, final List<Expression> params, 
+            final List<Type> templates, boolean heap) {
         super(type);
         this.params = params;
         this.templates = templates;
+        this.heap = heap;
         this.body = null;
     }
     public ConstructorCall(@Element(name = "type") final Type type, 
                            @ElementList(name = "params") final List<Expression> params, 
                            @ElementList(name = "templates") final List<Type> templates, 
-                           @Element(name = "body") final DeclBody body) {
+                           @Element(name = "body") final DeclBody body,
+                           @Element(name = "heap") boolean heap) {
         super(type);
         this.params = params;
         this.templates = templates;
         this.body = body;
+        this.heap = heap;
     }
 
     public List<Expression> getParams() {
@@ -72,5 +80,20 @@ public class ConstructorCall extends Expression {
             visitor.dispatch(body);
         }
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder result = new StringBuilder();
+        if (heap) {
+            result.append("new ");
+        }
+        result.append(type.toString());
+        if (!templates.isEmpty()) {
+            result.append('<').append(Stringifier.toString(templates)).append('>');
+        }
+        result.append('(').append(Stringifier.toString(params)).append(')');
+        return result.toString();
+    }
+    
     
 }

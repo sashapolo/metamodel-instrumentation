@@ -28,4 +28,9 @@ public class StringLiteral extends Literal {
     @Override
     public void accept(Visitor visitor) {
     }
+    
+    @Override
+    public String toString() {
+        return value;
+    }
 }
