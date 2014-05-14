@@ -25,10 +25,23 @@ public class CatchStatement implements Statement {
         this.body = body;
     }
 
+    public VariableDeclStatement getException() {
+        return exception;
+    }
+
+    public Statement getBody() {
+        return body;
+    }
+
     @Override
     public void accept(Visitor visitor) {
         visitor.dispatch(exception);
         visitor.dispatch(body);
+    }
+
+    @Override
+    public String toString() {
+        return "catch (" + exception.toString() + ")";
     }
     
     

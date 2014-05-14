@@ -46,6 +46,10 @@ public class StaticAttributeAccess extends Expression {
         visitor.dispatch(qualifier);
         visitor.dispatch(attribute);
     }
-    
+
+    @Override
+    public String toString() {
+        return qualifier + "." + attribute;
+    }
     
 }

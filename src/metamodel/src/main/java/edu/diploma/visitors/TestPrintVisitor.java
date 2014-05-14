@@ -42,7 +42,6 @@ import edu.diploma.metamodel.literals.IntegerLiteral;
 import edu.diploma.metamodel.literals.Literal;
 import edu.diploma.metamodel.literals.SpecialLiteral;
 import edu.diploma.metamodel.literals.StringLiteral;
-import edu.diploma.metamodel.statements.ArbitraryStatement;
 import edu.diploma.metamodel.statements.BreakStatement;
 import edu.diploma.metamodel.statements.CatchStatement;
 import edu.diploma.metamodel.statements.ContinueStatement;
@@ -251,11 +250,6 @@ public class TestPrintVisitor extends DefaultVisitor {
 
     @Override
     public void visit(StringLiteral entity) {
-        System.out.println(entity.getClass().getName());
-    }
-
-    @Override
-    public void visit(ArbitraryStatement entity) {
         System.out.println(entity.getClass().getName());
     }
 

@@ -33,4 +33,11 @@ public class CastExpression extends Expression {
     public void accept(Visitor visitor) {
         visitor.dispatch(param);
     }
+
+    @Override
+    public String toString() {
+        return "(" + type + ") " + param;
+    }
+    
+    
 }

@@ -46,6 +46,9 @@ public class AssignmentExpression extends Expression {
         visitor.dispatch(lhs);
         visitor.dispatch(rhs);
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return lhs + " = " + rhs;
+    }
 }

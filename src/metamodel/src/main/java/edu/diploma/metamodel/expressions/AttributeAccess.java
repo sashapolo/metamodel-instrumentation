@@ -50,7 +50,7 @@ public class AttributeAccess extends Expression {
 
     @Override
     public String toString() {
-        return expr.toString() + "." + name;
+        return expr + "." + name;
     }
     
     

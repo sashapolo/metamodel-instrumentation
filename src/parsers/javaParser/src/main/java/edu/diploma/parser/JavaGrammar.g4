@@ -44,7 +44,6 @@ grammar JavaGrammar;
     import edu.diploma.metamodel.literals.*;
     import edu.diploma.parser.util.TypeFactory;
     import edu.diploma.parser.UntypedVariable;
-    import edu.diploma.parser.ArrayParam;
 }
 
 // starting point for parsing a java file
@@ -915,12 +914,7 @@ locals [List<SwitchStatement.Label> labels = new LinkedList<>(),
     :   block { $result = $block.result; }
     |   ASSERT carExpr=expression (':' cdrExpr=expression)? ';'
         {
-            List<Entity> exprs = new LinkedList<>();
-            exprs.add($carExpr.result);
-            if ($cdrExpr.ctx != null) {
-                exprs.add($cdrExpr.result);
-            }
-            $result = new ArbitraryStatement($ASSERT.text, exprs);
+            $result = new EmptyStatement();
         }
     |   'if' parExpression car=statement ('else' cdr=statement)?
         {
@@ -1281,10 +1275,7 @@ locals [List<Type> types = Collections.emptyList()]
         }
     |   createdName arrayCreatorRest
         {
-            $result = new ConstructorCall($createdName.result, Collections.<Expression>emptyList(), true);
-            for (final ArrayParam param : $arrayCreatorRest.params) {
-                $result = new ArrayConstructorCall($result, param.getSize(), true);
-            }                                                          
+            $result = new ArrayConstructorCall($createdName.result, $arrayCreatorRest.params, true);
         }
     ;
 
@@ -1317,15 +1308,15 @@ innerCreator
     ;
 
 arrayCreatorRest
-returns [List<ArrayParam> params]
+returns [ExpressionList params]
 @init {
-    $params = new LinkedList<>();       
+    $params = new ExpressionList();       
 }       
-    :   '[' ']' { $params.add(new ArrayParam(null)); } ('[' ']' { $params.add(new ArrayParam(null)); })* 
+    :   '[' ']' { $params.add(null); } ('[' ']' { $params.add(null); })* 
         arrayInitializer
-    |   '[' expression { $params.add(new ArrayParam($expression.result)); } ']' 
-        ('[' expression ']' { $params.add(new ArrayParam($expression.result)); })* 
-        ('[' ']' { $params.add(new ArrayParam(null)); })*
+    |   '[' expression { $params.add($expression.result); } ']' 
+        ('[' expression ']' { $params.add($expression.result); })* 
+        ('[' ']' { $params.add(null); })*
     ;
 
 classCreatorRest

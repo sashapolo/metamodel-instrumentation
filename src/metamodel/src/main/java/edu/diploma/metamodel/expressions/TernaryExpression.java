@@ -55,6 +55,11 @@ public class TernaryExpression extends Expression {
         visitor.dispatch(ifBranch);
         visitor.dispatch(elseBranch);
     }
+
+    @Override
+    public String toString() {
+        return condition + " ? " + ifBranch + " : " + elseBranch;
+    }
     
     
 }

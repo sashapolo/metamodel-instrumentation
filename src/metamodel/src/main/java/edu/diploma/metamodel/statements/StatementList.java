@@ -6,6 +6,7 @@
 
 package edu.diploma.metamodel.statements;
 
+import edu.diploma.util.Stringifier;
 import edu.diploma.visitors.Visitor;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,6 +31,10 @@ public class StatementList implements Statement {
     public void addAll(final List<? extends Statement> statements) {
         this.statements.addAll(statements);
     }
+    
+    public List<Statement> asList() {
+        return statements;
+    }
 
     @Override
     public void accept(Visitor visitor) {
@@ -37,4 +42,11 @@ public class StatementList implements Statement {
             visitor.dispatch(state);
         }
     }
+
+    @Override
+    public String toString() {
+        return Stringifier.toString(statements);
+    }
+    
+    
 }

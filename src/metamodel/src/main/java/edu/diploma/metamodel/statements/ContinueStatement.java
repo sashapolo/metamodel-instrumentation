@@ -27,4 +27,9 @@ public class ContinueStatement implements Statement {
 
     @Override
     public void accept(Visitor visitor) {}
+
+    @Override
+    public String toString() {
+        return "continue";
+    }
 }

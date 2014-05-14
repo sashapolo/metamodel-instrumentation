@@ -17,38 +17,37 @@ import org.simpleframework.xml.Element;
  */
 @Default
 public class ArrayConstructorCall extends Expression {
-    private final Expression inner;
-    private final Expression size;
+    private final ExpressionList size;
     private final boolean heap;
     
     public ArrayConstructorCall(@Element(name = "type") final Type type, 
-                                @Element(name = "inner") final Expression inner, 
-                                @Element(name = "size") final Expression size,
+                                @Element(name = "size") final ExpressionList size,
                                 @Element(name = "heap") boolean heap) {
         super(type);
-        this.inner = inner;
-        this.size = size;
-        this.heap = heap;
-    }
-    public ArrayConstructorCall(final Expression inner, final Expression size, boolean heap) {
-        super(Type.UNKOWN_TYPE);
-        this.inner = inner;
         this.size = size;
         this.heap = heap;
     }
 
-    public Expression getInner() {
-        return inner;
-    }
-
-    public Expression getSize() {
+    public ExpressionList getSize() {
         return size;
     }
 
     @Override
     public void accept(Visitor visitor) {
-        visitor.dispatch(inner);
         visitor.dispatch(size);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder result = new StringBuilder();
+        if (heap) {
+            result.append("new ");
+        }
+        result.append(type.toString());
+        for (final Expression expr : size.asList()) {
+            result.append("[").append(expr == null ? "" : expr.toString()).append("]");
+        }
+        return result.toString();
     }
     
     

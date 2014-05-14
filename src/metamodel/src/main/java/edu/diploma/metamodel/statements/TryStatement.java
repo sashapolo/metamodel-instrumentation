@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.statements;
 
 import edu.diploma.visitors.Visitor;
+import java.util.Collections;
 import java.util.List;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -34,6 +35,18 @@ public class TryStatement implements Statement {
         this.body = body;
         this.catches = catches;
         this.finallyBlock = finallyBlock;
+    }
+
+    public Statement getBody() {
+        return body;
+    }
+
+    public Statement getFinallyBlock() {
+        return finallyBlock;
+    }
+
+    public List<CatchStatement> getCatches() {
+        return Collections.unmodifiableList(catches);
     }
 
     @Override

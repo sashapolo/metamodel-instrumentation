@@ -1,6 +1,7 @@
 package edu.diploma.metamodel.expressions;
 
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.util.Stringifier;
 import edu.diploma.visitors.Visitor;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,4 +40,11 @@ public class ExpressionList extends Expression {
             visitor.dispatch(expr);
         }
     }
+
+    @Override
+    public String toString() {
+        return Stringifier.toString(expressions);
+    }
+    
+    
 }

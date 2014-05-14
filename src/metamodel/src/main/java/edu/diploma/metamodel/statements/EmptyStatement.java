@@ -7,16 +7,24 @@
 package edu.diploma.metamodel.statements;
 
 import edu.diploma.visitors.Visitor;
-import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Element;
 
 /**
  *
  * @author alexander
  */
-@Default
 public class EmptyStatement implements Statement {
-
+    //FIXME find how to get rid of this shit
+    @Element(required = false)
+    private final String placeholder;
+    
+    public EmptyStatement() {
+        this.placeholder = null;
+    }
+    private EmptyStatement(@Element(name = "placeholder") final String placeholder) {
+        this.placeholder = placeholder;
+    }
+    
     @Override
     public void accept(Visitor visitor) {}
-    
 }

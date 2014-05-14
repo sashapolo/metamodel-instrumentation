@@ -42,7 +42,6 @@ import edu.diploma.metamodel.literals.IntegerLiteral;
 import edu.diploma.metamodel.literals.Literal;
 import edu.diploma.metamodel.literals.SpecialLiteral;
 import edu.diploma.metamodel.literals.StringLiteral;
-import edu.diploma.metamodel.statements.ArbitraryStatement;
 import edu.diploma.metamodel.statements.BreakStatement;
 import edu.diploma.metamodel.statements.CatchStatement;
 import edu.diploma.metamodel.statements.ContinueStatement;
@@ -117,7 +116,6 @@ public abstract class DefaultVisitor extends VisitorAdapter {
     public abstract void visit(final StringLiteral entity);
     
     // Statements
-    public abstract void visit(final ArbitraryStatement entity);
     public abstract void visit(final BreakStatement entity);
     public abstract void visit(final CatchStatement entity);
     public abstract void visit(final ContinueStatement entity);

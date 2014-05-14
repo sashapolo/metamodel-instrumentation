@@ -59,4 +59,15 @@ public class UnaryExpression extends Expression {
     public void accept(Visitor visitor) {
         visitor.dispatch(operand);
     }
+
+    @Override
+    public String toString() {
+        if (postfix) {
+            return operand + operation;
+        } else {
+            return operation + operand;
+        }
+    }
+    
+    
 }

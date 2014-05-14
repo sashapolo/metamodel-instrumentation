@@ -26,6 +26,11 @@ public class JGraphUtils {
                                   size.getHeight() + VERTEX_OFFSET, 
                                   null);
     }
+    
+    public static Object createEmptyVertex(final mxGraph graph) {
+        final Map<String, Object> style = graph.getStylesheet().getDefaultVertexStyle();
+        return graph.createVertex(graph.getDefaultParent(), null, "", 0, 0, 20, 20, null);
+    }
 
     private JGraphUtils() {
     }

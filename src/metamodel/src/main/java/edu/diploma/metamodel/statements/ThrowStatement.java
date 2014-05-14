@@ -27,4 +27,11 @@ public class ThrowStatement implements Statement {
     public void accept(Visitor visitor) {
         visitor.dispatch(expr);
     }
+
+    @Override
+    public String toString() {
+        return "throw " + expr;
+    }
+    
+    
 }

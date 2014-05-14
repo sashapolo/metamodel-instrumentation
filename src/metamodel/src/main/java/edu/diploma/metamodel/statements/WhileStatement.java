@@ -26,6 +26,14 @@ public class WhileStatement implements Statement {
         this.body = body;
     }
 
+    public Expression getCondition() {
+        return condition;
+    }
+
+    public Statement getBody() {
+        return body;
+    }
+    
     @Override
     public void accept(Visitor visitor) {
         visitor.dispatch(condition);

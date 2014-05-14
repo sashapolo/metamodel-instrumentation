@@ -32,6 +32,22 @@ public class ForStatement implements Statement {
         this.body = body;
     }
 
+    public Statement getInit() {
+        return init;
+    }
+
+    public Expression getCondition() {
+        return condition;
+    }
+
+    public Statement getAction() {
+        return action;
+    }
+
+    public Statement getBody() {
+        return body;
+    }
+    
     @Override
     public void accept(Visitor visitor) {
         visitor.dispatch(init);

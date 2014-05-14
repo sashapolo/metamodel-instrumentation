@@ -29,6 +29,18 @@ public class ForEachStatement implements Statement {
         this.body = body;
     }
 
+    public VariableDeclStatement getInit() {
+        return init;
+    }
+
+    public Expression getRange() {
+        return range;
+    }
+
+    public Statement getBody() {
+        return body;
+    }
+
     @Override
     public void accept(Visitor visitor) {
         visitor.dispatch(init);

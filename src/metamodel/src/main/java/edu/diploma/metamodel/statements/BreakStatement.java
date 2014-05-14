@@ -27,4 +27,9 @@ public class BreakStatement implements Statement {
 
     @Override
     public void accept(Visitor visitor) {}
+
+    @Override
+    public String toString() {
+        return "break";
+    }
 }

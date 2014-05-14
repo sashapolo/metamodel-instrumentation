@@ -8,6 +8,7 @@ package edu.diploma.metamodel.expressions;
 
 import edu.diploma.metamodel.Entity;
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.util.Stringifier;
 import edu.diploma.visitors.Visitor;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -44,5 +45,12 @@ public class ArrayInitializer extends Expression {
             visitor.dispatch(val);
         }
     }
+
+    @Override
+    public String toString() {
+        return "{" + Stringifier.toString(values) + "}";
+    }
+    
+    
     
 }

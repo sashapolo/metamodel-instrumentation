@@ -8,6 +8,7 @@ package edu.diploma.metamodel.statements;
 
 import edu.diploma.metamodel.expressions.Expression;
 import edu.diploma.visitors.Visitor;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import org.simpleframework.xml.Default;
@@ -41,7 +42,7 @@ public class SwitchStatement implements Statement {
         public final static Label DEFAULT = new Label(null);
         
         private final Expression expr;
-        private final List<Statement> states = new LinkedList<>();
+        private final StatementList states = new StatementList();
         
         public Label(final Expression expr) {
             this.expr = expr;
@@ -57,10 +58,24 @@ public class SwitchStatement implements Statement {
         @Override
         public void accept(Visitor visitor) {
             visitor.dispatch(expr);
-            for (final Statement state : states) {
-                visitor.dispatch(state);
-            }
+            visitor.dispatch(states);
         }
+
+        public Expression getExpr() {
+            return expr;
+        }
+
+        public StatementList getStates() {
+            return states;
+        }
+    }
+
+    public Expression getCondition() {
+        return condition;
+    }
+
+    public List<Label> getCases() {
+        return Collections.unmodifiableList(cases);
     }
     
 }

@@ -12,7 +12,6 @@ import edu.diploma.metamodel.types.Type;
 import edu.diploma.util.Stringifier;
 import edu.diploma.visitors.Visitor;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
