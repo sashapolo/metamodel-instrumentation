@@ -6,9 +6,16 @@
 
 package edu.diploma.tool;
 
+import com.mxgraph.swing.handler.mxRubberband;
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.mxGraphOutline;
 import com.mxgraph.view.mxGraph;
 import edu.diploma.metamodel.Metamodel;
 import edu.diploma.tool.visitors.CfgDrawVisitor;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.logging.Level;
@@ -30,6 +37,7 @@ public class Metalyser extends javax.swing.JFrame {
      */
     public Metalyser() {
         initComponents();
+        
     }
 
     /**
@@ -46,6 +54,7 @@ public class Metalyser extends javax.swing.JFrame {
         javax.swing.JMenuItem openMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenuItem closeMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu viewMenu = new javax.swing.JMenu();
+        javax.swing.JMenu DisplayMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Metalyser");
@@ -81,15 +90,14 @@ public class Metalyser extends javax.swing.JFrame {
         viewMenu.setText("View");
         viewMenu.setToolTipText("");
 
-        cfgMenuItem.setText("Control Flow Graph");
-        cfgMenuItem.setToolTipText("");
-        cfgMenuItem.setEnabled(false);
-        cfgMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        fitViewMenuItem.setText("Fit view");
+        fitViewMenuItem.setEnabled(false);
+        fitViewMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cfgMenuItemActionPerformed(evt);
+                fitViewMenuItemActionPerformed(evt);
             }
         });
-        viewMenu.add(cfgMenuItem);
+        viewMenu.add(fitViewMenuItem);
 
         foldGraphMenuItem.setText("Fold graph");
         foldGraphMenuItem.setEnabled(false);
@@ -101,6 +109,20 @@ public class Metalyser extends javax.swing.JFrame {
         viewMenu.add(foldGraphMenuItem);
 
         jMenuBar1.add(viewMenu);
+
+        DisplayMenu.setText("Display");
+
+        cfgMenuItem.setText("Control Flow Graph");
+        cfgMenuItem.setToolTipText("");
+        cfgMenuItem.setEnabled(false);
+        cfgMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cfgMenuItemActionPerformed(evt);
+            }
+        });
+        DisplayMenu.add(cfgMenuItem);
+
+        jMenuBar1.add(DisplayMenu);
 
         setJMenuBar(jMenuBar1);
 
@@ -150,19 +172,93 @@ public class Metalyser extends javax.swing.JFrame {
         drawPanel.repaint();
         cfgMenuItem.setEnabled(true);
         foldGraphMenuItem.setEnabled(false);
+        fitViewMenuItem.setEnabled(false);
     }//GEN-LAST:event_openMenuItemActionPerformed
 
     private void cfgMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cfgMenuItemActionPerformed
-        final CfgDrawVisitor v = new CfgDrawVisitor(drawPanel);
+        final CfgDrawVisitor v = new CfgDrawVisitor();
         v.dispatch(metamodel);
         graph = v.getGraph();
-        foldGraphMenuItem.setEnabled(true);
+        graphComponent = new mxGraphComponent(graph);
+        graphComponent.setConnectable(false);
         
+        new mxRubberband(graphComponent) {
+
+            @Override
+            public void mouseReleased(MouseEvent e)
+            {
+                // get bounds before they are reset
+                Rectangle rect = bounds;
+
+                // invoke usual behaviour
+                super.mouseReleased(e);
+
+                if( rect != null) {
+
+                    double newScale = 1;
+
+                    Dimension graphSize = new Dimension( rect.width, rect.height);
+                    Dimension viewPortSize = graphComponent.getViewport().getSize();
+
+                    int gw = (int) graphSize.getWidth();
+                    int gh = (int) graphSize.getHeight();
+
+                    if (gw > 0 && gh > 0) {
+                        int w = (int) viewPortSize.getWidth();
+                        int h = (int) viewPortSize.getHeight();
+
+                        newScale = Math.min((double) w / gw, (double) h / gh);
+                    }
+
+                    // zoom to fit selected area
+                    graphComponent.zoom(newScale);
+
+                    // make selected area visible 
+                    graphComponent.getGraphControl().scrollRectToVisible( 
+                            new Rectangle((int) (rect.x * newScale), 
+                                          (int) (rect.y * newScale),  
+                                          (int) (rect.width * newScale),  
+                                          (int) (rect.height * newScale)));
+
+                }
+
+            }
+
+        };
+        
+        final mxGraphOutline graphOutline = new mxGraphOutline(graphComponent);
+        graphOutline.setPreferredSize(new Dimension(100, 100));
+        
+        drawPanel.add(graphOutline, BorderLayout.WEST);
+        drawPanel.add(graphComponent, BorderLayout.CENTER);
+        drawPanel.revalidate();
+        
+        foldGraphMenuItem.setEnabled(true);
+        fitViewMenuItem.setEnabled(true);
     }//GEN-LAST:event_cfgMenuItemActionPerformed
 
     private void foldGraphMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_foldGraphMenuItemActionPerformed
         graph.foldCells(true, true, graph.getChildVertices(graph.getDefaultParent()));
     }//GEN-LAST:event_foldGraphMenuItemActionPerformed
+
+    private void fitViewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fitViewMenuItemActionPerformed
+        double newScale = 1;
+
+        Dimension graphSize = graphComponent.getGraphControl().getSize();
+        Dimension viewPortSize = graphComponent.getViewport().getSize();
+
+        int gw = (int) graphSize.getWidth();
+        int gh = (int) graphSize.getHeight();
+
+        if (gw > 0 && gh > 0) {
+            int w = (int) viewPortSize.getWidth();
+            int h = (int) viewPortSize.getHeight();
+
+            newScale = Math.min((double) w / gw, (double) h / gh);
+        }
+
+        graphComponent.zoom(newScale);
+    }//GEN-LAST:event_fitViewMenuItemActionPerformed
     
     /**
      * @param args the command line arguments
@@ -179,9 +275,11 @@ public class Metalyser extends javax.swing.JFrame {
 
     private Metamodel metamodel;
     private mxGraph graph;
+    private mxGraphComponent graphComponent;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private final javax.swing.JMenuItem cfgMenuItem = new javax.swing.JMenuItem();
     private final javax.swing.JPanel drawPanel = new javax.swing.JPanel();
+    private final javax.swing.JMenuItem fitViewMenuItem = new javax.swing.JMenuItem();
     private final javax.swing.JMenuItem foldGraphMenuItem = new javax.swing.JMenuItem();
     // End of variables declaration//GEN-END:variables
 }

@@ -6,8 +6,10 @@
 
 package edu.diploma.tool.graph;
 
+import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxRectangle;
 import com.mxgraph.util.mxUtils;
+import com.mxgraph.view.mxEdgeStyle;
 import com.mxgraph.view.mxGraph;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +20,16 @@ import java.util.Map;
  * @author alexander
  */
 public class Graph extends mxGraph {
+    
+    public Graph() {
+        super();
+        final Map<String, Object> vertexStyle = getStylesheet().getDefaultVertexStyle();
+        vertexStyle.put(mxConstants.STYLE_GRADIENTCOLOR, "white");
+        vertexStyle.put(mxConstants.STYLE_ROUNDED, true);
+        final Map<String, Object> edgeStyle = getStylesheet().getDefaultEdgeStyle();
+        edgeStyle.put(mxConstants.STYLE_EDGE, mxEdgeStyle.EntityRelation);
+        edgeStyle.put(mxConstants.STYLE_ROUNDED, true);
+    }
     
     private Object[] toggleSubtree(final mxGraph graph, final Object cell, boolean show) {
         final List<Object> cells = new LinkedList<>();

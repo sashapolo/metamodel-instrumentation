@@ -7,7 +7,6 @@ package edu.diploma.tool.visitors;
 
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.model.mxICell;
-import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 import edu.diploma.metamodel.Entity;
 import edu.diploma.metamodel.Metamodel;
@@ -54,15 +53,12 @@ import edu.diploma.tool.graph.Graph;
 import edu.diploma.util.Stringifier;
 import edu.diploma.visitors.VisitorAdapter;
 import java.util.List;
-import javax.swing.JComponent;
 
 /**
  *
  * @author alexander
  */
 public class CfgDrawVisitor extends VisitorAdapter {
-
-    private final JComponent drawBoard;
     private final Graph graph;
     private Object parent;
 
@@ -140,8 +136,7 @@ public class CfgDrawVisitor extends VisitorAdapter {
         }
     }
 
-    public CfgDrawVisitor(final JComponent drawBoard) {
-        this.drawBoard = drawBoard;
+    public CfgDrawVisitor() {
         this.graph = new Graph();
 
         graph.setAllowLoops(true);
@@ -159,11 +154,6 @@ public class CfgDrawVisitor extends VisitorAdapter {
         
         final mxHierarchicalLayout layout = new mxHierarchicalLayout(graph);
         layout.execute(graph.getDefaultParent());
-        final mxGraphComponent graphComponent = new mxGraphComponent(graph);
-        graphComponent.setConnectable(false);
-
-        drawBoard.add(graphComponent);
-        drawBoard.revalidate();
     }
     
     public void visit(TranslationUnit entity) {
