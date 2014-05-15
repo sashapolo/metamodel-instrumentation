@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.List;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.ElementList;
-import org.simpleframework.xml.Root;
 
 /**
  *

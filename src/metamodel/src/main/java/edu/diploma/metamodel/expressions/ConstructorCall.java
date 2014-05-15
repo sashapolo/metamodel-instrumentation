@@ -68,13 +68,17 @@ public class ConstructorCall extends Expression {
         return body;
     }
 
+    public boolean isHeap() {
+        return heap;
+    }
+    
     @Override
     public void accept(Visitor visitor) {
         for (final Expression expr : params) {
             visitor.dispatch(expr);
         }
-        for (final Type type : templates) {
-            visitor.dispatch(type);
+        for (final Type t : templates) {
+            visitor.dispatch(t);
         }
         if (body != null) {
             visitor.dispatch(body);

@@ -22,6 +22,10 @@ public class PrimitiveType implements Type {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public void accept(Visitor visitor) {}
 

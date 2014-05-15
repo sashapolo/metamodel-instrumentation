@@ -6,8 +6,10 @@
 package edu.diploma.tool.visitors;
 
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
+import com.mxgraph.layout.mxCompactTreeLayout;
+import com.mxgraph.layout.mxParallelEdgeLayout;
+import com.mxgraph.layout.mxStackLayout;
 import com.mxgraph.model.mxICell;
-import com.mxgraph.view.mxGraph;
 import edu.diploma.metamodel.Entity;
 import edu.diploma.metamodel.Metamodel;
 import edu.diploma.metamodel.TranslationUnit;
@@ -49,17 +51,14 @@ import edu.diploma.metamodel.statements.TryStatement;
 import edu.diploma.metamodel.statements.TryWithResourcesStatement;
 import edu.diploma.metamodel.statements.VariableDeclStatement;
 import edu.diploma.metamodel.statements.WhileStatement;
-import edu.diploma.tool.graph.Graph;
 import edu.diploma.util.Stringifier;
-import edu.diploma.visitors.VisitorAdapter;
 import java.util.List;
 
 /**
  *
  * @author alexander
  */
-public class CfgDrawVisitor extends VisitorAdapter {
-    private final Graph graph;
+public class CfgDrawVisitor extends DrawVisitor {
     private Object parent;
 
     private Object insertVertex(final Entity entity) {
@@ -137,8 +136,6 @@ public class CfgDrawVisitor extends VisitorAdapter {
     }
 
     public CfgDrawVisitor() {
-        this.graph = new Graph();
-
         graph.setAllowLoops(true);
         graph.setCellsMovable(true);
         graph.setCellsResizable(false);
@@ -393,9 +390,4 @@ public class CfgDrawVisitor extends VisitorAdapter {
         entity.accept(this);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public mxGraph getGraph() {
-        return graph;
-    }
-
 }

@@ -23,6 +23,10 @@ public class ThrowStatement implements Statement {
         this.expr = expr;
     }
 
+    public Expression getExpr() {
+        return expr;
+    }
+    
     @Override
     public void accept(Visitor visitor) {
         visitor.dispatch(expr);

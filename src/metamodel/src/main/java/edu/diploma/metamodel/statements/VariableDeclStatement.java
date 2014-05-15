@@ -16,6 +16,10 @@ public class VariableDeclStatement implements Statement {
         this.variable = variable;
     }
 
+    public VariableDecl getVariable() {
+        return variable;
+    }
+
     @Override
     public void accept(Visitor visitor) {
         visitor.dispatch(variable);

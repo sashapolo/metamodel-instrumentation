@@ -22,6 +22,10 @@ public class ArrayType implements Type {
         this.type = type;
     }
 
+    public Type getType() {
+        return type;
+    }
+
     @Override
     public void accept(Visitor visitor) {
         visitor.dispatch(type);

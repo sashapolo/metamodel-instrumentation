@@ -18,12 +18,15 @@ public class StatementBlock implements Statement {
 
     private final List<Statement> statements;
 
+    public StatementBlock() {
+        this.statements = new LinkedList<Statement>();
+    }
     public StatementBlock(@ElementList(name = "statements") final List<Statement> statements) {
         this.statements = statements;
     }
 
-    public static StatementBlock create() {
-        return new StatementBlock(new LinkedList<Statement>());
+    public List<Statement> getStatements() {
+        return Collections.unmodifiableList(statements);
     }
     
     public void add(final Statement statement) {

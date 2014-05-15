@@ -857,7 +857,7 @@ returns [Entity result]
 block
 returns [StatementBlock result]
 @init {
-    $result = StatementBlock.create();       
+    $result = new StatementBlock();       
 }
     :   '{' 
         ( blockStatement { $result.addAll($blockStatement.result); })* 

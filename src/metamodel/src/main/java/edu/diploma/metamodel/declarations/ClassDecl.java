@@ -58,7 +58,7 @@ public class ClassDecl extends Declaration {
 
     @Override
     public void accept(Visitor visitor) {
-        for (final Annotation anno : getAnnotations()) {
+        for (final Annotation anno : annotations) {
             visitor.dispatch(anno);
         }
         for (final TemplateDecl templ : templates) {

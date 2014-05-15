@@ -32,6 +32,10 @@ public class ArrayConstructorCall extends Expression {
         return size;
     }
 
+    public boolean isHeap() {
+        return heap;
+    }
+
     @Override
     public void accept(Visitor visitor) {
         visitor.dispatch(size);
