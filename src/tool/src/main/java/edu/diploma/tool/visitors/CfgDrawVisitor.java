@@ -154,6 +154,18 @@ public class CfgDrawVisitor extends VisitorAdapter {
     public void navigate(Entity entity) {
     }
 
+    public void visit(final Metamodel entity) {
+        entity.accept(this);
+        
+        final mxHierarchicalLayout layout = new mxHierarchicalLayout(graph);
+        layout.execute(graph.getDefaultParent());
+        final mxGraphComponent graphComponent = new mxGraphComponent(graph);
+        graphComponent.setConnectable(false);
+
+        drawBoard.add(graphComponent);
+        drawBoard.revalidate();
+    }
+    
     public void visit(TranslationUnit entity) {
         graph.getModel().beginUpdate();
         try {
@@ -165,14 +177,6 @@ public class CfgDrawVisitor extends VisitorAdapter {
         } finally {
             graph.getModel().endUpdate();
         }
-
-        final mxHierarchicalLayout layout = new mxHierarchicalLayout(graph);
-        layout.execute(graph.getDefaultParent());
-        final mxGraphComponent graphComponent = new mxGraphComponent(graph);
-        graphComponent.setConnectable(false);
-
-        drawBoard.add(graphComponent);
-        drawBoard.revalidate();
     }
 
     public void visit(ClassDecl entity) {
@@ -269,14 +273,14 @@ public class CfgDrawVisitor extends VisitorAdapter {
             parent = vertex;
 
             for (final SwitchStatement.Label state : entity.getCases()) {
-                final Object c = graph.createVertex("case: " + state.getExpr());
+                final String caseLabel = state.getExpr() == null ? "default:" : "case " + state.getExpr() + ":";
+                final Object c = graph.insertVertex(caseLabel);
                 graph.insertEdge(parent, c);
+                parent = c;
                 dispatch(state.getStates());
-                if (parent == vertex) {
-                    parent = c;
-                } else {
-                    parent = vertex;
+                if (parent != c) {
                     graph.insertEdge(parent, exit);
+                    parent = vertex;
                 }
             }
 
@@ -396,10 +400,6 @@ public class CfgDrawVisitor extends VisitorAdapter {
     }
 
     public void visit(final ExpressionList entity) {
-        entity.accept(this);
-    }
-
-    public void visit(final Metamodel entity) {
         entity.accept(this);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////

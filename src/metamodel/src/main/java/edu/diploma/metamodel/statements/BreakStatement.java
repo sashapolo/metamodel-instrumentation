@@ -7,15 +7,14 @@
 package edu.diploma.metamodel.statements;
 
 import edu.diploma.visitors.Visitor;
-import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
 /**
  *
  * @author alexander
  */
-@Default
 public class BreakStatement implements Statement {
+    @Element(required = false)
     private final String label;
     
     public BreakStatement() {

@@ -42,7 +42,7 @@ public class UntypedVariable {
     
     public VariableDecl createVariableDecl(final Type type) {
         if (next != null) {
-            return createVariableDecl(new ArrayType(type));
+            return next.createVariableDecl(new ArrayType(type));
         }
         return new VariableDecl(type, name, value);
     }

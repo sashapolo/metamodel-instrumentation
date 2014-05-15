@@ -145,7 +145,11 @@ public class Metalyser extends javax.swing.JFrame {
                 Logger.getLogger(Metalyser.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
         }
+        drawPanel.removeAll();
+        drawPanel.revalidate();
+        drawPanel.repaint();
         cfgMenuItem.setEnabled(true);
+        foldGraphMenuItem.setEnabled(false);
     }//GEN-LAST:event_openMenuItemActionPerformed
 
     private void cfgMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cfgMenuItemActionPerformed

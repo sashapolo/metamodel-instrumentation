@@ -9,11 +9,11 @@ package edu.diploma.metamodel.statements;
 import edu.diploma.metamodel.expressions.Expression;
 import edu.diploma.visitors.Visitor;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Transient;
 
 /**
  *
@@ -39,25 +39,33 @@ public class SwitchStatement implements Statement {
     }
     
     public static class Label implements Statement{
+        @Transient
         public final static Label DEFAULT = new Label(null);
         
+        @Element(name = "expr", required = false)
         private final Expression expr;
-        private final StatementList states = new StatementList();
+        @Element(name = "states")
+        private final StatementList states;
         
+        private Label(@Element(name = "expr") final Expression expr,
+                      @Element(name = "states") final StatementList states) {
+            this.expr = expr;
+            this.states = states;
+        }
         public Label(final Expression expr) {
             this.expr = expr;
+            this.states = new StatementList();
         }
         
         public void addAll(final List<Statement> states) {
-            if (expr == null) {
-                throw new IllegalArgumentException("Can't add statements to DEFAULT label");
-            }
             this.states.addAll(states);
         }
 
         @Override
         public void accept(Visitor visitor) {
-            visitor.dispatch(expr);
+            if (expr != null) {
+                visitor.dispatch(expr);
+            }
             visitor.dispatch(states);
         }
 
