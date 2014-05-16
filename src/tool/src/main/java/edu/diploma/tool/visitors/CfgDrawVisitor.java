@@ -6,9 +6,6 @@
 package edu.diploma.tool.visitors;
 
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
-import com.mxgraph.layout.mxCompactTreeLayout;
-import com.mxgraph.layout.mxParallelEdgeLayout;
-import com.mxgraph.layout.mxStackLayout;
 import com.mxgraph.model.mxICell;
 import edu.diploma.metamodel.Entity;
 import edu.diploma.metamodel.Metamodel;

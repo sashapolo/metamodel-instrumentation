@@ -31,6 +31,7 @@ import edu.diploma.metamodel.expressions.Expression;
 import edu.diploma.metamodel.expressions.ExpressionList;
 import edu.diploma.metamodel.expressions.FunctionCall;
 import edu.diploma.metamodel.expressions.StaticAttributeAccess;
+import edu.diploma.metamodel.expressions.TernaryExpression;
 import edu.diploma.metamodel.expressions.TypeExpression;
 import edu.diploma.metamodel.expressions.UnaryExpression;
 import edu.diploma.metamodel.expressions.VariableReference;
@@ -570,7 +571,11 @@ public class AstDrawVisitor extends DrawVisitor {
     }
     
     public void visit(BreakStatement entity) {
+        final Object vertex = graph.insertVertex("Break");
+        graph.insertEdge(parents.peek(), vertex, names.peek());
+        parents.push(vertex);
         insertTerminal("break");
+        parents.pop();
     }
     
     public void visit(CatchStatement entity) {
@@ -591,7 +596,11 @@ public class AstDrawVisitor extends DrawVisitor {
 
     
     public void visit(ContinueStatement entity) {
+        final Object vertex = graph.insertVertex("Continue");
+        graph.insertEdge(parents.peek(), vertex, names.peek());
+        parents.push(vertex);
         insertTerminal("continue");
+        parents.pop();
     }
 
     
@@ -886,5 +895,48 @@ public class AstDrawVisitor extends DrawVisitor {
         }
         final mxCompactTreeLayout layout = new mxCompactTreeLayout(graph, false);
         layout.execute(graph.getDefaultParent());
+    }
+    
+    public void visit(SwitchStatement.Label entity) {
+        final Object vertex = graph.insertVertex("Case");
+        graph.insertEdge(parents.peek(), vertex, names.peek());
+        parents.push(vertex);
+        
+        if (entity.getExpr() == null) {
+            insertTerminal("default:");
+        } else {
+            insertTerminal("case:");
+        }
+        
+        if (!entity.getStates().asList().isEmpty()) {
+            names.push("statements");
+            dispatch(entity.getStates());
+            names.pop();
+        }
+        parents.pop();
+    }
+    
+    public void visit(TernaryExpression entity) {
+        final Object vertex = graph.insertVertex("Ternary Expression");
+        graph.insertEdge(parents.peek(), vertex, names.peek());
+        parents.push(vertex);
+        
+        names.push("condition");
+        dispatch(entity.getCondition());
+        names.pop();
+                
+        insertTerminal("?");
+        
+        names.push("if-branch");
+        dispatch(entity.getIfBranch());
+        names.pop();
+        
+        insertTerminal(":");
+        
+        names.push("else-branch");
+        dispatch(entity.getElseBranch());
+        names.pop();
+        
+        parents.pop();
     }
 }

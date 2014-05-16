@@ -3,7 +3,6 @@ package edu.diploma.metamodel;
 import edu.diploma.visitors.Visitor;
 import java.util.Collections;
 import java.util.Map;
-import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementMap;
 
@@ -15,10 +14,12 @@ import org.simpleframework.xml.ElementMap;
  * To change this template use File | Settings | File Templates.
  */
 
-@Default
 public class Annotation implements Entity {
+    @Element
     private final String name;
+    @ElementMap
     private final Map<String, Entity> values;
+    @Element(required = false)
     private final Entity value;
     
     private Annotation(@Element(name = "name") final String name, 
@@ -31,12 +32,12 @@ public class Annotation implements Entity {
     public Annotation(final String name) {
         this.name = name;
         this.value = null;
-        this.values = null;
+        this.values = Collections.emptyMap();
     }
     public Annotation(final String name, final Entity value) {
         this.name = name;
         this.value = value;
-        this.values = null;
+        this.values = Collections.emptyMap();
     }
     public Annotation(final String name, final Map<String, Entity> values) {
         this.name = name;
@@ -58,11 +59,11 @@ public class Annotation implements Entity {
 
     @Override
     public void accept(Visitor visitor) {
-        if (values != null) {
+        if (value == null) {
             for (final Entity val : values.values()) {
                 visitor.dispatch(val);
             }
-        } else if (value != null) {
+        } else {
             visitor.dispatch(value);
         }
     }
