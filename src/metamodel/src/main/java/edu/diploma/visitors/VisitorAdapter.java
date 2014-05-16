@@ -21,9 +21,11 @@ public class VisitorAdapter implements Visitor {
     public void dispatch(final Entity entity) {
         if (entity == null) return;
         try {
-            final Method m = getClass().getMethod("visit", new Class[] { entity.getClass() });
+            final Method m = getClass().getMethod("visit", new Class<?>[] { entity.getClass() });
             m.invoke(this, new Object[] { entity });
-        } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(VisitorAdapter.class.getName()).log(Level.WARNING, "No visit method for class {0}", entity.getClass().getName());
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(VisitorAdapter.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
         navigate(entity);
