@@ -132,13 +132,6 @@ public class CfgDrawVisitor extends DrawVisitor {
         }
     }
 
-    public CfgDrawVisitor() {
-        graph.setAllowLoops(true);
-        graph.setCellsMovable(true);
-        graph.setCellsResizable(false);
-        graph.setCellsEditable(false);
-    }
-
     @Override
     public void navigate(Entity entity) {
     }

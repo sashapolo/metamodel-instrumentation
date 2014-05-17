@@ -15,7 +15,15 @@ import edu.diploma.visitors.VisitorAdapter;
  * @author alexander
  */
 public class DrawVisitor extends VisitorAdapter {
-    protected final Graph graph = new Graph();
+    protected final Graph graph;
+    
+    public DrawVisitor() {
+        graph = new Graph();
+        graph.setAllowLoops(true);
+        graph.setCellsMovable(true);
+        graph.setCellsResizable(false);
+        graph.setCellsEditable(false);
+    }
     
     public mxGraph getGraph() {
         return graph;

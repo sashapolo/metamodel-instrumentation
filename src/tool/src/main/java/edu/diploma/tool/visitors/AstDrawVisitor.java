@@ -92,13 +92,6 @@ public class AstDrawVisitor extends DrawVisitor {
         final Object child = graph.insertVertex("'" + label + "'");
         graph.insertEdge(parents.peek(), child, edge);
     }
-    
-    public AstDrawVisitor() {
-        graph.setAllowLoops(true);
-        graph.setCellsMovable(true);
-        graph.setCellsResizable(false);
-        graph.setCellsEditable(false);
-    }
 
     @Override
     public void navigate(Entity entity) {

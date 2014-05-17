@@ -13,6 +13,7 @@ import com.mxgraph.view.mxGraph;
 import edu.diploma.metamodel.Metamodel;
 import edu.diploma.tool.visitors.AstDrawVisitor;
 import edu.diploma.tool.visitors.CfgDrawVisitor;
+import edu.diploma.tool.visitors.ClassDiagramDrawVisitor;
 import edu.diploma.tool.visitors.DrawVisitor;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -132,6 +133,15 @@ public class Metalyser extends javax.swing.JFrame {
         });
         DisplayMenu.add(astViewMenuItem);
 
+        classDiagramMenuItem.setText("Class Diagram");
+        classDiagramMenuItem.setEnabled(false);
+        classDiagramMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                classDiagramMenuItemActionPerformed(evt);
+            }
+        });
+        DisplayMenu.add(classDiagramMenuItem);
+
         jMenuBar1.add(DisplayMenu);
 
         setJMenuBar(jMenuBar1);
@@ -184,6 +194,7 @@ public class Metalyser extends javax.swing.JFrame {
         
         cfgMenuItem.setEnabled(true);
         astViewMenuItem.setEnabled(true);
+        classDiagramMenuItem.setEnabled(true);
         foldGraphMenuItem.setEnabled(false);
         fitViewMenuItem.setEnabled(false);
     }//GEN-LAST:event_openMenuItemActionPerformed
@@ -218,6 +229,10 @@ public class Metalyser extends javax.swing.JFrame {
     private void astViewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_astViewMenuItemActionPerformed
         runVisitor(new AstDrawVisitor());
     }//GEN-LAST:event_astViewMenuItemActionPerformed
+
+    private void classDiagramMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classDiagramMenuItemActionPerformed
+        runVisitor(new ClassDiagramDrawVisitor());
+    }//GEN-LAST:event_classDiagramMenuItemActionPerformed
     
     /**
      * @param args the command line arguments
@@ -301,6 +316,7 @@ public class Metalyser extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private final javax.swing.JMenuItem astViewMenuItem = new javax.swing.JMenuItem();
     private final javax.swing.JMenuItem cfgMenuItem = new javax.swing.JMenuItem();
+    private final javax.swing.JMenuItem classDiagramMenuItem = new javax.swing.JMenuItem();
     private final javax.swing.JPanel drawPanel = new javax.swing.JPanel();
     private final javax.swing.JMenuItem fitViewMenuItem = new javax.swing.JMenuItem();
     private final javax.swing.JMenuItem foldGraphMenuItem = new javax.swing.JMenuItem();

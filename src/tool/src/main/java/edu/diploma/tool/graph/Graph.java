@@ -94,11 +94,15 @@ public class Graph extends mxGraph {
         final Object vertex = createEmptyVertex();
         return addCell(vertex);
     }
+    
     public Object insertEdge(final Object source, final Object dest) {
-        return insertEdge(source, dest, "");
+        return insertEdge(source, dest, "", null);
     }
     public Object insertEdge(final Object source, final Object dest, final String label) {
-        return insertEdge(getDefaultParent(), null, label, source, dest);
+        return insertEdge(source, dest, label, null);
+    }
+    public Object insertEdge(final Object source, final Object dest, final String label, final String style) {
+        return insertEdge(getDefaultParent(), null, label, source, dest, style);
     }
     
     public int removeOrphans() {
