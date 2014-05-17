@@ -178,6 +178,15 @@ public class Metalyser extends javax.swing.JFrame {
                         "Metamodel successfully imported", 
                         "Success!", 
                         JOptionPane.INFORMATION_MESSAGE);
+                drawPanel.removeAll();
+                drawPanel.revalidate();
+                drawPanel.repaint();
+
+                cfgMenuItem.setEnabled(true);
+                astViewMenuItem.setEnabled(true);
+                classDiagramMenuItem.setEnabled(true);
+                foldGraphMenuItem.setEnabled(false);
+                fitViewMenuItem.setEnabled(false);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(
                         this, 
@@ -187,16 +196,6 @@ public class Metalyser extends javax.swing.JFrame {
                 Logger.getLogger(Metalyser.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
         }
-        
-        drawPanel.removeAll();
-        drawPanel.revalidate();
-        drawPanel.repaint();
-        
-        cfgMenuItem.setEnabled(true);
-        astViewMenuItem.setEnabled(true);
-        classDiagramMenuItem.setEnabled(true);
-        foldGraphMenuItem.setEnabled(false);
-        fitViewMenuItem.setEnabled(false);
     }//GEN-LAST:event_openMenuItemActionPerformed
 
     private void cfgMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cfgMenuItemActionPerformed

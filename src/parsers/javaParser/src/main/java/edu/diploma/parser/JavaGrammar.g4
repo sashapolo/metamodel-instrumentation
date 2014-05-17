@@ -1211,8 +1211,8 @@ locals [String operation]
         { $result = new BinaryExpression($lhs.result, $rhs.result, $operation); }
     |   lhs=expression ('<=' { $operation = "<="; } | '>=' { $operation = ">="; } | '>' { $operation = ">"; } | '<' { $operation = "<"; }) rhs=expression
         { $result = new BinaryExpression($lhs.result, $rhs.result, $operation); }
-    |   expression 'instanceof' type
-        { $result = new BinaryExpression($expression.result, new TypeExpression($type.result), "instanceof"); }
+    |   lhs=expression 'instanceof' type
+        { $result = new BinaryExpression($lhs.result, new TypeExpression($type.result), "instanceof"); }
     |   lhs=expression ('==' { $operation = "=="; } | '!=' { $operation = "!="; }) rhs=expression
         { $result = new BinaryExpression($lhs.result, $rhs.result, $operation); }
     |   lhs=expression '&' rhs=expression
