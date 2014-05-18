@@ -17,7 +17,9 @@ import edu.diploma.tool.visitors.ClassDiagramDrawVisitor;
 import edu.diploma.tool.visitors.DrawVisitor;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
@@ -26,7 +28,10 @@ import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
@@ -235,6 +240,20 @@ public class Metalyser extends javax.swing.JFrame {
 
     private void classDiagramMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classDiagramMenuItemActionPerformed
         runVisitor(new ClassDiagramDrawVisitor());
+        graphComponent.getGraphControl().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                mouseReleased(e);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    showGraphPopupMenu(e);
+                }
+            }
+
+        });
     }//GEN-LAST:event_classDiagramMenuItemActionPerformed
 
     /**
@@ -258,48 +277,7 @@ public class Metalyser extends javax.swing.JFrame {
         graphComponent = new mxGraphComponent(graph);
         graphComponent.setConnectable(false);
 
-        new mxRubberband(graphComponent) {
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                // get bounds before they are reset
-                Rectangle rect = bounds;
-
-                // invoke usual behaviour
-                super.mouseReleased(e);
-
-                if (rect != null) {
-
-                    double newScale = 1;
-
-                    Dimension graphSize = new Dimension(rect.width, rect.height);
-                    Dimension viewPortSize = graphComponent.getViewport().getSize();
-
-                    int gw = (int) graphSize.getWidth();
-                    int gh = (int) graphSize.getHeight();
-
-                    if (gw > 0 && gh > 0) {
-                        int w = (int) viewPortSize.getWidth();
-                        int h = (int) viewPortSize.getHeight();
-
-                        newScale = Math.min((double) w / gw, (double) h / gh);
-                    }
-
-                    // zoom to fit selected area
-                    graphComponent.zoom(newScale);
-
-                    // make selected area visible 
-                    graphComponent.getGraphControl().scrollRectToVisible(
-                            new Rectangle((int) (rect.x * newScale),
-                                    (int) (rect.y * newScale),
-                                    (int) (rect.width * newScale),
-                                    (int) (rect.height * newScale)));
-
-                }
-
-            }
-
-        };
+        createRubberbandZoom();
 
         final mxGraphOutline graphOutline = new mxGraphOutline(graphComponent);
         graphOutline.setPreferredSize(new Dimension(100, 100));
@@ -326,6 +304,50 @@ public class Metalyser extends javax.swing.JFrame {
 
         foldGraphMenuItem.setEnabled(true);
         fitViewMenuItem.setEnabled(true);
+    }
+
+    private void createRubberbandZoom() {
+        new mxRubberband(graphComponent) {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                final Rectangle rect = bounds;
+                super.mouseReleased(e);
+
+                if (rect != null) {
+                    double newScale = 1;
+
+                    final Dimension graphSize = new Dimension(rect.width, rect.height);
+                    final Dimension viewPortSize = graphComponent.getViewport().getSize();
+
+                    int gw = (int) graphSize.getWidth();
+                    int gh = (int) graphSize.getHeight();
+
+                    if (gw > 0 && gh > 0) {
+                        int w = (int) viewPortSize.getWidth();
+                        int h = (int) viewPortSize.getHeight();
+
+                        newScale = Math.min((double) w / gw, (double) h / gh);
+                    }
+
+                    graphComponent.zoom(newScale);
+                    graphComponent.getGraphControl().scrollRectToVisible(
+                            new Rectangle((int) (rect.x * newScale),
+                                          (int) (rect.y * newScale),
+                                          (int) (rect.width * newScale),
+                                          (int) (rect.height * newScale)));
+                }
+
+            }
+        };
+    }
+
+    private void showGraphPopupMenu(MouseEvent e) {
+        final Point pt = SwingUtilities.convertPoint(e.getComponent(), e.getPoint(), graphComponent);
+        final JPopupMenu menu = new JPopupMenu();
+        final JMenuItem menuItem = new JMenuItem("View metrics");
+        menu.add(menuItem);
+        menu.show(graphComponent, pt.x, pt.y);
+        e.consume();
     }
 
     private Metamodel metamodel;
