@@ -8,6 +8,7 @@ package edu.diploma.tool.visitors;
 
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.layout.mxGraphLayout;
+import com.mxgraph.model.mxICell;
 import com.mxgraph.util.mxConstants;
 import edu.diploma.metamodel.Entity;
 import edu.diploma.metamodel.Metamodel;
@@ -25,7 +26,6 @@ import edu.diploma.metamodel.types.ClassType;
 import edu.diploma.metamodel.types.Type;
 import edu.diploma.tool.graph.Graph;
 import edu.diploma.tool.util.UmlClass;
-import edu.diploma.util.Pair;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,7 +38,7 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
     private static final String AGGREGATION_STYLE = "defaultEdge;" + mxConstants.STYLE_ENDARROW + "=" + mxConstants.ARROW_DIAMOND;
     private static final String INHERITANCE_STYLE = "defaultEdge;" + mxConstants.STYLE_ENDARROW + "=" + mxConstants.ARROW_CLASSIC;
     
-    private final Map<String, Pair<UmlClass, Object>> map = new HashMap<>();
+    private final Map<String, mxICell> map = new HashMap<>();
     private UmlClass currentClass;
 
     public ClassDiagramDrawVisitor() {
@@ -67,8 +67,8 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
         try {
             currentClass = new UmlClass(entity.getName(), entity.getInherits());
             dispatch(entity.getBody());
-            final Object vertex = graph.insertVertex(currentClass.toString());
-            map.put(entity.getName(), new Pair<>(currentClass, vertex));
+            final Object vertex = graph.insertVertex(currentClass);
+            map.put(entity.getName(), (mxICell) vertex);
             currentClass = null;
         } finally {
             graph.getModel().endUpdate();
@@ -96,12 +96,13 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
     public void visit(final TemplateDecl entity) {}
     
     private void enrich() {
-        for (final Pair<UmlClass, Object> pair : map.values()) {
-            for (final VariableDecl var : pair.first.getVars()) {
-                parseAssocType(var.getType(), pair.second, ASSOCIATION_STYLE);
+        for (final mxICell cell : map.values()) {
+            final UmlClass uml = (UmlClass) cell.getValue();
+            for (final VariableDecl var : uml.getVars()) {
+                parseAssocType(var.getType(), cell, ASSOCIATION_STYLE);
             }
-            for (final Type type : pair.first.getInherits()) {
-                parseInheritance(type, pair.second);
+            for (final Type type : uml.getInherits()) {
+                parseInheritance(type, cell);
             }
         }
     }
@@ -119,7 +120,7 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
         if (type instanceof ClassType) {
             final ClassType t = (ClassType) type;
             if (map.containsKey(t.getName())) {
-                insertAssoc(source, map.get(t.getName()).second, style);
+                insertAssoc(source, map.get(t.getName()), style);
             }
         } else if (type instanceof ArrayType) {
             final ArrayType t = (ArrayType) type;
@@ -131,7 +132,7 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
         if (type instanceof ClassType) {
             final ClassType t = (ClassType) type;
             if (map.containsKey(t.getName())) {
-                graph.insertEdge(source, map.get(t.getName()).second, "", INHERITANCE_STYLE);
+                graph.insertEdge(source, map.get(t.getName()), "", INHERITANCE_STYLE);
             }
         }
     }

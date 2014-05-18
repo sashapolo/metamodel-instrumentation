@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package edu.diploma.tool;
 
 import com.mxgraph.swing.handler.mxRubberband;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
+import com.mxgraph.util.mxResources;
 import com.mxgraph.view.mxGraph;
 import edu.diploma.metamodel.Metamodel;
 import edu.diploma.tool.visitors.AstDrawVisitor;
@@ -19,6 +19,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.logging.Level;
@@ -33,6 +35,7 @@ import org.simpleframework.xml.core.Persister;
  * @author alexander
  */
 public class Metalyser extends javax.swing.JFrame {
+
     private static final long serialVersionUID = 1L;
 
     /**
@@ -174,9 +177,9 @@ public class Metalyser extends javax.swing.JFrame {
             try {
                 metamodel = serializer.read(Metamodel.class, file);
                 JOptionPane.showMessageDialog(
-                        this, 
-                        "Metamodel successfully imported", 
-                        "Success!", 
+                        this,
+                        "Metamodel successfully imported",
+                        "Success!",
                         JOptionPane.INFORMATION_MESSAGE);
                 drawPanel.removeAll();
                 drawPanel.revalidate();
@@ -189,9 +192,9 @@ public class Metalyser extends javax.swing.JFrame {
                 fitViewMenuItem.setEnabled(false);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(
-                        this, 
-                        "Error while loading the metamodel (see the log for more details)", 
-                        "Error!", 
+                        this,
+                        "Error while loading the metamodel (see the log for more details)",
+                        "Error!",
                         JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(Metalyser.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
@@ -233,7 +236,7 @@ public class Metalyser extends javax.swing.JFrame {
     private void classDiagramMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classDiagramMenuItemActionPerformed
         runVisitor(new ClassDiagramDrawVisitor());
     }//GEN-LAST:event_classDiagramMenuItemActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */
@@ -249,28 +252,27 @@ public class Metalyser extends javax.swing.JFrame {
 
     private void runVisitor(final DrawVisitor visitor) {
         drawPanel.removeAll();
-        
+
         visitor.dispatch(metamodel);
         final mxGraph graph = visitor.getGraph();
         graphComponent = new mxGraphComponent(graph);
         graphComponent.setConnectable(false);
-        
+
         new mxRubberband(graphComponent) {
 
             @Override
-            public void mouseReleased(MouseEvent e)
-            {
+            public void mouseReleased(MouseEvent e) {
                 // get bounds before they are reset
                 Rectangle rect = bounds;
 
                 // invoke usual behaviour
                 super.mouseReleased(e);
 
-                if( rect != null) {
+                if (rect != null) {
 
                     double newScale = 1;
 
-                    Dimension graphSize = new Dimension( rect.width, rect.height);
+                    Dimension graphSize = new Dimension(rect.width, rect.height);
                     Dimension viewPortSize = graphComponent.getViewport().getSize();
 
                     int gw = (int) graphSize.getWidth();
@@ -287,29 +289,45 @@ public class Metalyser extends javax.swing.JFrame {
                     graphComponent.zoom(newScale);
 
                     // make selected area visible 
-                    graphComponent.getGraphControl().scrollRectToVisible( 
-                            new Rectangle((int) (rect.x * newScale), 
-                                          (int) (rect.y * newScale),  
-                                          (int) (rect.width * newScale),  
-                                          (int) (rect.height * newScale)));
+                    graphComponent.getGraphControl().scrollRectToVisible(
+                            new Rectangle((int) (rect.x * newScale),
+                                    (int) (rect.y * newScale),
+                                    (int) (rect.width * newScale),
+                                    (int) (rect.height * newScale)));
 
                 }
 
             }
 
         };
-        
+
         final mxGraphOutline graphOutline = new mxGraphOutline(graphComponent);
         graphOutline.setPreferredSize(new Dimension(100, 100));
-        
+
+        final MouseWheelListener wheelTracker = new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                if (e.getSource() instanceof mxGraphOutline || e.isControlDown()) {
+                    if (e.getWheelRotation() < 0) {
+                        graphComponent.zoomIn();
+                    } else {
+                        graphComponent.zoomOut();
+                    }
+                }
+            }
+
+        };
+        graphOutline.addMouseWheelListener(wheelTracker);
+        graphComponent.addMouseWheelListener(wheelTracker);
+
         drawPanel.add(graphOutline, BorderLayout.WEST);
         drawPanel.add(graphComponent, BorderLayout.CENTER);
         drawPanel.revalidate();
-        
+
         foldGraphMenuItem.setEnabled(true);
         fitViewMenuItem.setEnabled(true);
     }
-    
+
     private Metamodel metamodel;
     private mxGraphComponent graphComponent;
     // Variables declaration - do not modify//GEN-BEGIN:variables

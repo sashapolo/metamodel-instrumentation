@@ -84,15 +84,15 @@ public class Graph extends mxGraph {
         }
     }
     
-    public Object createVertex(final String label) {
-        final mxRectangle size = getVertexSize(label);
+    public Object createVertex(final Object label) {
+        final mxRectangle size = getVertexSize(label.toString());
         return createVertex(getDefaultParent(), null, label, 0, 0, size.getWidth(), size.getHeight(), null);
     }
     public Object createEmptyVertex() {
         return createVertex(getDefaultParent(), null, "", 0, 0, 20, 20, null);
     }
     
-    public Object insertVertex(final String label) {
+    public Object insertVertex(final Object label) {
         final Object vertex = createVertex(label);
         return addCell(vertex);
     }
