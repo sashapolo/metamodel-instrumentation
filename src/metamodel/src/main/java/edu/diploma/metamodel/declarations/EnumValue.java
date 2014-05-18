@@ -26,10 +26,11 @@ public class EnumValue extends Declaration {
     
     private EnumValue(@Element(name = "name") String name, 
                       @Element(name = "body") final DeclBody body,
+                      @Element(name = "visibility") final Visibility visibility,
                       @ElementList(name = "modifiers") final List<String> modifiers,
                       @ElementList(name = "value") final List<Expression> value,
                       @ElementList(name = "annotations") final List<Annotation> annotations) {
-        super(name, modifiers, annotations);
+        super(name, visibility, modifiers, annotations);
         this.value = value;
         this.body = body;
     }

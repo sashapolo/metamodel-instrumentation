@@ -21,11 +21,12 @@ import org.simpleframework.xml.ElementList;
 public class AnnotationDecl extends Declaration {
     private final DeclBody body;
     
-    private AnnotationDecl(@Element(name = "name") String name, 
+    private AnnotationDecl(@Element(name = "name") final String name, 
+                           @Element(name = "visibility") final Visibility visibility,
                            @ElementList(name = "modifiers") final List<String> modifiers,
                            @ElementList(name = "annotations") final List<Annotation> annotations,
                            @Element(name = "body") final DeclBody body) {
-        super(name, modifiers, annotations);
+        super(name, visibility, modifiers, annotations);
         this.body = body;
     }
     

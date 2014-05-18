@@ -25,10 +25,11 @@ public class TemplateDecl extends Declaration {
     private final List<Type> bounds;
     
     private TemplateDecl(@Element(name = "name") String name, 
+                         @Element(name = "visibility") final Visibility visibility,
                          @ElementList(name = "modifiers") final List<String> modifiers,
                          @ElementList(name = "annotations") final List<Annotation> annotations,
                          @ElementList(name = "bounds") final List<Type> bounds) {
-        super(name, modifiers, annotations);
+        super(name, visibility, modifiers, annotations);
         this.bounds = bounds;
     }
     

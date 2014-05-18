@@ -24,11 +24,12 @@ public class ParameterDecl extends Declaration {
     private final boolean variadic;
 
     private ParameterDecl(@Element(name = "name") String name, 
+                          @Element(name = "visibility") final Visibility visibility,
                           @ElementList(name = "modifiers") final List<String> modifiers,
                           @ElementList(name = "annotations") final List<Annotation> annotations,
                           @Element(name = "value") final VariableDecl value,
                           @Element(name = "variadic") boolean variadic) {
-        super(name, modifiers, annotations);
+        super(name, visibility, modifiers, annotations);
         this.value = value;
         this.variadic = variadic;
     }

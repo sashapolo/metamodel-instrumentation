@@ -94,13 +94,14 @@ public class FunctionDecl extends Declaration {
     }
     private FunctionDecl(@Element(name = "retType") final Type retType, 
                          @Element(name = "name") final String name,
+                         @Element(name = "visibility") final Visibility visibility,
                          @ElementList(name = "params") final List<ParameterDecl> params,
                          @ElementList(name = "exceptions") final List<String> exceptions,
                          @ElementList(name = "templates") final List<TemplateDecl> templates,
                          @Element(name = "body") final StatementBlock body,
                          @ElementList(name = "modifiers") final List<String> modifiers, 
                          @ElementList(name = "annotations") final List<Annotation> annotations) {
-        super(name, modifiers, annotations);
+        super(name, visibility, modifiers, annotations);
         this.retType = retType;
         this.params = params;
         this.exceptions = exceptions;
@@ -129,11 +130,15 @@ public class FunctionDecl extends Declaration {
     public String toString() {
         final StringBuilder result = new StringBuilder();
         
+        if (!visibility.toString().isEmpty()) {
+            result.append(visibility.toString()).append(" ");
+        }
+        result.append(Stringifier.toString(modifiers, " ")).append(' ');
+        
         if (!templates.isEmpty()) {
             result.append('<').append(Stringifier.toString(templates)).append(">\n");
         }
         
-        result.append(Stringifier.toString(modifiers, " ")).append(' ');
         if (retType != null) {
             result.append(retType.toString()).append(' ');
         }

@@ -102,8 +102,10 @@ locals [List<Annotation> annos = new LinkedList<>(),
         | annotationTypeDeclaration { $result = $annotationTypeDeclaration.result; }
         )
         {
+            final Declaration.Visibility visibility = TypeFactory.parseModifiers($mods);
             $result.addAnnotations($annos);
             $result.addModifiers($mods);
+            $result.setVisibility(visibility);
         }
     |   ';' { $result = null; }
     ;

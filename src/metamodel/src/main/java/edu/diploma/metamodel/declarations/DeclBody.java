@@ -25,10 +25,11 @@ public class DeclBody extends Declaration {
     private final List<Declaration> decls;
     
     private DeclBody(@Element(name = "name") String name, 
+                     @Element(name = "visibility") final Visibility visibility,
                      @ElementList(name = "decls") final List<Declaration> decls,
                      @ElementList(name = "modifiers") final List<String> modifiers,
                      @ElementList(name = "annotations") final List<Annotation> annotations) {
-        super(name, modifiers, annotations);
+        super(name, visibility, modifiers, annotations);
         this.decls = decls;
     }
     public DeclBody() {

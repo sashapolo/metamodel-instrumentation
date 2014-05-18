@@ -26,12 +26,13 @@ public class EnumDecl extends Declaration {
     private final DeclBody body;
     
     private EnumDecl(@Element(name = "name") String name, 
+                     @Element(name = "visibility") final Visibility visibility,
                      @ElementList(name = "modifiers") final List<String> modifiers,
                      @ElementList(name = "annotations") final List<Annotation> annotations,
                      @ElementList(name = "enums") final List<EnumValue> enums, 
                      @ElementList(name = "inherits") final List<Type> inherits,
                      @Element(name = "body") final DeclBody body) {
-        super(name, modifiers, annotations);
+        super(name, visibility, modifiers, annotations);
         this.enums = enums;
         this.inherits = inherits;
         this.body = body;

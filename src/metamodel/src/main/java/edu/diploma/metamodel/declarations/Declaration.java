@@ -21,6 +21,8 @@ import org.simpleframework.xml.ElementList;
 public abstract class Declaration implements Entity {
     @Element(required = false)
     protected final String name;
+    @Element
+    protected Visibility visibility;
     @ElementList(required = false)
     protected final List<String> modifiers;
     @ElementList(required = false)
@@ -28,13 +30,16 @@ public abstract class Declaration implements Entity {
     
     public Declaration(final String name) {
         this.name = name;
+        this.visibility = Visibility.DEFAULT;
         this.modifiers = new LinkedList<>();
         this.annotations = new LinkedList<>();
     }
     public Declaration(@Element(name = "name") final String name, 
+                       @Element(name = "visibility") final Visibility visibility,
                        @ElementList(name = "modifiers") final List<String> modifiers, 
                        @ElementList(name = "annotations") final List<Annotation> annotations) {
         this.name = name;
+        this.visibility = visibility;
         this.modifiers = modifiers;
         this.annotations = annotations;
     }
@@ -55,6 +60,9 @@ public abstract class Declaration implements Entity {
     public void addModifier(final String modifier) {
         this.modifiers.add(modifier);
     }
+    public void setVisibility(final Visibility visibility) {
+        this.visibility = visibility;
+    }
 
     public String getName() {
         return name;
@@ -64,5 +72,20 @@ public abstract class Declaration implements Entity {
     }
     public List<Annotation> getAnnotations() {
         return Collections.unmodifiableList(annotations);
+    }
+    
+    public static enum Visibility {
+        PUBLIC, PRIVATE, PROTECTED, DEFAULT;
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case DEFAULT: return "";
+                case PRIVATE: return "private";
+                case PROTECTED: return "protected";
+                case PUBLIC: return "public";
+            }
+            throw new AssertionError("unreachable");
+        }
     }
 }

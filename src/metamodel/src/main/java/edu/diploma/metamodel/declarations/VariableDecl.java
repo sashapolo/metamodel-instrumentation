@@ -26,11 +26,12 @@ public class VariableDecl extends Declaration {
     private final Expression value;
     
     private VariableDecl(@Element(name = "name") String name, 
+                         @Element(name = "visibility") final Visibility visibility,
                          @ElementList(name = "modifiers") final List<String> modifiers,
                          @ElementList(name = "annotations") final List<Annotation> annotations,
                          @Element(name = "type") final Type type, 
                          @Element(name = "value") final Expression value) {
-        super(name, modifiers, annotations);
+        super(name, visibility, modifiers, annotations);
         this.type = type;
         this.value = value;
     }
@@ -67,10 +68,13 @@ public class VariableDecl extends Declaration {
 
     @Override
     public String toString() {
-        final StringBuilder result = new StringBuilder(Stringifier.toString(modifiers, " "));
+        final StringBuilder result = new StringBuilder();
         
+        if (!visibility.toString().isEmpty()) {
+            result.append(visibility.toString()).append(" ");
+        }
         if (!modifiers.isEmpty()) {
-            result.append(' ');
+            result.append(Stringifier.toString(modifiers, " ")).append(' ');
         }
         result.append(type.toString()).append(' ').append(name);
         
