@@ -18,11 +18,18 @@ public class DrawVisitor extends VisitorAdapter {
     protected final Graph graph;
     
     public DrawVisitor() {
-        graph = new Graph();
+        graph = Graph.createRoundedGraph();
         graph.setAllowLoops(true);
         graph.setCellsMovable(true);
         graph.setCellsResizable(false);
         graph.setCellsEditable(false);
+    }
+    public DrawVisitor(final Graph graph) {
+        this.graph = graph;
+        this.graph.setAllowLoops(true);
+        this.graph.setCellsMovable(true);
+        this.graph.setCellsResizable(false);
+        this.graph.setCellsEditable(false);
     }
     
     public mxGraph getGraph() {

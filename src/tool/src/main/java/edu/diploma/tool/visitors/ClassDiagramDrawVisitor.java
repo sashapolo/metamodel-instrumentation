@@ -27,6 +27,7 @@ import edu.diploma.metamodel.declarations.VariableDecl;
 import edu.diploma.metamodel.types.ArrayType;
 import edu.diploma.metamodel.types.ClassType;
 import edu.diploma.metamodel.types.Type;
+import edu.diploma.tool.graph.Graph;
 import edu.diploma.tool.util.UmlClass;
 import edu.diploma.util.Pair;
 import java.util.HashMap;
@@ -37,11 +38,17 @@ import java.util.Map;
  * @author alexander
  */
 public class ClassDiagramDrawVisitor extends DrawVisitor {
+    private static final String ASSOCIATION_STYLE = "defaultEdge;" + mxConstants.STYLE_ENDARROW + "=" + mxConstants.ARROW_OPEN;
     private static final String AGGREGATION_STYLE = "defaultEdge;" + mxConstants.STYLE_ENDARROW + "=" + mxConstants.ARROW_DIAMOND;
+    private static final String INHERITANCE_STYLE = "defaultEdge;" + mxConstants.STYLE_ENDARROW + "=" + mxConstants.ARROW_CLASSIC;
     
     private final Map<String, Pair<UmlClass, Object>> map = new HashMap<>();
     private UmlClass currentClass;
 
+    public ClassDiagramDrawVisitor() {
+        super(new Graph());
+    }
+    
     @Override
     public void navigate(Entity entity) {
     }
@@ -62,7 +69,7 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
     public void visit(final ClassDecl entity) {
         graph.getModel().beginUpdate();
         try {
-            currentClass = new UmlClass(entity.getName());
+            currentClass = new UmlClass(entity.getName(), entity.getInherits());
             dispatch(entity.getBody());
             final Object vertex = graph.insertVertex(currentClass.toString());
             map.put(entity.getName(), new Pair<>(currentClass, vertex));
@@ -95,7 +102,10 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
     private void enrich() {
         for (final Pair<UmlClass, Object> pair : map.values()) {
             for (final VariableDecl var : pair.first.getVars()) {
-                parseAssocType(var.getType(), pair.second, null);
+                parseAssocType(var.getType(), pair.second, ASSOCIATION_STYLE);
+            }
+            for (final Type type : pair.first.getInherits()) {
+                parseInheritance(type, pair.second);
             }
         }
     }
@@ -118,6 +128,15 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
         } else if (type instanceof ArrayType) {
             final ArrayType t = (ArrayType) type;
             parseAssocType(t.getType(), source, AGGREGATION_STYLE);
+        }
+    }
+    
+    private void parseInheritance(final Type type, final Object source) {
+        if (type instanceof ClassType) {
+            final ClassType t = (ClassType) type;
+            if (map.containsKey(t.getName())) {
+                graph.insertEdge(source, map.get(t.getName()).second, "", INHERITANCE_STYLE);
+            }
         }
     }
 }

@@ -7,10 +7,13 @@ public class umlTest {
     }
 }
 
-class Test2 {
+class Test2 extends Super {
     private final int foo;
 }
 
-class Test3 {
+class Test3 extends Super {
     private final String bar;
+}
+
+class Super {
 }

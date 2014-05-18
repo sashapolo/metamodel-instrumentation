@@ -22,13 +22,19 @@ import java.util.Map;
 public class Graph extends mxGraph {
     
     public Graph() {
-        super();
         final Map<String, Object> vertexStyle = getStylesheet().getDefaultVertexStyle();
         vertexStyle.put(mxConstants.STYLE_GRADIENTCOLOR, "white");
-        vertexStyle.put(mxConstants.STYLE_ROUNDED, true);
         final Map<String, Object> edgeStyle = getStylesheet().getDefaultEdgeStyle();
         edgeStyle.put(mxConstants.STYLE_EDGE, mxEdgeStyle.EntityRelation);
+    }
+    
+    public static Graph createRoundedGraph() {
+        Graph result = new Graph();
+        final Map<String, Object> vertexStyle = result.getStylesheet().getDefaultVertexStyle();
+        vertexStyle.put(mxConstants.STYLE_ROUNDED, true);
+        final Map<String, Object> edgeStyle = result.getStylesheet().getDefaultEdgeStyle();
         edgeStyle.put(mxConstants.STYLE_ROUNDED, true);
+        return result;
     }
     
     private Object[] toggleSubtree(final mxGraph graph, final Object cell, boolean show) {

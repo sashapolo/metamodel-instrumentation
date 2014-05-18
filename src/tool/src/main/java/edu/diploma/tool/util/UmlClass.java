@@ -8,6 +8,7 @@ package edu.diploma.tool.util;
 
 import edu.diploma.metamodel.declarations.FunctionDecl;
 import edu.diploma.metamodel.declarations.VariableDecl;
+import edu.diploma.metamodel.types.Type;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,11 +19,13 @@ import java.util.List;
  */
 public class UmlClass {
     private final String name;
+    private final List<Type> inherits;
     private final List<VariableDecl> vars;
     private final List<FunctionDecl> methods;
     
-    public UmlClass(final String name) {
+    public UmlClass(final String name, final List<Type> inherits) {
         this.name = name;
+        this.inherits = inherits;
         this.vars = new LinkedList<>();
         this.methods = new LinkedList<>();
     }
@@ -53,5 +56,9 @@ public class UmlClass {
 
     public List<VariableDecl> getVars() {
         return Collections.unmodifiableList(vars);
+    }
+
+    public List<Type> getInherits() {
+        return Collections.unmodifiableList(inherits);
     }
 }

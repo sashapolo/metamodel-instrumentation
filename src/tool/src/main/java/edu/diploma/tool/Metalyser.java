@@ -203,14 +203,15 @@ public class Metalyser extends javax.swing.JFrame {
     }//GEN-LAST:event_cfgMenuItemActionPerformed
 
     private void foldGraphMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_foldGraphMenuItemActionPerformed
+        final mxGraph graph = graphComponent.getGraph();
         graph.foldCells(true, true, graph.getChildVertices(graph.getDefaultParent()));
     }//GEN-LAST:event_foldGraphMenuItemActionPerformed
 
     private void fitViewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fitViewMenuItemActionPerformed
         double newScale = 1;
 
-        Dimension graphSize = graphComponent.getGraphControl().getSize();
-        Dimension viewPortSize = graphComponent.getViewport().getSize();
+        final Dimension graphSize = graphComponent.getGraphControl().getSize();
+        final Dimension viewPortSize = graphComponent.getViewport().getSize();
 
         int gw = (int) graphSize.getWidth();
         int gh = (int) graphSize.getHeight();
@@ -250,7 +251,7 @@ public class Metalyser extends javax.swing.JFrame {
         drawPanel.removeAll();
         
         visitor.dispatch(metamodel);
-        graph = visitor.getGraph();
+        final mxGraph graph = visitor.getGraph();
         graphComponent = new mxGraphComponent(graph);
         graphComponent.setConnectable(false);
         
@@ -310,7 +311,6 @@ public class Metalyser extends javax.swing.JFrame {
     }
     
     private Metamodel metamodel;
-    private mxGraph graph;
     private mxGraphComponent graphComponent;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private final javax.swing.JMenuItem astViewMenuItem = new javax.swing.JMenuItem();
