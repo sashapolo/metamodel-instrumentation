@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.types;
 
 import edu.diploma.visitors.Visitor;
+import java.util.Objects;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -53,4 +54,27 @@ public class TemplateParameter implements Type {
             return type == null ? "?" : type.toString();
         }
     }
+
+    
+    // FIXME this is genuinely wrong and MUST be changed later
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 13 * hash + Objects.hashCode(this.type);
+        return hash;
+    }
+    // FIXME this is genuinely wrong and MUST be changed later
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TemplateParameter other = (TemplateParameter) obj;
+        return Objects.equals(this.type, other.type);
+    }
+    
+    
 }

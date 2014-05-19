@@ -19,6 +19,7 @@ import edu.diploma.metamodel.declarations.DeclBody;
 import edu.diploma.metamodel.declarations.Declaration;
 import edu.diploma.metamodel.declarations.EnumDecl;
 import edu.diploma.metamodel.declarations.FunctionDecl;
+import edu.diploma.metamodel.declarations.ParameterDecl;
 import edu.diploma.metamodel.declarations.TemplateDecl;
 import edu.diploma.metamodel.declarations.VariableDecl;
 import edu.diploma.metamodel.types.ArrayType;
@@ -28,6 +29,7 @@ import edu.diploma.tool.graph.Graph;
 import edu.diploma.tool.util.Metrics;
 import edu.diploma.tool.util.UmlClass;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -144,6 +146,8 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
             final UmlClass c = (UmlClass) cell.getValue();
             final Metrics result = new Metrics();
             result.mhf = getMethodHidingFactor(c);
+            result.ahf = getAttributeHidingFactor(c);
+            result.mif = getMethodInheritanceFactor(c);
             c.addMetrics(result);
         }
     }
@@ -158,6 +162,63 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
                 ++hidden;
             }
         }
-        return (double) hidden / (hidden + visible);
+        return ((double) hidden) / (hidden + visible);
+    }
+
+    private double getAttributeHidingFactor(UmlClass c) {
+        int hidden = 0;
+        int visible = 0;
+        for (final VariableDecl decl : c.getVars()) {
+            if (decl.getVisibility() == Declaration.Visibility.PUBLIC) {
+                ++visible;
+            } else if (decl.getVisibility() == Declaration.Visibility.PRIVATE) {
+                ++hidden;
+            }
+        }
+        return ((double) hidden) / (hidden + visible);
+    }
+
+    private double getMethodInheritanceFactor(UmlClass c) {
+        boolean skip = false;
+        int inherited = 0;
+        int methods = 0;
+        int overriden = 0;
+        for (final FunctionDecl method : c.getMethods()) {
+            for (final Type type : c.getInherits()) {
+                if (type instanceof ClassType) {
+                    final ClassType t = (ClassType) type;
+                    if (map.containsKey(t.getName())) {
+                        final UmlClass superClass = (UmlClass) map.get(t.getName());
+                        for (final FunctionDecl superMethod : superClass.getMethods()) {
+                            if (isOverriden(superMethod, method)) {
+                                ++overriden;
+                                skip = true;
+                            } else {
+                                ++inherited;
+                            }
+                        }
+                    }
+                }
+            }
+            if (!skip) {
+                ++methods;
+            }
+            skip = false;
+        }
+        return ((double) inherited) / (inherited + methods + overriden);
+    }
+    
+    private boolean isOverriden(final FunctionDecl a, final FunctionDecl b) {
+        if (!a.getName().equals(b.getName())) return false;
+        if (a.getParams().size() != b.getParams().size()) return false;
+        
+        final Iterator<ParameterDecl> it1 = a.getParams().iterator();
+        final Iterator<ParameterDecl> it2 = b.getParams().iterator();
+        while (it1.hasNext()) {
+            final Type t1 = it1.next().getValue().getType();
+            final Type t2 = it2.next().getValue().getType();
+            if (!t1.equals(t2)) return false;
+        }
+        return true;
     }
 }

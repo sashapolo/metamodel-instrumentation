@@ -40,12 +40,12 @@ public class MetricsFrame extends javax.swing.JDialog {
         javax.swing.JLabel jLabel4 = new javax.swing.JLabel();
         javax.swing.JLabel jLabel5 = new javax.swing.JLabel();
         javax.swing.JLabel jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        javax.swing.JTextField jTextField1 = new javax.swing.JTextField();
+        javax.swing.JTextField jTextField2 = new javax.swing.JTextField();
+        javax.swing.JTextField jTextField3 = new javax.swing.JTextField();
         final javax.swing.JTextField mhfText = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        javax.swing.JTextField jTextField5 = new javax.swing.JTextField();
+        javax.swing.JTextField jTextField6 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -61,18 +61,23 @@ public class MetricsFrame extends javax.swing.JDialog {
 
         jLabel6.setText("Coupling Factor");
 
-        jTextField1.setText("jTextField1");
+        jTextField1.setEditable(false);
+        jTextField1.setText(String.valueOf(metrics.aif));
 
-        jTextField2.setText("jTextField2");
+        jTextField2.setEditable(false);
+        jTextField2.setText(String.valueOf(metrics.mif));
 
-        jTextField3.setText("jTextField3");
+        jTextField3.setEditable(false);
+        jTextField3.setText(String.valueOf(metrics.ahf));
 
         mhfText.setEditable(false);
         mhfText.setText(String.valueOf(metrics.mhf));
 
-        jTextField5.setText("jTextField5");
+        jTextField5.setEditable(false);
+        jTextField5.setText(String.valueOf(metrics.pof));
 
-        jTextField6.setText("jTextField6");
+        jTextField6.setEditable(false);
+        jTextField6.setText(String.valueOf(metrics.cof));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,10 +136,5 @@ public class MetricsFrame extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }

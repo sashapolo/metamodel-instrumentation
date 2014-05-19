@@ -7,6 +7,7 @@
 package edu.diploma.metamodel.types;
 
 import edu.diploma.visitors.Visitor;
+import java.util.Objects;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Element;
 
@@ -33,4 +34,25 @@ public class PrimitiveType implements Type {
     public String toString() {
         return name;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.name);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PrimitiveType other = (PrimitiveType) obj;
+        return Objects.equals(this.name, other.name);
+    }
+    
+    
 }

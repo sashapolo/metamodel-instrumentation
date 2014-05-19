@@ -13,6 +13,7 @@ import edu.diploma.util.Stringifier;
 import edu.diploma.visitors.Visitor;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 

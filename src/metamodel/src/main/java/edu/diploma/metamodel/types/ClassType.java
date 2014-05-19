@@ -4,6 +4,7 @@ import edu.diploma.visitors.Visitor;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 
@@ -74,6 +75,36 @@ public class ClassType implements Type {
             result.append('>');
         }
         return result.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.name);
+        hash = 71 * hash + Objects.hashCode(this.outer);
+        hash = 71 * hash + Objects.hashCode(this.templates);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ClassType other = (ClassType) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.outer, other.outer)) {
+            return false;
+        }
+        if (!Objects.equals(this.templates, other.templates)) {
+            return false;
+        }
+        return true;
     }
     
     

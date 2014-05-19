@@ -296,7 +296,9 @@ locals [List<String> mods = new LinkedList<>(),
           }
         )* memberDeclaration
         {
+            final Declaration.Visibility visibility = TypeFactory.parseModifiers($mods);
             $result = $memberDeclaration.result;
+            $result.setVisibility(visibility);
             $result.addModifiers($mods);
             $result.addAnnotations($annos);
         }
