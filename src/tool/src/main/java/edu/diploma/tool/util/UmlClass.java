@@ -22,6 +22,7 @@ public class UmlClass {
     private final List<Type> inherits;
     private final List<VariableDecl> vars;
     private final List<FunctionDecl> methods;
+    private Metrics metrics;
     
     public UmlClass(final String name, final List<Type> inherits) {
         this.name = name;
@@ -58,7 +59,19 @@ public class UmlClass {
         return Collections.unmodifiableList(vars);
     }
 
+    public List<FunctionDecl> getMethods() {
+        return Collections.unmodifiableList(methods);
+    }
+
+    public Metrics getMetrics() {
+        return metrics;
+    }
+    
     public List<Type> getInherits() {
         return Collections.unmodifiableList(inherits);
+    }
+    
+    public void addMetrics(final Metrics metrics) {
+        this.metrics = metrics;
     }
 }

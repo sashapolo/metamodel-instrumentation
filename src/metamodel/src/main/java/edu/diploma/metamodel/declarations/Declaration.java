@@ -67,6 +67,9 @@ public abstract class Declaration implements Entity {
     public String getName() {
         return name;
     }
+    public Visibility getVisibility() {
+        return visibility;
+    }
     public List<String> getModifiers() {
         return Collections.unmodifiableList(modifiers);
     }

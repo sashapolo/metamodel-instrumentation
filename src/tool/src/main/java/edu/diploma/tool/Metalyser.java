@@ -5,12 +5,13 @@
  */
 package edu.diploma.tool;
 
+import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.handler.mxRubberband;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;
-import com.mxgraph.util.mxResources;
 import com.mxgraph.view.mxGraph;
 import edu.diploma.metamodel.Metamodel;
+import edu.diploma.tool.util.UmlClass;
 import edu.diploma.tool.visitors.AstDrawVisitor;
 import edu.diploma.tool.visitors.CfgDrawVisitor;
 import edu.diploma.tool.visitors.ClassDiagramDrawVisitor;
@@ -19,6 +20,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -27,7 +30,9 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
@@ -249,13 +254,24 @@ public class Metalyser extends javax.swing.JFrame {
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (e.isPopupTrigger()) {
-                    showGraphPopupMenu(e);
+                    final Point point = e.getPoint();
+                    final mxICell cell = (mxICell) graphComponent.getCellAt(point.x, point.y);
+                    if (cell != null && cell.isVertex()) {
+                        showGraphPopupMenu(e, cell);
+                    }
                 }
             }
 
         });
     }//GEN-LAST:event_classDiagramMenuItemActionPerformed
 
+    private void showMetricsMenuItemActionPerformed(final mxICell cell) {
+        final UmlClass uml = (UmlClass) cell.getValue();
+        final String label = "Showing metrics for class \"" + uml.getName() + "\"";
+        final JDialog frame = new MetricsFrame(this, label, uml.getMetrics());
+        frame.setVisible(true);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -341,10 +357,16 @@ public class Metalyser extends javax.swing.JFrame {
         };
     }
 
-    private void showGraphPopupMenu(MouseEvent e) {
+    private void showGraphPopupMenu(final MouseEvent e, final mxICell cell) {
         final Point pt = SwingUtilities.convertPoint(e.getComponent(), e.getPoint(), graphComponent);
         final JPopupMenu menu = new JPopupMenu();
         final JMenuItem menuItem = new JMenuItem("View metrics");
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                showMetricsMenuItemActionPerformed(cell);
+            }
+        });
         menu.add(menuItem);
         menu.show(graphComponent, pt.x, pt.y);
         e.consume();

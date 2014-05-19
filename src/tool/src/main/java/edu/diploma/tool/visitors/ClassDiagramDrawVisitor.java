@@ -25,6 +25,7 @@ import edu.diploma.metamodel.types.ArrayType;
 import edu.diploma.metamodel.types.ClassType;
 import edu.diploma.metamodel.types.Type;
 import edu.diploma.tool.graph.Graph;
+import edu.diploma.tool.util.Metrics;
 import edu.diploma.tool.util.UmlClass;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +37,7 @@ import java.util.Map;
 public class ClassDiagramDrawVisitor extends DrawVisitor {
     private static final String ASSOCIATION_STYLE = "defaultEdge;" + mxConstants.STYLE_ENDARROW + "=" + mxConstants.ARROW_OPEN;
     private static final String AGGREGATION_STYLE = "defaultEdge;" + mxConstants.STYLE_ENDARROW + "=" + mxConstants.ARROW_DIAMOND;
-    private static final String INHERITANCE_STYLE = "defaultEdge;" + mxConstants.STYLE_ENDARROW + "=" + mxConstants.ARROW_CLASSIC;
+    private static final String INHERITANCE_STYLE = "defaultEdge;" + mxConstants.STYLE_ENDARROW + "=" + mxConstants.ARROW_BLOCK;
     
     private final Map<String, mxICell> map = new HashMap<>();
     private UmlClass currentClass;
@@ -51,6 +52,8 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
     
     public void visit(final Metamodel entity) {
         entity.accept(this);
+        calculateMetrics();
+        enrich();
         final mxGraphLayout layout = new mxHierarchicalLayout(graph);
         layout.execute(graph.getDefaultParent());
     }
@@ -59,7 +62,6 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
         for (final Declaration decl : entity.getTypes()) {
             dispatch(decl);
         }
-        enrich();
     }
     
     public void visit(final ClassDecl entity) {
@@ -135,5 +137,27 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
                 graph.insertEdge(source, map.get(t.getName()), "", INHERITANCE_STYLE);
             }
         }
+    }
+
+    private void calculateMetrics() {
+        for (final mxICell cell : map.values()) {
+            final UmlClass c = (UmlClass) cell.getValue();
+            final Metrics result = new Metrics();
+            result.mhf = getMethodHidingFactor(c);
+            c.addMetrics(result);
+        }
+    }
+
+    private double getMethodHidingFactor(final UmlClass c) {
+        int hidden = 0;
+        int visible = 0;
+        for (final FunctionDecl decl : c.getMethods()) {
+            if (decl.getVisibility() == Declaration.Visibility.PUBLIC) {
+                ++visible;
+            } else if (decl.getVisibility() == Declaration.Visibility.PRIVATE) {
+                ++hidden;
+            }
+        }
+        return (double) hidden / (hidden + visible);
     }
 }
