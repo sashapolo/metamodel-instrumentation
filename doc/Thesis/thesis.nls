@@ -1,0 +1,28 @@
+\begin{thenomenclature} 
+
+ \nomgroup{A}
+
+  \item [{eCST}]\begingroup enriched Concrete Syntax Tree, модель программы, используемая средством SMIILE\nomeqref {1.0}
+		\nompageref{19}
+  \item [{FAMIX}]\begingroup Семейство метамоделей, используемых средством Moose\nomeqref {1.0}
+		\nompageref{17}
+  \item [{LLVM}]\begingroup Low Level Virtual Machine, фреймворк для создания компиляторов\nomeqref {1.0}
+		\nompageref{21}
+  \item [{Moose}]\begingroup Платформа для анализа программ\nomeqref {1.0}
+		\nompageref{17}
+  \item [{MSE}]\begingroup язык разметки, используемый средством Moose\nomeqref {1.0}
+		\nompageref{17}
+  \item [{SDL}]\begingroup Specification and Description Language, язык для описания моделей программных систем\nomeqref {1.0}
+		\nompageref{22}
+  \item [{SMIILE}]\begingroup Software Metrics Independent of Input LanguagE, средство для анализа программ\nomeqref {1.0}
+		\nompageref{19}
+  \item [{SSA}]\begingroup Static Single Assignment, модель программы: однократное статическое присваивание\nomeqref {1.0}
+		\nompageref{15}
+  \item [{ULF-Ware}]\begingroup Unified Language Family softWare, фреймворк для генерации кода из программных моделей\nomeqref {1.0}
+		\nompageref{22}
+  \item [{XML}]\begingroup eXtensible Markup Language, расширяемый язык разметки\nomeqref {1.0}
+		\nompageref{17}
+  \item [{ПО}]\begingroup Программное обеспечение\nomeqref {0}
+		\nompageref{9}
+
+\end{thenomenclature}
