@@ -2,27 +2,53 @@
 
  \nomgroup{A}
 
+  \item [{AST}]\begingroup Abstrac Syntax Tree, абстрактное синтаксическое дерево\nomeqref {1.0}
+		\nompageref{15}
+  \item [{CFG}]\begingroup Control Flow Graph, граф потока управления\nomeqref {1.0}
+		\nompageref{15}
+  \item [{CMOF}]\begingroup Complete MOF, основная структурная составляющая MOF\nomeqref {3.0}
+		\nompageref{31}
+  \item [{DDG}]\begingroup Data Dependency Graph, граф зависимостей по данным\nomeqref {1.0}
+		\nompageref{15}
+  \item [{DTD}]\begingroup Document Type Definition, описание схемы документа для языка разметки\nomeqref {3.0}
+		\nompageref{31}
   \item [{eCST}]\begingroup enriched Concrete Syntax Tree, модель программы, используемая средством SMIILE\nomeqref {1.0}
-		\nompageref{19}
+		\nompageref{18}
+  \item [{EMOF}]\begingroup Essential MOF, базовая структурная составляющая MOF\nomeqref {3.0}
+		\nompageref{30}
   \item [{FAMIX}]\begingroup Семейство метамоделей, используемых средством Moose\nomeqref {1.0}
-		\nompageref{17}
+		\nompageref{16}
   \item [{LLVM}]\begingroup Low Level Virtual Machine, фреймворк для создания компиляторов\nomeqref {1.0}
-		\nompageref{21}
+		\nompageref{20}
+  \item [{MDA}]\begingroup Model-Driven Architecture, подход к разработке программных систем\nomeqref {3.0}
+		\nompageref{27}
+  \item [{MDE}]\begingroup Model-Driven Engeneering, разработка, управляемая моделями\nomeqref {3.0}
+		\nompageref{27}
+  \item [{MOF}]\begingroup Meta-Object Facility, стандарт для разработки, управляемой моделями\nomeqref {3.0}
+		\nompageref{27}
   \item [{Moose}]\begingroup Платформа для анализа программ\nomeqref {1.0}
-		\nompageref{17}
+		\nompageref{16}
   \item [{MSE}]\begingroup язык разметки, используемый средством Moose\nomeqref {1.0}
-		\nompageref{17}
+		\nompageref{16}
+  \item [{OMG}]\begingroup Object Management Group, консорциум, занимающийся разработкой и продвижением объекто-ориентированных технологий и стандартов\nomeqref {3.0}
+		\nompageref{27}
   \item [{SDL}]\begingroup Specification and Description Language, язык для описания моделей программных систем\nomeqref {1.0}
-		\nompageref{22}
+		\nompageref{21}
   \item [{SMIILE}]\begingroup Software Metrics Independent of Input LanguagE, средство для анализа программ\nomeqref {1.0}
-		\nompageref{19}
+		\nompageref{18}
   \item [{SSA}]\begingroup Static Single Assignment, модель программы: однократное статическое присваивание\nomeqref {1.0}
 		\nompageref{15}
   \item [{ULF-Ware}]\begingroup Unified Language Family softWare, фреймворк для генерации кода из программных моделей\nomeqref {1.0}
-		\nompageref{22}
+		\nompageref{21}
+  \item [{UML}]\begingroup Unified Modeling Language, унифицированный язык моделирования\nomeqref {3.0}
+		\nompageref{27}
+  \item [{XMI}]\begingroup XML Metadata Interchange, формат для сериализации метамоделей в формат XML\nomeqref {3.0}
+		\nompageref{31}
   \item [{XML}]\begingroup eXtensible Markup Language, расширяемый язык разметки\nomeqref {1.0}
-		\nompageref{17}
+		\nompageref{16}
   \item [{ПО}]\begingroup Программное обеспечение\nomeqref {0}
 		\nompageref{9}
+  \item [{РБНФ}]\begingroup Расширенная Форма Бэкуса-Наура\nomeqref {3.0}
+		\nompageref{27}
 
 \end{thenomenclature}

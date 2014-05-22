@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 \def\selectlanguageifdefined#1{
 \expandafter\ifx\csname date#1\endcsname\relax
 \else\selectlanguage{#1}\fi}
@@ -13,7 +13,7 @@
 
 \bibitem{itsykson}
 \selectlanguageifdefined{russian}
-\BibEmph{М.И.~Глухих, В.М.~Ицыксон}. Программная
+\BibEmph{Глухих М.И., Ицыксон В.М.} Программная
   инженерия. Обеспечение качества
   программных средств методами
   статического анализа. \BibDash
@@ -22,14 +22,14 @@
 
 \bibitem{kulyamin}
 \selectlanguageifdefined{russian}
-\BibEmph{В.В.~Кулямин}. {Методы верификации
+\BibEmph{Кулямин В.В.} {Методы верификации
   программного обеспечения}. \BibDash
 \newblock {Институт системного
   программирования РАН}, {2008}.
 
 \bibitem{formal_methods}
 \selectlanguageifdefined{russian}
-\BibEmph{Ковалёв~С.~П.} {Применение формальных
+\BibEmph{С.~П. Ковалёв}. {Применение формальных
   методов для обеспечения качества
   вычислительных систем}~// \BibEmph{{Вестник
   Новосибирского государственного
@@ -70,7 +70,7 @@ Automation of GUI testing using a model-driven approach~/ Marlon~Vieira,
 \bibitem{smile}
 \selectlanguageifdefined{english}
 {A Programming Language Independent Framework for Metrics-based Software
-  Evolution and Analysis}~/ ~Črt~Gerlec, Gordana~Rakić, Zoran~Budimac,
+  Evolution and Analysis}~/ Črt~Gerlec, Gordana~Rakić, Zoran~Budimac,
   Marjan~Heričko~// \BibEmph{{Computer Science and Information Systems}}.
   \BibDash
 \newblock 2012. \BibDash Sep. \BibDash
@@ -84,5 +84,50 @@ Automation of GUI testing using a model-driven approach~/ Marlon~Vieira,
   International Symposium on Code Generation and Optimization (CGO'04)}.
   \BibDash
 \newblock Palo Alto, California, 2004. \BibDash Mar.
+
+\bibitem{Fowler03}
+\selectlanguageifdefined{english}
+\BibEmph{Fowler~Martin}. UML Distilled: A Brief Guide to the Standard Object
+  Modeling Language. \BibDash
+\newblock 3 edition. \BibDash
+\newblock Boston, MA~: Addison-Wesley, 2003. \BibDash
+\newblock
+  ISBN:~\href{http://isbndb.com/search-all.html?kw=978-0-321-19368-1}{978-0-321-19368-1}.
+
+\bibitem{mof}
+\selectlanguageifdefined{english}
+Meta Object Facility {(MOF)} 2.0 Core Specification. \BibDash
+\newblock 2003. \BibDash
+\newblock Version~2.
+
+\bibitem{miller2003}
+\selectlanguageifdefined{english}
+MDA Guide Version 1.0.1~: Rep.~/ {Object Management Group (OMG)}~; Executor:
+  J.~Miller, J.~Mukerji~: 2003.
+
+\bibitem{essay57286}
+\selectlanguageifdefined{english}
+\BibEmph{{Overbeek}~J.F.} Meta Object Facility (MOF): investigation of the
+  state of the art. \BibDash
+\newblock 2006. \BibDash June.
+
+\bibitem{standard/XMI}
+\selectlanguageifdefined{english}
+\BibEmph{{Object Management Group ({O}{M}{G})}}. XML Meta-Data Interchange
+  {XMI} 2.1.1. \BibDash
+\newblock formal/2007-12-01. \BibDash
+\newblock 2007.
+
+\bibitem{Aho1986}
+\selectlanguageifdefined{english}
+\BibEmph{Aho~A., Sethi~R., Ullman~J.} Compilers: Principles, Techniques and
+  Tools. \BibDash
+\newblock Addison-Wesley, 1986.
+
+\bibitem{Gamma94}
+\selectlanguageifdefined{english}
+Design patterns: elements of reusable object-oriented software~/ Erich~Gamma,
+  Richard~Helm, Ralph~Johnson, John~Vlissides. \BibDash
+\newblock Pearson Education, 1994.
 
 \end{thebibliography}
