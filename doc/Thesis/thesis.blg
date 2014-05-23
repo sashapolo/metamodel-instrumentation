@@ -13,10 +13,10 @@ Database file #1: thesis.bib
 Warning--empty booktitle in moose
 
 Here's how much of BibTeX's memory you used:
- Cites:                16 out of 750
- Fields:              557 out of 5000
- Hash table:         9578 out of 10000
- Strings:            1180 out of 10000
- Free string pool:  11577 out of 65000
+ Cites:                18 out of 750
+ Fields:              631 out of 5000
+ Hash table:         9575 out of 10000
+ Strings:            1194 out of 10000
+ Free string pool:  11919 out of 65000
  Wizard functions:   3946 out of 6000
 (There was 1 warning)
