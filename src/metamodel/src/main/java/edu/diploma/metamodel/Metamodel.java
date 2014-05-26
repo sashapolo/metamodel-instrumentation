@@ -31,5 +31,4 @@ public class Metamodel implements Entity {
             visitor.dispatch(u);
         }
     }
-    
 }
