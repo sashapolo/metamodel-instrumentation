@@ -2,6 +2,8 @@
 
  \nomgroup{A}
 
+  \item [{ANTLR}]\begingroup ANother Tool for Language Recognition, инструмент для генерации лексических и синтаксических анализаторов\nomeqref {4.0}
+		\nompageref{52}
   \item [{AST}]\begingroup Abstrac Syntax Tree, абстрактное синтаксическое дерево\nomeqref {1.0}
 		\nompageref{17}
   \item [{CFG}]\begingroup Control Flow Graph, граф потока управления\nomeqref {1.0}
@@ -18,8 +20,12 @@
 		\nompageref{32}
   \item [{FAMIX}]\begingroup Семейство метамоделей, используемых средством Moose\nomeqref {1.0}
 		\nompageref{19}
+  \item [{JavaCC}]\begingroup Java Compiler Compiler, генератор синтаксических анализаторов\nomeqref {4.0}
+		\nompageref{52}
   \item [{JAXB}]\begingroup Java Architecture for XML Binding, фреймворк для XML-сериализации для языка Java\nomeqref {4.0}
-		\nompageref{47}
+		\nompageref{48}
+  \item [{Jparsec}]\begingroup генератор синтаксических и лексических анализаторов\nomeqref {4.0}
+		\nompageref{52}
   \item [{LLVM}]\begingroup Low Level Virtual Machine, фреймворк для создания компиляторов\nomeqref {1.0}
 		\nompageref{22}
   \item [{MDA}]\begingroup Model-Driven Architecture, подход к разработке программных систем\nomeqref {3.0}
@@ -39,7 +45,7 @@
   \item [{SDL}]\begingroup Specification and Description Language, язык для описания моделей программных систем\nomeqref {1.0}
 		\nompageref{23}
   \item [{Simple}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}
-		\nompageref{47}
+		\nompageref{48}
   \item [{SMIILE}]\begingroup Software Metrics Independent of Input LanguagE, средство для анализа программ\nomeqref {1.0}
 		\nompageref{20}
   \item [{SSA}]\begingroup Static Single Assignment, модель программы: однократное статическое присваивание\nomeqref {1.0}
@@ -53,11 +59,11 @@
   \item [{XML}]\begingroup eXtensible Markup Language, расширяемый язык разметки\nomeqref {1.0}
 		\nompageref{19}
   \item [{XMLBeans}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}
-		\nompageref{47}
+		\nompageref{48}
   \item [{XSD}]\begingroup XML Schema Definition, язык описания схем XML\nomeqref {4.0}
 		\nompageref{50}
   \item [{XStream}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}
-		\nompageref{47}
+		\nompageref{48}
   \item [{ПО}]\begingroup Программное обеспечение\nomeqref {0}
 		\nompageref{11}
   \item [{РБНФ}]\begingroup Расширенная Форма Бэкуса-Наура\nomeqref {3.0}
