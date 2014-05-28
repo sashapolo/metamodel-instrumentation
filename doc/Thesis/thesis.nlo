@@ -3,7 +3,7 @@
 \nomenclatureentry{aCFG@[{CFG}]\begingroup Control Flow Graph, граф потока управления\nomeqref {1.0}|nompageref}{19}
 \nomenclatureentry{aDDG@[{DDG}]\begingroup Data Dependency Graph, граф зависимостей по данным\nomeqref {1.0}|nompageref}{19}
 \nomenclatureentry{aSSA@[{SSA}]\begingroup Static Single Assignment, модель программы: однократное статическое присваивание\nomeqref {1.0}|nompageref}{19}
-\nomenclatureentry{aMoose@[{Moose}]\begingroup Платформа для анализа программ\nomeqref {1.0}|nompageref}{20}
+\nomenclatureentry{aMoose@[{Moose}]\begingroup Платформа для анализа программ\nomeqref {1.0}|nompageref}{21}
 \nomenclatureentry{aFAMIX@[{FAMIX}]\begingroup Семейство метамоделей, используемых средством Moose\nomeqref {1.0}|nompageref}{21}
 \nomenclatureentry{aXML@[{XML}]\begingroup eXtensible Markup Language, расширяемый язык разметки\nomeqref {1.0}|nompageref}{21}
 \nomenclatureentry{aMSE@[{MSE}]\begingroup язык разметки, используемый средством Moose\nomeqref {1.0}|nompageref}{21}
