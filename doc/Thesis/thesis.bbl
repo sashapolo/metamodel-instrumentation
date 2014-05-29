@@ -20,13 +20,6 @@
 \newblock Санкт Петербург~: Издательство
   Политехнического университета, 2011.
 
-\bibitem{kulyamin}
-\selectlanguageifdefined{russian}
-\BibEmph{В.В.~Кулямин}. {Методы верификации
-  программного обеспечения}. \BibDash
-\newblock {Институт системного
-  программирования РАН}, {2008}.
-
 \bibitem{formal_methods}
 \selectlanguageifdefined{russian}
 \BibEmph{Ковалёв~С.~П.} {Применение формальных
@@ -37,6 +30,13 @@
 \newblock 2004. \BibDash
 \newblock Т.~IV, {№}~2. \BibDash
 \newblock {С.}~49–74.
+
+\bibitem{kulyamin}
+\selectlanguageifdefined{russian}
+\BibEmph{В.В.~Кулямин}. {Методы верификации
+  программного обеспечения}. \BibDash
+\newblock {Институт системного
+  программирования РАН}, {2008}.
 
 \bibitem{Vieira2006}
 \selectlanguageifdefined{english}
