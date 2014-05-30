@@ -93,8 +93,10 @@ public class CfgDrawVisitor extends DrawVisitor {
         }
     }
 
-    private void drawTryStatement(final Entity body, final List<CatchStatement> catches,
-            final Entity finallyBlock, final String label) {
+    private void drawTryStatement(final Entity body, 
+            final List<CatchStatement> catches,
+            final Entity finallyBlock, 
+            final String label) {
         graph.getModel().beginUpdate();
         try {
             final Object vertex = graph.insertVertex(label);

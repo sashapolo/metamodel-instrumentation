@@ -142,6 +142,19 @@ Maven Documentation~: Rep.~/ Apache Software Foundation~; Executor:
   Apache~Maven~Project~: Apache Maven Project, 2001 - 2005. \BibDash
 \newblock URL: \BibUrl{http://maven.apache.org/guides/index.html}.
 
+\bibitem{jaxb}
+\selectlanguageifdefined{english}
+\BibEmph{222~JSR}. The Java Architecture for XML Binding (JAXB) 2.2. \BibDash
+\newblock 2009. \BibDash
+\newblock URL: \BibUrl{http://jcp.org/en/jsr/detail?id=222}.
+
+\bibitem{SimpleXML}
+\selectlanguageifdefined{english}
+\BibEmph{Gallagher~Niall}. Simple XML Framework Projekt. \BibDash
+\newblock online. \BibDash
+\newblock 2011. \BibDash
+\newblock URL: \BibUrl{http://simple.sourceforge.net/}.
+
 \bibitem{parr_definitive_2007}
 \selectlanguageifdefined{english}
 \BibEmph{Parr~Terence}. The Definitive ANTLR Reference: Building
@@ -150,5 +163,18 @@ Maven Documentation~: Rep.~/ Apache Software Foundation~; Executor:
 \newblock P.~376. \BibDash
 \newblock
   ISBN:~\href{http://isbndb.com/search-all.html?kw=0978739256}{0978739256}.
+
+\bibitem{journals/csr/Mahmoud13}
+\selectlanguageifdefined{english}
+\BibEmph{Mahmoud~Khaled~Zuhair}. Compiler Construction using Java, JavaCC and
+  YaCC, Anthony J. Dos Reis. Wiley (January, 2012)~// \BibEmph{Computer Science
+  Review}. \BibDash
+\newblock 2013. \BibDash
+\newblock Vol.~10. \BibDash
+\newblock P.~31--34.
+
+\bibitem{Abreu1998}
+\selectlanguageifdefined{english}
+The MOOD2 Metrics Set~: Rep.~; Executor: Fernando~{Brito e Abreu}~: 1998.
 
 \end{thebibliography}

@@ -23,12 +23,11 @@
 \nomenclatureentry{aCMOF@[{CMOF}]\begingroup Complete MOF, основная структурная составляющая MOF\nomeqref {3.0}|nompageref}{39}
 \nomenclatureentry{aXMI@[{XMI}]\begingroup XML Metadata Interchange, формат для сериализации метамоделей в формат XML\nomeqref {3.0}|nompageref}{39}
 \nomenclatureentry{aDTD@[{DTD}]\begingroup Document Type Definition, описание схемы документа для языка разметки\nomeqref {3.0}|nompageref}{39}
-\nomenclatureentry{aPOM@[{POM}]\begingroup Project Object Model, способ описания проекта в система автоматизированной сборки Maven\nomeqref {4.0}|nompageref}{45}
+\nomenclatureentry{aPOM@[{POM}]\begingroup Project Object Model, способ описания проекта в система автоматизированной сборки Maven\nomeqref {4.0}|nompageref}{46}
 \nomenclatureentry{aJAXB@[{JAXB}]\begingroup Java Architecture for XML Binding, фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{54}
 \nomenclatureentry{aSimple@[{Simple}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{54}
 \nomenclatureentry{aXStream@[{XStream}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{54}
 \nomenclatureentry{aXMLBeans@[{XMLBeans}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{54}
-\nomenclatureentry{aXSD@[{XSD}]\begingroup XML Schema Definition, язык описания схем XML\nomeqref {4.0}|nompageref}{56}
 \nomenclatureentry{aANTLR@[{ANTLR}]\begingroup ANother Tool for Language Recognition, инструмент для генерации лексических и синтаксических анализаторов\nomeqref {4.0}|nompageref}{58}
 \nomenclatureentry{aJavaCC@[{JavaCC}]\begingroup Java Compiler Compiler, генератор синтаксических анализаторов\nomeqref {4.0}|nompageref}{58}
 \nomenclatureentry{aJparsec@[{Jparsec}]\begingroup генератор синтаксических и лексических анализаторов\nomeqref {4.0}|nompageref}{58}

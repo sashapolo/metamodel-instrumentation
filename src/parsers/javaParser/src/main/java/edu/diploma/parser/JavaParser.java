@@ -50,8 +50,8 @@ public class JavaParser {
             result.add(parser.compilationUnit().result);
         }      
         
-        Serializer serializer = new Persister();
-        File xmlresult = new File(params.output);
+        final Serializer serializer = new Persister();
+        final File xmlresult = new File(params.output);
         serializer.write(new Metamodel(result), xmlresult);
     }
     
