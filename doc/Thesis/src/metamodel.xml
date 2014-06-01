@@ -1,0 +1,152 @@
+<metamodel>
+ <units class="java.util.LinkedList">
+  <translationUnit>
+   <imports class="java.util.LinkedList"/>
+   <types class="java.util.LinkedList">
+    <declaration class="edu.diploma.metamodel.declarations.ClassDecl">
+     <name>Condition</name>
+     <visibility>DEFAULT</visibility>
+     <modifiers class="java.util.LinkedList"/>
+     <annotations class="java.util.LinkedList"/>
+     <templates class="java.util.Collections$EmptyList"/>
+     <inherits class="java.util.LinkedList"/>
+     <body>
+      <name></name>
+      <visibility>DEFAULT</visibility>
+      <modifiers class="java.util.LinkedList"/>
+      <annotations class="java.util.LinkedList"/>
+      <decls class="java.util.LinkedList">
+       <declaration class="edu.diploma.metamodel.declarations.FunctionDecl">
+        <name>main</name>
+        <visibility>PUBLIC</visibility>
+        <modifiers class="java.util.LinkedList">
+         <string>static</string>
+        </modifiers>
+        <annotations class="java.util.LinkedList"/>
+        <retType class="edu.diploma.metamodel.types.PrimitiveType">
+         <name>void</name>
+        </retType>
+        <exceptions class="java.util.Collections$EmptyList"/>
+        <params class="java.util.LinkedList">
+         <parameterDecl>
+          <name>args</name>
+          <visibility>DEFAULT</visibility>
+          <modifiers class="java.util.LinkedList"/>
+          <annotations class="java.util.LinkedList"/>
+          <value>
+           <name>args</name>
+           <visibility>DEFAULT</visibility>
+           <modifiers class="java.util.LinkedList"/>
+           <annotations class="java.util.LinkedList"/>
+           <type class="edu.diploma.metamodel.types.ArrayType">
+            <type class="edu.diploma.metamodel.types.ClassType">
+             <name>String</name>
+             <templates class="java.util.Collections$EmptyList"/>
+            </type>
+           </type>
+          </value>
+          <variadic>false</variadic>
+         </parameterDecl>
+        </params>
+        <templates class="java.util.Collections$EmptyList"/>
+        <body>
+         <statements class="java.util.LinkedList">
+          <statement class="edu.diploma.metamodel.statements.VariableDeclStatement">
+           <variable>
+            <name>learning</name>
+            <visibility>DEFAULT</visibility>
+            <modifiers class="java.util.LinkedList"/>
+            <annotations class="java.util.LinkedList"/>
+            <type class="edu.diploma.metamodel.types.PrimitiveType">
+             <name>boolean</name>
+            </type>
+            <value class="edu.diploma.metamodel.literals.BooleanLiteral">
+             <type class="edu.diploma.metamodel.types.PrimitiveType">
+              <name>boolean</name>
+             </type>
+             <value>true</value>
+            </value>
+           </variable>
+          </statement>
+          <statement class="edu.diploma.metamodel.statements.IfStatement">
+           <condition class="edu.diploma.metamodel.expressions.VariableReference">
+            <type class="edu.diploma.metamodel.types.PrimitiveType">
+             <name>unknown</name>
+            </type>
+            <name>learning</name>
+           </condition>
+           <ifer class="edu.diploma.metamodel.statements.StatementBlock">
+            <statements class="java.util.LinkedList">
+             <statement class="edu.diploma.metamodel.expressions.FunctionCall">
+              <type class="edu.diploma.metamodel.types.PrimitiveType">
+               <name>unknown</name>
+              </type>
+              <name>println</name>
+              <caller class="edu.diploma.metamodel.expressions.AttributeAccess">
+               <type class="edu.diploma.metamodel.types.PrimitiveType">
+                <name>unknown</name>
+               </type>
+               <expr class="edu.diploma.metamodel.expressions.VariableReference">
+                <type class="edu.diploma.metamodel.types.PrimitiveType">
+                 <name>unknown</name>
+                </type>
+                <name>System</name>
+               </expr>
+               <name>out</name>
+              </caller>
+              <params class="java.util.LinkedList">
+               <expression class="edu.diploma.metamodel.literals.StringLiteral">
+                <type class="edu.diploma.metamodel.types.ClassType">
+                 <name>java.lang.String</name>
+                 <templates class="java.util.Collections$EmptyList"/>
+                </type>
+                <value>&quot;Java programmer&quot;</value>
+               </expression>
+              </params>
+              <templateParams class="java.util.Collections$EmptyList"/>
+             </statement>
+            </statements>
+           </ifer>
+           <elser class="edu.diploma.metamodel.statements.StatementBlock">
+            <statements class="java.util.LinkedList">
+             <statement class="edu.diploma.metamodel.expressions.FunctionCall">
+              <type class="edu.diploma.metamodel.types.PrimitiveType">
+               <name>unknown</name>
+              </type>
+              <name>println</name>
+              <caller class="edu.diploma.metamodel.expressions.AttributeAccess">
+               <type class="edu.diploma.metamodel.types.PrimitiveType">
+                <name>unknown</name>
+               </type>
+               <expr class="edu.diploma.metamodel.expressions.VariableReference">
+                <type class="edu.diploma.metamodel.types.PrimitiveType">
+                 <name>unknown</name>
+                </type>
+                <name>System</name>
+               </expr>
+               <name>out</name>
+              </caller>
+              <params class="java.util.LinkedList">
+               <expression class="edu.diploma.metamodel.literals.StringLiteral">
+                <type class="edu.diploma.metamodel.types.ClassType">
+                 <name>java.lang.String</name>
+                 <templates class="java.util.Collections$EmptyList"/>
+                </type>
+                <value>&quot;What are you doing here?&quot;</value>
+               </expression>
+              </params>
+              <templateParams class="java.util.Collections$EmptyList"/>
+             </statement>
+            </statements>
+           </elser>
+          </statement>
+         </statements>
+        </body>
+       </declaration>
+      </decls>
+     </body>
+    </declaration>
+   </types>
+  </translationUnit>
+ </units>
+</metamodel>
