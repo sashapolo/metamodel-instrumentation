@@ -1,33 +1,33 @@
-\nomenclatureentry{aПО@[{ПО}]\begingroup Программное обеспечение\nomeqref {0}|nompageref}{7}
-\nomenclatureentry{aAST@[{AST}]\begingroup Abstrac Syntax Tree, абстрактное синтаксическое дерево\nomeqref {1.0}|nompageref}{13}
-\nomenclatureentry{aCFG@[{CFG}]\begingroup Control Flow Graph, граф потока управления\nomeqref {1.0}|nompageref}{13}
-\nomenclatureentry{aDDG@[{DDG}]\begingroup Data Dependency Graph, граф зависимостей по данным\nomeqref {1.0}|nompageref}{13}
-\nomenclatureentry{aSSA@[{SSA}]\begingroup Static Single Assignment, модель программы: однократное статическое присваивание\nomeqref {1.0}|nompageref}{13}
-\nomenclatureentry{aMoose@[{Moose}]\begingroup Платформа для анализа программ\nomeqref {1.0}|nompageref}{16}
-\nomenclatureentry{aFAMIX@[{FAMIX}]\begingroup Семейство метамоделей, используемых средством Moose\nomeqref {1.0}|nompageref}{16}
-\nomenclatureentry{aXML@[{XML}]\begingroup eXtensible Markup Language, расширяемый язык разметки\nomeqref {1.0}|nompageref}{16}
-\nomenclatureentry{aMSE@[{MSE}]\begingroup язык разметки, используемый средством Moose\nomeqref {1.0}|nompageref}{16}
-\nomenclatureentry{aSMIILE@[{SMIILE}]\begingroup Software Metrics Independent of Input LanguagE, средство для анализа программ\nomeqref {1.0}|nompageref}{18}
-\nomenclatureentry{aeCST@[{eCST}]\begingroup enriched Concrete Syntax Tree, модель программы, используемая средством SMIILE\nomeqref {1.0}|nompageref}{18}
-\nomenclatureentry{aLLVM@[{LLVM}]\begingroup Low Level Virtual Machine, фреймворк для создания компиляторов\nomeqref {1.0}|nompageref}{20}
-\nomenclatureentry{aULF-Ware@[{ULF-Ware}]\begingroup Unified Language Family softWare, фреймворк для генерации кода из программных моделей\nomeqref {1.0}|nompageref}{21}
-\nomenclatureentry{aSDL@[{SDL}]\begingroup Specification and Description Language, язык для описания моделей программных систем\nomeqref {1.0}|nompageref}{21}
-\nomenclatureentry{aAPI@[{API}]\begingroup Application programming interface, интерфейс прикладного программирования\nomeqref {2.0}|nompageref}{25}
-\nomenclatureentry{aOMG@[{OMG}]\begingroup Object Management Group, консорциум, занимающийся разработкой и продвижением объекто-ориентированных технологий и стандартов\nomeqref {3.0}|nompageref}{31}
-\nomenclatureentry{aUML@[{UML}]\begingroup Unified Modeling Language, унифицированный язык моделирования\nomeqref {3.0}|nompageref}{31}
-\nomenclatureentry{aMOF@[{MOF}]\begingroup Meta-Object Facility, стандарт для разработки, управляемой моделями\nomeqref {3.0}|nompageref}{31}
-\nomenclatureentry{aMDE@[{MDE}]\begingroup Model-Driven Engeneering, разработка, управляемая моделями\nomeqref {3.0}|nompageref}{31}
-\nomenclatureentry{aMDA@[{MDA}]\begingroup Model-Driven Architecture, подход к разработке программных систем\nomeqref {3.0}|nompageref}{31}
-\nomenclatureentry{aРБНФ@[{РБНФ}]\begingroup Расширенная Форма Бэкуса-Наура\nomeqref {3.0}|nompageref}{31}
-\nomenclatureentry{aEMOF@[{EMOF}]\begingroup Essential MOF, базовая структурная составляющая MOF\nomeqref {3.0}|nompageref}{34}
-\nomenclatureentry{aCMOF@[{CMOF}]\begingroup Complete MOF, основная структурная составляющая MOF\nomeqref {3.0}|nompageref}{35}
-\nomenclatureentry{aXMI@[{XMI}]\begingroup XML Metadata Interchange, формат для сериализации метамоделей в формат XML\nomeqref {3.0}|nompageref}{35}
-\nomenclatureentry{aDTD@[{DTD}]\begingroup Document Type Definition, описание схемы документа для языка разметки\nomeqref {3.0}|nompageref}{35}
-\nomenclatureentry{aPOM@[{POM}]\begingroup Project Object Model, способ описания проекта в система автоматизированной сборки Maven\nomeqref {4.0}|nompageref}{42}
-\nomenclatureentry{aJAXB@[{JAXB}]\begingroup Java Architecture for XML Binding, фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{50}
-\nomenclatureentry{aSimple@[{Simple}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{50}
-\nomenclatureentry{aXStream@[{XStream}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{50}
-\nomenclatureentry{aXMLBeans@[{XMLBeans}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{50}
-\nomenclatureentry{aANTLR@[{ANTLR}]\begingroup ANother Tool for Language Recognition, инструмент для генерации лексических и синтаксических анализаторов\nomeqref {4.0}|nompageref}{54}
-\nomenclatureentry{aJavaCC@[{JavaCC}]\begingroup Java Compiler Compiler, генератор синтаксических анализаторов\nomeqref {4.0}|nompageref}{54}
-\nomenclatureentry{aJparsec@[{Jparsec}]\begingroup генератор синтаксических и лексических анализаторов\nomeqref {4.0}|nompageref}{54}
+\nomenclatureentry{aПО@[{ПО}]\begingroup Программное обеспечение\nomeqref {0}|nompageref}{9}
+\nomenclatureentry{aAST@[{AST}]\begingroup Abstrac Syntax Tree, абстрактное синтаксическое дерево\nomeqref {1.0}|nompageref}{15}
+\nomenclatureentry{aCFG@[{CFG}]\begingroup Control Flow Graph, граф потока управления\nomeqref {1.0}|nompageref}{15}
+\nomenclatureentry{aDDG@[{DDG}]\begingroup Data Dependency Graph, граф зависимостей по данным\nomeqref {1.0}|nompageref}{15}
+\nomenclatureentry{aSSA@[{SSA}]\begingroup Static Single Assignment, модель программы: однократное статическое присваивание\nomeqref {1.0}|nompageref}{15}
+\nomenclatureentry{aMoose@[{Moose}]\begingroup Платформа для анализа программ\nomeqref {1.0}|nompageref}{18}
+\nomenclatureentry{aFAMIX@[{FAMIX}]\begingroup Семейство метамоделей, используемых средством Moose\nomeqref {1.0}|nompageref}{18}
+\nomenclatureentry{aXML@[{XML}]\begingroup eXtensible Markup Language, расширяемый язык разметки\nomeqref {1.0}|nompageref}{18}
+\nomenclatureentry{aMSE@[{MSE}]\begingroup язык разметки, используемый средством Moose\nomeqref {1.0}|nompageref}{18}
+\nomenclatureentry{aSMIILE@[{SMIILE}]\begingroup Software Metrics Independent of Input LanguagE, средство для анализа программ\nomeqref {1.0}|nompageref}{20}
+\nomenclatureentry{aeCST@[{eCST}]\begingroup enriched Concrete Syntax Tree, модель программы, используемая средством SMIILE\nomeqref {1.0}|nompageref}{20}
+\nomenclatureentry{aLLVM@[{LLVM}]\begingroup Low Level Virtual Machine, фреймворк для создания компиляторов\nomeqref {1.0}|nompageref}{22}
+\nomenclatureentry{aULF-Ware@[{ULF-Ware}]\begingroup Unified Language Family softWare, фреймворк для генерации кода из программных моделей\nomeqref {1.0}|nompageref}{23}
+\nomenclatureentry{aSDL@[{SDL}]\begingroup Specification and Description Language, язык для описания моделей программных систем\nomeqref {1.0}|nompageref}{23}
+\nomenclatureentry{aAPI@[{API}]\begingroup Application programming interface, интерфейс прикладного программирования\nomeqref {2.0}|nompageref}{27}
+\nomenclatureentry{aOMG@[{OMG}]\begingroup Object Management Group, консорциум, занимающийся разработкой и продвижением объекто-ориентированных технологий и стандартов\nomeqref {3.0}|nompageref}{33}
+\nomenclatureentry{aUML@[{UML}]\begingroup Unified Modeling Language, унифицированный язык моделирования\nomeqref {3.0}|nompageref}{33}
+\nomenclatureentry{aMOF@[{MOF}]\begingroup Meta-Object Facility, стандарт для разработки, управляемой моделями\nomeqref {3.0}|nompageref}{33}
+\nomenclatureentry{aMDE@[{MDE}]\begingroup Model-Driven Engeneering, разработка, управляемая моделями\nomeqref {3.0}|nompageref}{33}
+\nomenclatureentry{aMDA@[{MDA}]\begingroup Model-Driven Architecture, подход к разработке программных систем\nomeqref {3.0}|nompageref}{33}
+\nomenclatureentry{aРБНФ@[{РБНФ}]\begingroup Расширенная Форма Бэкуса-Наура\nomeqref {3.0}|nompageref}{33}
+\nomenclatureentry{aEMOF@[{EMOF}]\begingroup Essential MOF, базовая структурная составляющая MOF\nomeqref {3.0}|nompageref}{36}
+\nomenclatureentry{aCMOF@[{CMOF}]\begingroup Complete MOF, основная структурная составляющая MOF\nomeqref {3.0}|nompageref}{37}
+\nomenclatureentry{aXMI@[{XMI}]\begingroup XML Metadata Interchange, формат для сериализации метамоделей в формат XML\nomeqref {3.0}|nompageref}{37}
+\nomenclatureentry{aDTD@[{DTD}]\begingroup Document Type Definition, описание схемы документа для языка разметки\nomeqref {3.0}|nompageref}{37}
+\nomenclatureentry{aPOM@[{POM}]\begingroup Project Object Model, способ описания проекта в система автоматизированной сборки Maven\nomeqref {4.0}|nompageref}{44}
+\nomenclatureentry{aJAXB@[{JAXB}]\begingroup Java Architecture for XML Binding, фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{52}
+\nomenclatureentry{aSimple@[{Simple}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{52}
+\nomenclatureentry{aXStream@[{XStream}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{52}
+\nomenclatureentry{aXMLBeans@[{XMLBeans}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{52}
+\nomenclatureentry{aANTLR@[{ANTLR}]\begingroup ANother Tool for Language Recognition, инструмент для генерации лексических и синтаксических анализаторов\nomeqref {4.0}|nompageref}{56}
+\nomenclatureentry{aJavaCC@[{JavaCC}]\begingroup Java Compiler Compiler, генератор синтаксических анализаторов\nomeqref {4.0}|nompageref}{56}
+\nomenclatureentry{aJparsec@[{Jparsec}]\begingroup генератор синтаксических и лексических анализаторов\nomeqref {4.0}|nompageref}{56}

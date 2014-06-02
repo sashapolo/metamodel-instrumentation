@@ -147,7 +147,9 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
             final Metrics result = new Metrics();
             result.mhf = getMethodHidingFactor(c);
             result.ahf = getAttributeHidingFactor(c);
+            result.aif = getAttributeInheritanceFactor();
             result.mif = getMethodInheritanceFactor(c);
+            result.pof = getPolymorphismFactor();
             c.addMetrics(result);
         }
     }
@@ -183,17 +185,19 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
         int inherited = 0;
         int methods = 0;
         int overriden = 0;
+        
         for (final FunctionDecl method : c.getMethods()) {
             for (final Type type : c.getInherits()) {
                 if (type instanceof ClassType) {
                     final ClassType t = (ClassType) type;
                     if (map.containsKey(t.getName())) {
-                        final UmlClass superClass = (UmlClass) map.get(t.getName());
+                        final UmlClass superClass = 
+                                (UmlClass) map.get(t.getName()).getValue();
                         for (final FunctionDecl superMethod : superClass.getMethods()) {
                             if (isOverriden(superMethod, method)) {
                                 ++overriden;
                                 skip = true;
-                            } else {
+                            } else if (superMethod.getVisibility() != Declaration.Visibility.PRIVATE) {
                                 ++inherited;
                             }
                         }
@@ -208,7 +212,15 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
         return ((double) inherited) / (inherited + methods + overriden);
     }
     
+    private double getAttributeInheritanceFactor() {
+        throw new UnsupportedOperationException();
+    }
+    
     private boolean isOverriden(final FunctionDecl a, final FunctionDecl b) {
+        if (a.getVisibility() == Declaration.Visibility.PRIVATE ||
+            b.getVisibility() == Declaration.Visibility.PRIVATE) {
+            return false;
+        }
         if (!a.getName().equals(b.getName())) return false;
         if (a.getParams().size() != b.getParams().size()) return false;
         
@@ -220,5 +232,9 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
             if (!t1.equals(t2)) return false;
         }
         return true;
+    }
+
+    private double getPolymorphismFactor() {
+        throw new UnsupportedOperationException();
     }
 }
