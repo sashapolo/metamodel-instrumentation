@@ -11,6 +11,12 @@
 \providecommand*{\BibDash}{\ifdim\lastskip>0pt\unskip\nobreak\hskip.2em\fi
 \cyrdash\hskip.2em\ignorespaces}
 
+\bibitem{international1994iso}
+\selectlanguageifdefined{english}
+\BibEmph{for Standardization~International~Organization}. ISO 8402: 1994:
+  Quality Management and Quality Assurance - Vocabulary. \BibDash
+\newblock International Organization for Standardization, 1994.
+
 \bibitem{itsykson}
 \selectlanguageifdefined{russian}
 \BibEmph{М.И.~Глухих, В.М.~Ицыксон}. Программная
@@ -130,17 +136,17 @@ Design patterns: elements of reusable object-oriented software~/ Erich~Gamma,
   Richard~Helm, Ralph~Johnson, John~Vlissides. \BibDash
 \newblock Pearson Education, 1994.
 
-\bibitem{Gosling2013}
-\selectlanguageifdefined{english}
-The {J}ava Language Specification, {J}ava {SE} 7 Edition~/ James~Gosling,
-  Bill~Joy, Guy~Steele et~al. \BibDash
-\newblock Addison Wesley, 2013.
-
 \bibitem{Maven2001-2005}
 \selectlanguageifdefined{english}
 Maven Documentation~: Rep.~/ Apache Software Foundation~; Executor:
   Apache~Maven~Project~: Apache Maven Project, 2001 - 2005. \BibDash
 \newblock URL: \BibUrl{http://maven.apache.org/guides/index.html}.
+
+\bibitem{Gosling2013}
+\selectlanguageifdefined{english}
+The {J}ava Language Specification, {J}ava {SE} 7 Edition~/ James~Gosling,
+  Bill~Joy, Guy~Steele et~al. \BibDash
+\newblock Addison Wesley, 2013.
 
 \bibitem{jaxb}
 \selectlanguageifdefined{english}
