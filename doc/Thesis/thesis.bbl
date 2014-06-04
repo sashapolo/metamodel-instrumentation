@@ -179,8 +179,14 @@ The {J}ava Language Specification, {J}ava {SE} 7 Edition~/ James~Gosling,
 \newblock Vol.~10. \BibDash
 \newblock P.~31--34.
 
-\bibitem{Abreu1998}
-\selectlanguageifdefined{english}
-The MOOD2 Metrics Set~: Rep.~; Executor: Fernando~{Brito e Abreu}~: 1998.
+\bibitem{orlov}
+\selectlanguageifdefined{russian}
+\BibEmph{Орлов~С.А., Цилькер~Б.Я.} Технологии
+  разработки программного обеспечения:
+  современный курс по программной
+  инженерии. Учебник для вузов. \BibDash
+\newblock Питер, 2012. \BibDash
+\newblock
+  ISBN:~\href{http://isbndb.com/search-all.html?kw=9785459011012}{9785459011012}.
 
 \end{thebibliography}
