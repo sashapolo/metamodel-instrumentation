@@ -6,7 +6,7 @@
 \nomenclatureentry{aMoose@[{Moose}]\begingroup Платформа для анализа программ\nomeqref {1.0}|nompageref}{21}
 \nomenclatureentry{aFAMIX@[{FAMIX}]\begingroup Семейство метамоделей, используемых средством Moose\nomeqref {1.0}|nompageref}{22}
 \nomenclatureentry{aXML@[{XML}]\begingroup eXtensible Markup Language, расширяемый язык разметки\nomeqref {1.0}|nompageref}{22}
-\nomenclatureentry{aMSE@[{MSE}]\begingroup язык разметки, используемый средством Moose\nomeqref {1.0}|nompageref}{22}
+\nomenclatureentry{aMSE@[{MSE}]\begingroup Язык разметки, используемый средством Moose\nomeqref {1.0}|nompageref}{22}
 \nomenclatureentry{aSMIILE@[{SMIILE}]\begingroup Software Metrics Independent of Input LanguagE, средство для анализа программ\nomeqref {1.0}|nompageref}{23}
 \nomenclatureentry{aeCST@[{eCST}]\begingroup enriched Concrete Syntax Tree, модель программы, используемая средством SMIILE\nomeqref {1.0}|nompageref}{23}
 \nomenclatureentry{aLLVM@[{LLVM}]\begingroup Low Level Virtual Machine, фреймворк для создания компиляторов\nomeqref {1.0}|nompageref}{25}
@@ -25,9 +25,9 @@
 \nomenclatureentry{aDTD@[{DTD}]\begingroup Document Type Definition, описание схемы документа для языка разметки\nomeqref {3.0}|nompageref}{40}
 \nomenclatureentry{aPOM@[{POM}]\begingroup Project Object Model, способ описания проекта в система автоматизированной сборки Maven\nomeqref {4.0}|nompageref}{46}
 \nomenclatureentry{aJAXB@[{JAXB}]\begingroup Java Architecture for XML Binding, фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{54}
-\nomenclatureentry{aSimple@[{Simple}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{54}
-\nomenclatureentry{aXStream@[{XStream}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{54}
-\nomenclatureentry{aXMLBeans@[{XMLBeans}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{54}
+\nomenclatureentry{aSimple@[{Simple}]\begingroup Фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{54}
+\nomenclatureentry{aXStream@[{XStream}]\begingroup Фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{54}
+\nomenclatureentry{aXMLBeans@[{XMLBeans}]\begingroup Фреймворк для XML-сериализации для языка Java\nomeqref {4.0}|nompageref}{54}
 \nomenclatureentry{aANTLR@[{ANTLR}]\begingroup ANother Tool for Language Recognition, инструмент для генерации лексических и синтаксических анализаторов\nomeqref {4.0}|nompageref}{58}
 \nomenclatureentry{aJavaCC@[{JavaCC}]\begingroup Java Compiler Compiler, генератор синтаксических анализаторов\nomeqref {4.0}|nompageref}{58}
-\nomenclatureentry{aJparsec@[{Jparsec}]\begingroup генератор синтаксических и лексических анализаторов\nomeqref {4.0}|nompageref}{58}
+\nomenclatureentry{aJparsec@[{Jparsec}]\begingroup Генератор синтаксических и лексических анализаторов\nomeqref {4.0}|nompageref}{58}

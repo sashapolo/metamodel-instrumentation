@@ -19,7 +19,7 @@
 
 \bibitem{itsykson}
 \selectlanguageifdefined{russian}
-\BibEmph{М.И.~Глухих, В.М.~Ицыксон}. Программная
+\BibEmph{Глухих М.И., Ицыксон В.М.} Программная
   инженерия. Обеспечение качества
   программных средств методами
   статического анализа. \BibDash
@@ -28,7 +28,7 @@
 
 \bibitem{formal_methods}
 \selectlanguageifdefined{russian}
-\BibEmph{Ковалёв~С.~П.} {Применение формальных
+\BibEmph{С.~П. Ковалёв}. {Применение формальных
   методов для обеспечения качества
   вычислительных систем}~// \BibEmph{{Вестник
   Новосибирского государственного
@@ -39,7 +39,7 @@
 
 \bibitem{kulyamin}
 \selectlanguageifdefined{russian}
-\BibEmph{В.В.~Кулямин}. {Методы верификации
+\BibEmph{Кулямин В.В.} {Методы верификации
   программного обеспечения}. \BibDash
 \newblock {Институт системного
   программирования РАН}, {2008}.
@@ -76,7 +76,7 @@ Automation of GUI testing using a model-driven approach~/ Marlon~Vieira,
 \bibitem{smile}
 \selectlanguageifdefined{english}
 {A Programming Language Independent Framework for Metrics-based Software
-  Evolution and Analysis}~/ ~Črt~Gerlec, Gordana~Rakić, Zoran~Budimac,
+  Evolution and Analysis}~/ Črt~Gerlec, Gordana~Rakić, Zoran~Budimac,
   Marjan~Heričko~// \BibEmph{{Computer Science and Information Systems}}.
   \BibDash
 \newblock 2012. \BibDash Sep. \BibDash

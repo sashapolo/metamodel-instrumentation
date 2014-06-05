@@ -3,17 +3,17 @@
  \nomgroup{A}
 
   \item [{ANTLR}]\begingroup ANother Tool for Language Recognition, инструмент для генерации лексических и синтаксических анализаторов\nomeqref {4.0}
-		\nompageref{56}
+		\nompageref{54}
   \item [{API}]\begingroup Application programming interface, интерфейс прикладного программирования\nomeqref {2.0}
 		\nompageref{25}
   \item [{AST}]\begingroup Abstrac Syntax Tree, абстрактное синтаксическое дерево\nomeqref {1.0}
-		\nompageref{14}
+		\nompageref{15}
   \item [{CFG}]\begingroup Control Flow Graph, граф потока управления\nomeqref {1.0}
-		\nompageref{14}
+		\nompageref{15}
   \item [{CMOF}]\begingroup Complete MOF, основная структурная составляющая MOF\nomeqref {3.0}
 		\nompageref{35}
   \item [{DDG}]\begingroup Data Dependency Graph, граф зависимостей по данным\nomeqref {1.0}
-		\nompageref{14}
+		\nompageref{15}
   \item [{DTD}]\begingroup Document Type Definition, описание схемы документа для языка разметки\nomeqref {3.0}
 		\nompageref{36}
   \item [{eCST}]\begingroup enriched Concrete Syntax Tree, модель программы, используемая средством SMIILE\nomeqref {1.0}
@@ -21,13 +21,13 @@
   \item [{EMOF}]\begingroup Essential MOF, базовая структурная составляющая MOF\nomeqref {3.0}
 		\nompageref{34}
   \item [{FAMIX}]\begingroup Семейство метамоделей, используемых средством Moose\nomeqref {1.0}
-		\nompageref{17}
+		\nompageref{18}
   \item [{JavaCC}]\begingroup Java Compiler Compiler, генератор синтаксических анализаторов\nomeqref {4.0}
-		\nompageref{56}
+		\nompageref{54}
   \item [{JAXB}]\begingroup Java Architecture for XML Binding, фреймворк для XML-сериализации для языка Java\nomeqref {4.0}
-		\nompageref{52}
-  \item [{Jparsec}]\begingroup генератор синтаксических и лексических анализаторов\nomeqref {4.0}
-		\nompageref{56}
+		\nompageref{50}
+  \item [{Jparsec}]\begingroup Генератор синтаксических и лексических анализаторов\nomeqref {4.0}
+		\nompageref{54}
   \item [{LLVM}]\begingroup Low Level Virtual Machine, фреймворк для создания компиляторов\nomeqref {1.0}
 		\nompageref{21}
   \item [{MDA}]\begingroup Model-Driven Architecture, подход к разработке программных систем\nomeqref {3.0}
@@ -37,21 +37,21 @@
   \item [{MOF}]\begingroup Meta-Object Facility, стандарт для разработки, управляемой моделями\nomeqref {3.0}
 		\nompageref{31}
   \item [{Moose}]\begingroup Платформа для анализа программ\nomeqref {1.0}
-		\nompageref{16}
-  \item [{MSE}]\begingroup язык разметки, используемый средством Moose\nomeqref {1.0}
 		\nompageref{17}
+  \item [{MSE}]\begingroup Язык разметки, используемый средством Moose\nomeqref {1.0}
+		\nompageref{18}
   \item [{OMG}]\begingroup Object Management Group, консорциум, занимающийся разработкой и продвижением объекто-ориентированных технологий и стандартов\nomeqref {3.0}
 		\nompageref{31}
   \item [{POM}]\begingroup Project Object Model, способ описания проекта в система автоматизированной сборки Maven\nomeqref {4.0}
-		\nompageref{44}
+		\nompageref{42}
   \item [{SDL}]\begingroup Specification and Description Language, язык для описания моделей программных систем\nomeqref {1.0}
 		\nompageref{22}
-  \item [{Simple}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}
-		\nompageref{52}
+  \item [{Simple}]\begingroup Фреймворк для XML-сериализации для языка Java\nomeqref {4.0}
+		\nompageref{50}
   \item [{SMIILE}]\begingroup Software Metrics Independent of Input LanguagE, средство для анализа программ\nomeqref {1.0}
 		\nompageref{19}
   \item [{SSA}]\begingroup Static Single Assignment, модель программы: однократное статическое присваивание\nomeqref {1.0}
-		\nompageref{14}
+		\nompageref{15}
   \item [{ULF-Ware}]\begingroup Unified Language Family softWare, фреймворк для генерации кода из программных моделей\nomeqref {1.0}
 		\nompageref{22}
   \item [{UML}]\begingroup Unified Modeling Language, унифицированный язык моделирования\nomeqref {3.0}
@@ -59,11 +59,11 @@
   \item [{XMI}]\begingroup XML Metadata Interchange, формат для сериализации метамоделей в формат XML\nomeqref {3.0}
 		\nompageref{36}
   \item [{XML}]\begingroup eXtensible Markup Language, расширяемый язык разметки\nomeqref {1.0}
-		\nompageref{17}
-  \item [{XMLBeans}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}
-		\nompageref{52}
-  \item [{XStream}]\begingroup фреймворк для XML-сериализации для языка Java\nomeqref {4.0}
-		\nompageref{52}
+		\nompageref{18}
+  \item [{XMLBeans}]\begingroup Фреймворк для XML-сериализации для языка Java\nomeqref {4.0}
+		\nompageref{50}
+  \item [{XStream}]\begingroup Фреймворк для XML-сериализации для языка Java\nomeqref {4.0}
+		\nompageref{50}
   \item [{ПО}]\begingroup Программное обеспечение\nomeqref {0}
 		\nompageref{7}
   \item [{РБНФ}]\begingroup Расширенная Форма Бэкуса-Наура\nomeqref {3.0}
