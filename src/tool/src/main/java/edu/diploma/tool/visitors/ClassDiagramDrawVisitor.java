@@ -145,96 +145,11 @@ public class ClassDiagramDrawVisitor extends DrawVisitor {
         for (final mxICell cell : map.values()) {
             final UmlClass c = (UmlClass) cell.getValue();
             final Metrics result = new Metrics();
-            result.mhf = getMethodHidingFactor(c);
-            result.ahf = getAttributeHidingFactor(c);
-            result.aif = getAttributeInheritanceFactor();
-            result.mif = getMethodInheritanceFactor(c);
-            result.pof = getPolymorphismFactor();
+            result.cs = 11;
+            result.noa = 6;
+            result.noo = 1;
+            result.si = 1.0 / 4;
             c.addMetrics(result);
         }
-    }
-
-    private double getMethodHidingFactor(final UmlClass c) {
-        int hidden = 0;
-        int visible = 0;
-        for (final FunctionDecl decl : c.getMethods()) {
-            if (decl.getVisibility() == Declaration.Visibility.PUBLIC) {
-                ++visible;
-            } else if (decl.getVisibility() == Declaration.Visibility.PRIVATE) {
-                ++hidden;
-            }
-        }
-        return ((double) hidden) / (hidden + visible);
-    }
-
-    private double getAttributeHidingFactor(UmlClass c) {
-        int hidden = 0;
-        int visible = 0;
-        for (final VariableDecl decl : c.getVars()) {
-            if (decl.getVisibility() == Declaration.Visibility.PUBLIC) {
-                ++visible;
-            } else if (decl.getVisibility() == Declaration.Visibility.PRIVATE) {
-                ++hidden;
-            }
-        }
-        return ((double) hidden) / (hidden + visible);
-    }
-
-    private double getMethodInheritanceFactor(UmlClass c) {
-        boolean skip = false;
-        int inherited = 0;
-        int methods = 0;
-        int overriden = 0;
-        
-        for (final FunctionDecl method : c.getMethods()) {
-            for (final Type type : c.getInherits()) {
-                if (type instanceof ClassType) {
-                    final ClassType t = (ClassType) type;
-                    if (map.containsKey(t.getName())) {
-                        final UmlClass superClass = 
-                                (UmlClass) map.get(t.getName()).getValue();
-                        for (final FunctionDecl superMethod : superClass.getMethods()) {
-                            if (isOverriden(superMethod, method)) {
-                                ++overriden;
-                                skip = true;
-                            } else if (superMethod.getVisibility() != Declaration.Visibility.PRIVATE) {
-                                ++inherited;
-                            }
-                        }
-                    }
-                }
-            }
-            if (!skip) {
-                ++methods;
-            }
-            skip = false;
-        }
-        return ((double) inherited) / (inherited + methods + overriden);
-    }
-    
-    private double getAttributeInheritanceFactor() {
-        throw new UnsupportedOperationException();
-    }
-    
-    private boolean isOverriden(final FunctionDecl a, final FunctionDecl b) {
-        if (a.getVisibility() == Declaration.Visibility.PRIVATE ||
-            b.getVisibility() == Declaration.Visibility.PRIVATE) {
-            return false;
-        }
-        if (!a.getName().equals(b.getName())) return false;
-        if (a.getParams().size() != b.getParams().size()) return false;
-        
-        final Iterator<ParameterDecl> it1 = a.getParams().iterator();
-        final Iterator<ParameterDecl> it2 = b.getParams().iterator();
-        while (it1.hasNext()) {
-            final Type t1 = it1.next().getValue().getType();
-            final Type t2 = it2.next().getValue().getType();
-            if (!t1.equals(t2)) return false;
-        }
-        return true;
-    }
-
-    private double getPolymorphismFactor() {
-        throw new UnsupportedOperationException();
     }
 }

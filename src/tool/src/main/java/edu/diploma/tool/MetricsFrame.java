@@ -38,46 +38,32 @@ public class MetricsFrame extends javax.swing.JDialog {
         javax.swing.JLabel jLabel2 = new javax.swing.JLabel();
         javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
         javax.swing.JLabel jLabel4 = new javax.swing.JLabel();
-        javax.swing.JLabel jLabel5 = new javax.swing.JLabel();
-        javax.swing.JLabel jLabel6 = new javax.swing.JLabel();
         javax.swing.JTextField jTextField1 = new javax.swing.JTextField();
         javax.swing.JTextField jTextField2 = new javax.swing.JTextField();
         javax.swing.JTextField jTextField3 = new javax.swing.JTextField();
         final javax.swing.JTextField mhfText = new javax.swing.JTextField();
-        javax.swing.JTextField jTextField5 = new javax.swing.JTextField();
-        javax.swing.JTextField jTextField6 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Method Hiding Factor");
+        jLabel1.setText("Class size");
 
-        jLabel2.setText("Attribute Hiding Factor");
+        jLabel2.setText("Number of operations overridden by a subclass");
 
-        jLabel3.setText("Method Inheritance Factor");
+        jLabel3.setText("Number of operations added by a subclass");
 
-        jLabel4.setText("Attribute Inheritance Factor");
-
-        jLabel5.setText("Polymorphism factor");
-
-        jLabel6.setText("Coupling Factor");
+        jLabel4.setText("Specialization index");
 
         jTextField1.setEditable(false);
-        jTextField1.setText(String.valueOf(metrics.aif));
+        jTextField1.setText(String.valueOf(metrics.si));
 
         jTextField2.setEditable(false);
-        jTextField2.setText(String.valueOf(metrics.mif));
+        jTextField2.setText(String.valueOf(metrics.noa));
 
         jTextField3.setEditable(false);
-        jTextField3.setText(String.valueOf(metrics.ahf));
+        jTextField3.setText(String.valueOf(metrics.noo));
 
         mhfText.setEditable(false);
-        mhfText.setText(String.valueOf(metrics.mhf));
-
-        jTextField5.setEditable(false);
-        jTextField5.setText(String.valueOf(metrics.pof));
-
-        jTextField6.setEditable(false);
-        jTextField6.setText(String.valueOf(metrics.cof));
+        mhfText.setText(String.valueOf(metrics.cs));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,17 +75,13 @@ public class MetricsFrame extends javax.swing.JDialog {
                     .addComponent(jLabel4)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
                     .addComponent(jTextField2)
                     .addComponent(jTextField3)
-                    .addComponent(mhfText)
-                    .addComponent(jTextField5)
-                    .addComponent(jTextField6))
+                    .addComponent(mhfText))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -121,14 +103,6 @@ public class MetricsFrame extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 

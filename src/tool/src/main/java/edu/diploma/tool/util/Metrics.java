@@ -11,16 +11,12 @@ package edu.diploma.tool.util;
  * @author alexander
  */
 public class Metrics {
-    // Method Hiding Factor
-    public double mhf;
-    // Attribute Hiding Factor
-    public double ahf;
-    // Method Inheritance Factor
-    public double mif;
-    // Attribute Inheritance Factor
-    public double aif;
-    // Polymorphism factor
-    public double pof;
-    // Coupling Factor
-    public double cof;
+    // Class size
+    public double cs;
+    // Number of operations overridden by a subclass
+    public double noo;
+    // Number of operations added by a subclass
+    public double noa;
+    // Specialization index
+    public double si;
 }

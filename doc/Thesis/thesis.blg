@@ -1,22 +1,49 @@
-This is 8-bit Big BibTeX version 0.99d
-Implementation:  C for Unix
-Release version: 3.71 (18 mar 2013)
-
-The 8-bit codepage and sorting file: gost/utf8cyrillic.csf
+This is BibTeX, Version 0.99d (TeX Live 2013/Arch Linux)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: thesis.aux
 The style file: ugost2008.bst
-Reallocated glb_str_ptr (elt_size=8) to 10 items from 0.
-Reallocated global_strs (elt_size=20001) to 10 items from 0.
-Reallocated glb_str_end (elt_size=8) to 10 items from 0.
 Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
 Database file #1: thesis.bib
 Warning--empty booktitle in moose
-
-Here's how much of BibTeX's memory you used:
- Cites:                24 out of 750
- Fields:              853 out of 5000
- Hash table:         9568 out of 10000
- Strings:            1227 out of 10000
- Free string pool:  12894 out of 65000
- Wizard functions:   3946 out of 6000
+You've used 24 entries,
+            3946 wiz_defined-function locations,
+            1229 strings with 12911 characters,
+and the built_in function-call counts, 6921 in all, are:
+= -- 829
+> -- 190
+< -- 21
++ -- 67
+- -- 43
+* -- 353
+:= -- 736
+add.period$ -- 82
+call.type$ -- 24
+change.case$ -- 0
+chr.to.int$ -- 0
+cite$ -- 25
+duplicate$ -- 408
+empty$ -- 843
+format.name$ -- 43
+if$ -- 1883
+int.to.chr$ -- 0
+int.to.str$ -- 24
+missing$ -- 0
+newline$ -- 151
+num.names$ -- 54
+pop$ -- 176
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 227
+stack$ -- 0
+substring$ -- 118
+swap$ -- 248
+text.length$ -- 5
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 1
+while$ -- 33
+width$ -- 26
+write$ -- 310
 (There was 1 warning)
